@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">KAMVIA</string>
+    <string name="navigation_drawer_open">Open Navigation drawer</string>
+    <string name="navigation_drawer_close">close Navigation drawer</string>>
+
 
     <string-array name="district_list">
         <item>Choose</item>

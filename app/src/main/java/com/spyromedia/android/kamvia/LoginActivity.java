@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
+import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void Login(){
 
-        String url = "http://192.168.43.236/NewApp/login.php";
+        String url = "http://192.168.43.132/KAMVIA/login.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -59,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                     if(!jsonObject.getBoolean("error")){
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                        Intent home = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(home);
 
                     }
                     else{
