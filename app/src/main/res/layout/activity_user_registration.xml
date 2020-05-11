@@ -43,11 +43,13 @@
                 android:text="First Name"
                 android:textSize="20dp"
                 />
+
             <EditText
-                android:layout_marginTop="9dp"
+                android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:background="@drawable/mainwindowviews"/>
+                android:layout_marginTop="9dp"
+                android:background="@drawable/mainwindowviews" />
 
             <TextView
                 android:layout_marginTop="9dp"
@@ -56,11 +58,13 @@
                 android:text="Last Name"
                 android:textSize="20dp"
                 />
+
             <EditText
-                android:layout_marginTop="9dp"
+                android:id="@+id/last_name"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:background="@drawable/mainwindowviews"/>
+                android:layout_marginTop="9dp"
+                android:background="@drawable/mainwindowviews" />
             <TextView
                 android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
@@ -68,11 +72,13 @@
                 android:text="Mobile No"
                 android:textSize="20dp"
                 />
+
             <EditText
-                android:layout_marginTop="9dp"
+                android:id="@+id/mob_no"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:background="@drawable/mainwindowviews"/>
+                android:layout_marginTop="9dp"
+                android:background="@drawable/mainwindowviews" />
             <TextView
                 android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
@@ -80,11 +86,13 @@
                 android:text="Password"
                 android:textSize="20dp"
                 />
+
             <EditText
-                android:layout_marginTop="9dp"
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:background="@drawable/mainwindowviews"/>
+                android:layout_marginTop="9dp"
+                android:background="@drawable/mainwindowviews" />
             <TextView
                 android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
@@ -92,19 +100,22 @@
                 android:text=" Confirm Password"
                 android:textSize="20dp"
                 />
+
             <EditText
-                android:layout_marginTop="9dp"
+                android:id="@+id/confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:background="@drawable/mainwindowviews"/>
+                android:layout_marginTop="9dp"
+                android:background="@drawable/mainwindowviews" />
 
             <Button
-                android:layout_marginTop="30dp"
+                android:id="@+id/register_btn"
                 android:layout_width="200dp"
                 android:layout_height="45dp"
-                android:text="Register"
                 android:layout_gravity="center"
-                android:background="@drawable/mainwindowbutton"/>
+                android:layout_marginTop="30dp"
+                android:background="@drawable/mainwindowbutton"
+                android:text="Register" />
 
         </LinearLayout>
 
