@@ -42,10 +42,12 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Login();
             }
         });
     }
+
 
     public void Login(){
 
