@@ -50,7 +50,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                     if (verification) {
                         //insert into database
                         Register();
-                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
                     } else {
                         //   Toast.makeText(getBaseContext(), "Something went wrong", Toast.LENGTH_LONG).show();
                     }

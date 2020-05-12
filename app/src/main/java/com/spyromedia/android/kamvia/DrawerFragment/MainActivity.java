@@ -7,12 +7,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.spyromedia.android.kamvia.R;
+import com.spyromedia.android.kamvia.UserProfileUpdate;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,8 +69,10 @@ if(savedInstanceState == null ) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewProfileFragment()).commit();
                 break;
             case R.id.id_addprofile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpdateProfileFragment()).commit();
-                break;
+                Intent userprofileup  =new Intent(MainActivity.this, UserProfileUpdate.class);
+                startActivity(userprofileup);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpdateProfileOptionFragment()).commit();
+                 break;
             case R.id.id_changepassword:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).commit();
                 break;
@@ -75,10 +80,11 @@ if(savedInstanceState == null ) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
                 break;
             case R.id.search_name:
-
+                Toast.makeText(this, "Search by name", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.search_location:
 
+            case R.id.search_location:
+                Toast.makeText(this, "Search by Location", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
