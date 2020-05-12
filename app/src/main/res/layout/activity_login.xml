@@ -140,6 +140,7 @@
             android:id="@+id/pswrdbtn"
             android:layout_width="39dp"
             android:layout_height="39dp"
+            android:layout_marginRight="24dp"
             android:layout_alignBottom="@+id/password"
             android:layout_toEndOf="@+id/Login"
             android:background="@mipmap/eye" />

@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText username,password ;
+    EditText username, password;
     Button login;
 
     @Override
@@ -35,21 +35,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        username=(EditText)findViewById(R.id.username);
-        password=(EditText)findViewById(R.id.password);
-        login=(Button)findViewById(R.id.Login);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        login = (Button) findViewById(R.id.Login);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Boolean verification = verify();
+                if (verification == true) {
+                    Login();
+                } else {
 
-                Login();
+                }
+
             }
         });
     }
 
 
-    public void Login(){
+    public void Login() {
 
         String url = "http://192.168.43.132/KAMVIA/login.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -60,14 +65,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if(!jsonObject.getBoolean("error")){
+                    if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent home = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(home);
 
-                    }
-                    else{
+                    } else {
 
                         Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
 
@@ -81,21 +85,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this, "Error:"+error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username.getText().toString().trim());
-                params.put("password",password.getText().toString().trim());
+                params.put("username", username.getText().toString().trim());
+                params.put("password", password.getText().toString().trim());
 
-                return  params;
+                return params;
             }
         };
         requestQueue.add(stringRequest);
     }
 
+    Boolean verify() {
+
+        if (username.getText().toString().isEmpty() == true){
+            username.setError("Enter registered Mobile number");
+            return false;
+        }
+
+        if (password.getText().toString().isEmpty() == true) {
+            password.setError("Please enter password");
+            return false;
+        }
+        return true;
+    }
 }

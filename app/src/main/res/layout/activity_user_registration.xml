@@ -49,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
+                android:singleLine="true"
                 android:background="@drawable/mainwindowviews" />
 
             <TextView
@@ -64,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
+                android:singleLine="true"
                 android:background="@drawable/mainwindowviews" />
             <TextView
                 android:layout_marginTop="9dp"
@@ -79,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:inputType="phone"
+                android:singleLine="true"
                 android:digits="0123456789+"
                 android:maxLength="10"
                 android:background="@drawable/mainwindowviews" />
@@ -95,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
+                android:singleLine="true"
                 android:inputType="textPassword"
                 android:background="@drawable/mainwindowviews" />
             <TextView
@@ -110,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
+                android:singleLine="true"
                 android:inputType="textPassword"
                 android:background="@drawable/mainwindowviews" />
 
