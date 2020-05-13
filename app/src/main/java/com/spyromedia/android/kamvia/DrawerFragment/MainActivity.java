@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.spyromedia.android.kamvia.R;
+import com.spyromedia.android.kamvia.SearchByLocationFragment;
+import com.spyromedia.android.kamvia.SearchByNameFragement;
 import com.spyromedia.android.kamvia.UserProfileUpdate;
 
 
@@ -80,11 +82,16 @@ if(savedInstanceState == null ) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
                 break;
             case R.id.search_name:
-                Toast.makeText(this, "Search by name", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchByNameFragement()).commit();
+
+                //Toast.makeText(this, "Search by name", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.search_location:
-                Toast.makeText(this, "Search by Location", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchByLocationFragment()).commit();
+
+
+                //    Toast.makeText(this, "Search by Location", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
