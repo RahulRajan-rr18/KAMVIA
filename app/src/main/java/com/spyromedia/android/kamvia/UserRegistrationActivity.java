@@ -35,12 +35,12 @@ public class UserRegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_registration);
 
-        register_btn = (Button) findViewById(R.id.register_btn);
-        first_name = (EditText) findViewById(R.id.first_name);
-        last_name = (EditText) findViewById(R.id.last_name);
-        password = (EditText) findViewById(R.id.password);
-        confirm_password = (EditText) findViewById(R.id.confirm_password);
-        mob_no = (EditText) findViewById(R.id.mob_no);
+        register_btn = findViewById(R.id.register_btn);
+        first_name = findViewById(R.id.first_name);
+        last_name = findViewById(R.id.last_name);
+        password = findViewById(R.id.password);
+        confirm_password = findViewById(R.id.confirm_password);
+        mob_no = findViewById(R.id.mob_no);
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
