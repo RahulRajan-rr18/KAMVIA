@@ -39,7 +39,7 @@
                 android:padding="10dp">
 
                 <EditText
-                    android:id="@+id/editText5"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/mainwindowviews"
@@ -48,7 +48,7 @@
                     android:inputType="textPersonName" />
 
                 <EditText
-                    android:id="@+id/editText6"
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -58,7 +58,7 @@
                     android:inputType="textEmailAddress" />
 
                 <EditText
-                    android:id="@+id/editText7"
+                    android:id="@+id/phone_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -103,6 +103,7 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/add_line1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -111,6 +112,7 @@
                     android:singleLine="true" />
 
                 <EditText
+                    android:id="@+id/add_line2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -144,6 +146,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/pincode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -153,6 +156,7 @@
                     android:maxLength="6" />
 
                 <EditText
+                    android:id="@+id/state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -161,6 +165,7 @@
                     android:text="Kerala" />
 
                 <EditText
+                    android:id="@+id/home_station"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -236,6 +241,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/present_station_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
