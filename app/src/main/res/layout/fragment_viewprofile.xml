@@ -1,13 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_purple">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vew Profile"
-        android:textSize="30sp"
-       android:layout_centerInParent="true"/>
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="176dp"
+        android:background="@color/colorPrimary"
 
-</RelativeLayout>
+        >
+
+        <ImageView
+            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:background="@drawable/round_shape"
+            />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:paddingLeft="@dimen/viewprofilepaddingleft"
+                android:layout_marginTop="@dimen/viewprofilemargin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Name"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Albert"
+                    android:fontFamily="sans-serif-black"
+                    android:layout_marginLeft="@dimen/viewprofilemargin"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingLeft="@dimen/viewprofilepaddingleft"
+                android:layout_marginTop="@dimen/viewprofilemargin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Email"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="albertab@gmail.com"
+                    android:layout_marginLeft="@dimen/viewprofilemargin"
+
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/viewprofilemargin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/viewprofilepaddingleft"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Employee Number"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="SPKD1234"
+                    android:layout_marginLeft="@dimen/viewprofilemargin"
+
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+
+
+
+</LinearLayout>
