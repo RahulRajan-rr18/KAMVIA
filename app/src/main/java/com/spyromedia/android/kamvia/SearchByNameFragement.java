@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +31,9 @@ public class SearchByNameFragement extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getContext(), "Hola...", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Hola...", Toast.LENGTH_SHORT).show();
+                Intent results = new Intent(getActivity(), SearchByNameResultActivity.class);
+                startActivity(results);
 
             }
         });
