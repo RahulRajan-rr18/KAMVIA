@@ -99,7 +99,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
     public void Register(){
 
-            String url = "http://192.168.43.236/KAMVIA/insert.php";
+            String url = "http://192.168.43.132/KAMVIA/insert.php";
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -110,13 +110,13 @@ public class UserRegistrationActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response);
                         if (!jsonObject.getBoolean("error")) {
 
-                            Toast.makeText(UserRegistrationActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserRegistrationActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                             Intent home = new Intent(UserRegistrationActivity.this, LoginActivity.class);
                             startActivity(home);
 
                         } else {
 
-                            Toast.makeText(UserRegistrationActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserRegistrationActivity.this, "Registration  Failed", Toast.LENGTH_LONG).show();
 
                         }
                     } catch (JSONException e) {

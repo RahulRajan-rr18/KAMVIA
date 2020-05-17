@@ -3,12 +3,14 @@ package com.spyromedia.android.kamvia;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,7 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,12 +30,17 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class UserProfileUpdate extends AppCompatActivity {
+public class UserProfileUpdateActivity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
     final Calendar myCalendar2 = Calendar.getInstance();
 
-    EditText birthday,dateOfJoining;
-    EditText name,email,phone_no,add_line1,add_line2,pincode,state,home_station,id_dateofjoining,present_station_code;
+    Spinner home_district, present_rto_district,membership_type;
+
+    TextView errorDist,errorRtoDist;
+    RadioGroup  member_fee_paid;
+    Button photo_upload , upload_details;
+    EditText dateofbirth, dateOfJoiningasamvi;
+    EditText name, email, employee_number, add_line1, add_line2, pincode, state, home_station_code, present_station_code;
 
     final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -67,54 +73,125 @@ public class UserProfileUpdate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_update);
-        birthday = findViewById(R.id.id_dob);
-        dateOfJoining = findViewById(R.id.id_dateofjoining);
 
+        dateofbirth = findViewById(R.id.id_dob);
+        dateOfJoiningasamvi = findViewById(R.id.id_dateofjoining);
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
-        phone_no = findViewById(R.id.phone_no);
+        employee_number = findViewById(R.id.employee_number);
         add_line1 = findViewById(R.id.add_line1);
         add_line2 = findViewById(R.id.add_line2);
+        home_district = findViewById(R.id.id_district);
+
         pincode = findViewById(R.id.pincode);
         state = findViewById(R.id.state);
-        home_station = findViewById(R.id.home_station);
-        id_dateofjoining = findViewById(R.id.id_dateofjoining);
+        home_station_code = findViewById(R.id.home_station_code);
+        present_rto_district = findViewById(R.id.id_present_district);
         present_station_code = findViewById(R.id.present_station_code);
+        member_fee_paid = findViewById(R.id.rd_group_feepaid);
+        photo_upload = findViewById(R.id.btn_uploadphoto);
+        upload_details = findViewById(R.id.btn_upload);
+        errorDist = findViewById(R.id.error_dist);
+        errorRtoDist = findViewById(R.id.error_rto_dist);
 
-        birthday.setOnClickListener(new View.OnClickListener() {
+        dateofbirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(UserProfileUpdate.this, date, myCalendar
+                new DatePickerDialog(UserProfileUpdateActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        dateOfJoining.setOnClickListener(new View.OnClickListener() {
+        dateOfJoiningasamvi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(UserProfileUpdate.this, dt, myCalendar
+                new DatePickerDialog(UserProfileUpdateActivity.this, dt, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
+
+        upload_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Boolean verify = vefifyDetails();
+                if(verify == true){
+                    Toast.makeText(UserProfileUpdateActivity.this, "Validation Success", Toast.LENGTH_SHORT).show();
+                    //database code
+                }
+            }
+        });
 
     }
-//datepicker
+
+    private Boolean vefifyDetails() {
+        if(email.getText().toString().trim().isEmpty() == true){
+            email.setError("Email reqired");
+            return  false;
+        }
+        if(employee_number.getText().toString().trim().isEmpty() == true){
+            employee_number.setError("PEN reqired");
+            return  false;
+        }
+        if(add_line1.getText().toString().trim().isEmpty() == true){
+            add_line1.setError("Reqired");
+            return  false;
+        }
+        if(add_line2.getText().toString().trim().isEmpty() == true){
+            add_line2.setError("Reqired");
+            return  false;
+        }
+
+        if(pincode.getText().toString().trim().isEmpty() == true){
+            pincode.setError("Please enter the pincode");
+            return  false;
+        }
+        if(home_station_code.getText().toString().trim().isEmpty() == true){
+            home_station_code.setError("Home station code reqired");
+            return  false;
+        }
+        if(present_station_code.getText().toString().trim().isEmpty() == true){
+            present_station_code.setError("Present station code reqired");
+            return  false;
+        }
+        if(dateofbirth.getText().toString().isEmpty()==true){
+            dateofbirth.setText("Reqired");
+            return  false;
+        }
+        if(home_district.getSelectedItem().toString().equals("Choose")){
+            errorDist.setError("Please choose your district");
+            return  false;
+        }
+
+        if(present_rto_district.getSelectedItem().toString().equals("Choose")){
+            errorRtoDist.setError("Please choose current district");
+            return  false;
+        }
+
+        return  true;
+
+    }
+
+
+
+    //datepicker
     private void updateLabel() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ROOT);
 
-        birthday.setText(sdf.format(myCalendar.getTime()));
+        dateofbirth.setText(sdf.format(myCalendar.getTime()));
 
     }
+
     private void updateLabel2() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ROOT);
-        dateOfJoining.setText(sdf.format(myCalendar2.getTime()));
+        dateOfJoiningasamvi.setText(sdf.format(myCalendar2.getTime()));
 
     }
 
@@ -131,11 +208,11 @@ public class UserProfileUpdate extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
 
-                        Toast.makeText(UserProfileUpdate.this, "Profile Updated Successful", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated Successful", Toast.LENGTH_LONG).show();
 
                     } else {
 
-                        Toast.makeText(UserProfileUpdate.this, "Profile Updation Failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserProfileUpdateActivity.this, "Profile Updation Failed", Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
@@ -147,7 +224,7 @@ public class UserProfileUpdate extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(UserProfileUpdate.this, "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserProfileUpdateActivity.this, "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -157,12 +234,12 @@ public class UserProfileUpdate extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name.getText().toString().trim());
                 params.put("email", email.getText().toString().trim());
-                params.put("phone_no", phone_no.getText().toString().trim());
+                params.put("phone_no", employee_number.getText().toString().trim());
                 params.put("add_line1", add_line1.getText().toString().trim());
                 params.put("add_line2", add_line2.getText().toString().trim());
                 params.put("pincode", pincode.getText().toString().trim());
                 params.put("state", state.getText().toString().trim());
-                params.put("home_station", home_station.getText().toString().trim());
+                params.put("home_station", home_station_code.getText().toString().trim());
                 params.put("present_station_code", present_station_code.getText().toString().trim());
 
                 return params;

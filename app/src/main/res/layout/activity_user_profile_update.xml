@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserProfileUpdate">
+    tools:context=".UserProfileUpdateActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                     android:inputType="textEmailAddress" />
 
                 <EditText
-                    android:id="@+id/phone_no"
+                    android:id="@+id/employee_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -143,6 +143,12 @@
                         android:layout_marginTop="10dp"
                         android:entries="@array/district_list"
                         android:hint="Dist" />
+                     <TextView
+                         android:id="@+id/error_dist"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="    "
+                         />
                 </LinearLayout>
 
                 <EditText
@@ -165,7 +171,7 @@
                     android:text="Kerala" />
 
                 <EditText
-                    android:id="@+id/home_station"
+                    android:id="@+id/home_station_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -230,14 +236,19 @@
                         android:textSize="20dp" />
 
                     <Spinner
-                        android:id="@+id/id_present"
+                        android:id="@+id/id_present_district"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:entries="@array/district_list"
-
                         android:hint="Dist" />
+                    <TextView
+                        android:id="@+id/error_rto_dist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="    "
+                        />
                 </LinearLayout>
 
                 <EditText
@@ -290,7 +301,7 @@
                         android:textSize="20dp" />
 
                     <RadioGroup
-                        android:id="@+id/rg5"
+                        android:id="@+id/rd_group_feepaid"
                         android:layout_width="match_parent"
                         android:layout_height="53dp"
                         android:gravity="center_horizontal"
@@ -327,23 +338,25 @@
                         android:text="Upload Photo"
                         android:textAlignment="gravity"
                         android:textSize="20dp" />
+
                     <Button
+                        android:id="@+id/btn_uploadphoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="choose photo"
                         android:layout_marginLeft="20dp"
-                        />
+                        android:text="choose photo" />
                 </LinearLayout>
 
                 <Button
-                    android:layout_marginTop="50dp"
+                    android:id="@+id/btn_upload"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginBottom="50dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="50dp"
                     android:background="@drawable/mainwindowbutton"
-                    android:text="Upload"/>
+                    android:text="Upload" />
             </LinearLayout>
         </ScrollView>
         />
