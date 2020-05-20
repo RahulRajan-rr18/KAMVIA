@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Boolean verification = verify();
                 if (verification == true) {
-                    Login();
+                    UserLogin();
                 } else {
 
                 }
@@ -54,9 +54,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void Login() {
+    public void UserLogin() {
 
-        String url = "http://192.168.43.132/KAMVIA/login.php";
+        String url = "http://192.168.43.132/KAMVIA/user_login.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

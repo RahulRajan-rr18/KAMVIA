@@ -49,7 +49,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                     Boolean verification = verify();
                     if (verification) {
                         //insert into database
-                        Register();
+                        RegisterUser();
                         Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
                     } else {
                         //   Toast.makeText(getBaseContext(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -97,9 +97,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
     }
 
-    public void Register(){
+    public void RegisterUser(){
 
-            String url = "http://192.168.43.132/KAMVIA/insert.php";
+            String url = "http://192.168.43.132/KAMVIA/user_registration.php";
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -136,7 +136,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<>();
-                    params.put("username", first_name.getText().toString().trim() +last_name.getText().toString().trim());
+                    params.put("username", first_name.getText().toString().trim() + last_name.getText().toString().trim());
                     params.put("password", password.getText().toString().trim());
                     params.put("mobno", mob_no.getText().toString().trim());
 
