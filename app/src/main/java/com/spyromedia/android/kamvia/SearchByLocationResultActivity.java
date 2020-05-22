@@ -15,7 +15,7 @@ public class SearchByLocationResultActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
-    private List<SearchResultItem> resultList;
+    private List<SearchResultRecyItem> resultList;
 
 
     TextView ClassName, SpeakerId;
@@ -36,7 +36,7 @@ public class SearchByLocationResultActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
 
-            SearchResultItem speakerListItem = new SearchResultItem("Albert", "Kunnamkulam","KL53");
+            SearchResultRecyItem speakerListItem = new SearchResultRecyItem("Albert", "Kunnamkulam","KL53");
             resultList.add(speakerListItem);
         }
 

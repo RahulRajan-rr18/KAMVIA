@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder >{
-    private  List<SearchResultItem> resultList;
+    private  List<SearchResultRecyItem> resultList;
     private Context context;
 
-    public SearchResultAdapter(List<SearchResultItem> resultList, Context context) {
+    public SearchResultAdapter(List<SearchResultRecyItem> resultList, Context context) {
         this.resultList = resultList;
         this.context = context;
     }
@@ -33,7 +33,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        SearchResultItem speakerListItem = resultList.get(position);
+        SearchResultRecyItem speakerListItem = resultList.get(position);
         //routeListItems: list variable
         holder.membername.setText(speakerListItem.getMemberName());
         holder.memberlocation.setText(speakerListItem.getMemberLocation());
