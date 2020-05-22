@@ -82,7 +82,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         add_line1 = findViewById(R.id.add_line1);
         add_line2 = findViewById(R.id.add_line2);
         home_district = findViewById(R.id.id_district);
-
         pincode = findViewById(R.id.pincode);
         state = findViewById(R.id.state);
         home_station_code = findViewById(R.id.home_station_code);
@@ -121,6 +120,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
                 Boolean verify = vefifyDetails();
                 if(verify == true){
+                    Update_Profile();
                     Toast.makeText(UserProfileUpdateActivity.this, "Validation Success", Toast.LENGTH_SHORT).show();
                     //database code
                 }
@@ -181,7 +181,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     //datepicker
     private void updateLabel() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        String myFormat = "YYYY/MM/DD"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ROOT);
 
         dateofbirth.setText(sdf.format(myCalendar.getTime()));
@@ -189,7 +189,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
     }
 
     private void updateLabel2() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        String myFormat = "YYYY/MM/DD"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ROOT);
         dateOfJoiningasamvi.setText(sdf.format(myCalendar2.getTime()));
 
@@ -197,7 +197,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     public void Update_Profile() {
 
-        String url = "";
+        String url = "http://192.168.43.132/KAMVIA/sample.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -232,16 +232,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("name", name.getText().toString().trim());
-                params.put("email", email.getText().toString().trim());
-                params.put("phone_no", employee_number.getText().toString().trim());
-                params.put("add_line1", add_line1.getText().toString().trim());
-                params.put("add_line2", add_line2.getText().toString().trim());
-                params.put("pincode", pincode.getText().toString().trim());
-                params.put("state", state.getText().toString().trim());
-                params.put("home_station", home_station_code.getText().toString().trim());
-                params.put("present_station_code", present_station_code.getText().toString().trim());
-
+                params.put("USER_ID",Globals.USER_ID);
+                params.put("USER_NAME", name.getText().toString().trim());
                 return params;
             }
         };
