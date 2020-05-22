@@ -43,14 +43,14 @@
                     android:textSize="20sp"
                     android:text="Name"
                     />
+
                 <TextView
+                    android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="Albert"
-                    android:fontFamily="sans-serif-black"
                     android:layout_marginLeft="@dimen/viewprofilemargin"
-                    />
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -67,15 +67,15 @@
                     android:textSize="20sp"
                     android:text="Email"
                     />
+
                 <TextView
+                    android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="albertab@gmail.com"
                     android:layout_marginLeft="@dimen/viewprofilemargin"
+                    android:fontFamily="sans-serif-black"
 
-                    />
+                    android:textSize="20sp" />
 
             </LinearLayout>
             <LinearLayout
@@ -92,15 +92,15 @@
                     android:textSize="20sp"
                     android:text="Employee Number"
                     />
+
                 <TextView
+                    android:id="@+id/employee_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="SPKD1234"
                     android:layout_marginLeft="@dimen/viewprofilemargin"
+                    android:fontFamily="sans-serif-black"
 
-                    />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
