@@ -92,6 +92,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         upload_details = findViewById(R.id.btn_upload);
         errorDist = findViewById(R.id.error_dist);
         errorRtoDist = findViewById(R.id.error_rto_dist);
+        membership_type = findViewById(R.id.id_memtype);
 
         dateofbirth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +198,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     public void Update_Profile() {
 
-        String url = "http://192.168.43.132/KAMVIA/sample.php";
+        String url = "http://192.168.43.236/KAMVIA/user_profile_update.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -232,8 +233,19 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("USER_ID",Globals.USER_ID);
-                params.put("USER_NAME", name.getText().toString().trim());
+                params.put("member_id",Globals.USER_ID);
+                params.put("name",name.getText().toString().trim());
+                params.put("mobile_no",Globals.MOBILE_NUMBER);
+                params.put("employee_no",employee_number.getText().toString().trim());
+                params.put("email",email.getText().toString().trim());
+                params.put("date_of_birth",dateofbirth.getText().toString().trim());
+                params.put("address",add_line1.getText().toString().trim() + add_line2.getText().toString().trim());
+                params.put("home_station_code",home_station_code.getText().toString().trim());
+                params.put("home_station",home_station_code.getText().toString().trim());
+                params.put("date_of_joining",dateOfJoiningasamvi.getText().toString().trim());
+                params.put("present_station_code",present_station_code.getText().toString().trim() + add_line2.getText().toString().trim());
+                params.put("present_station",present_station_code.getText().toString().trim());
+                params.put("state","Kerala");
                 return params;
             }
         };
