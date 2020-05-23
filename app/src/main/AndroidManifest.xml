@@ -11,13 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MemberDetailsActivity"></activity>
         <activity android:name=".AddNewPostActivity" />
         <activity android:name=".UserProfileUpdateActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SearchByNameResultActivity" />
         <activity android:name=".SearchByLocationResultActivity" />
-
         <activity
             android:name=".DrawerFragment.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

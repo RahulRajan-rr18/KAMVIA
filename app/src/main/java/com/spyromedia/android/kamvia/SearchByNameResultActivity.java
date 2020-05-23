@@ -14,7 +14,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
-    private List<SearchResultItem> resultList;
+    private List<SearchResultRecyItem> resultList;
 
 
     //TextView ClassName, SpeakerId;
@@ -35,7 +35,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
 
-            SearchResultItem speakerListItem = new SearchResultItem("Albert", "Kunnamkulam","KL52");
+            SearchResultRecyItem speakerListItem = new SearchResultRecyItem("Albert", "Kunnamkulam","KL52");
             resultList.add(speakerListItem);
         }
 

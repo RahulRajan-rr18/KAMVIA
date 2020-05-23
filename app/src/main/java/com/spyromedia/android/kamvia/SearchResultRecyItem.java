@@ -1,6 +1,6 @@
 package com.spyromedia.android.kamvia;
 
-	public class SearchResultItem {
+	public class SearchResultRecyItem {
 
 		private  String memberName;
 		private  String memberLocation;
@@ -19,7 +19,7 @@ package com.spyromedia.android.kamvia;
 			return memberStationCode;
 		}
 
-		public SearchResultItem(String memberName, String memberLocation, String memberLocationCode) {
+		public SearchResultRecyItem(String memberName, String memberLocation, String memberLocationCode) {
 			this.memberName = memberName;
 			this.memberLocation = memberLocation;
             this.memberStationCode = memberLocationCode;
