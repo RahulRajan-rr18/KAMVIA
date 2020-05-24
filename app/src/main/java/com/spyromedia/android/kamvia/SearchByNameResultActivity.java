@@ -35,8 +35,8 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
 
-            SearchResultRecyItem speakerListItem = new SearchResultRecyItem("Albert", "Kunnamkulam","KL52");
-            resultList.add(speakerListItem);
+            SearchResultRecyItem searchResultItem = new SearchResultRecyItem("Albert", "Kunnamkulam","KL52");
+            resultList.add(searchResultItem);
         }
 
         adapter = new SearchResultAdapter(resultList, this);

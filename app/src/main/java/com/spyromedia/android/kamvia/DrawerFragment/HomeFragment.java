@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.spyromedia.android.kamvia.HomeTimelineItem;
+import com.spyromedia.android.kamvia.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyAdapter;
 import com.spyromedia.android.kamvia.LoginActivity;
 import com.spyromedia.android.kamvia.R;
@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
          HomeTimelineRecyAdapter adapter;
-         List<HomeTimelineItem> timelinelist;
+         List<HomeTimelineListItem> timelinelist;
 
         RecyclerView home_recyclerview = view.findViewById(R.id.home_recyclerview);
         home_recyclerview.setHasFixedSize(true);
@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
 
         for (int i = 0; i < 10; i++) {
 
-            HomeTimelineItem timelineitem = new HomeTimelineItem("Dasan"+i, "Thrikkaderi"+i,"KL-51");
+            HomeTimelineListItem timelineitem = new HomeTimelineListItem("Dasan"+i, "Thrikkaderi"+i,"KL-51");
             timelinelist.add(timelineitem);
         }
 

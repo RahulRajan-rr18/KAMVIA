@@ -198,7 +198,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     public void Update_Profile() {
 
-        String url = "http://192.168.43.236/KAMVIA/user_profile_update.php";
+        String url = "http://192.168.43.132/KAMVIA/user_profile_update.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

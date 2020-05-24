@@ -11,19 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRecyAdapter.ViewHolder >{
-    private  List<HomeTimelineListItem> timelineList;
+public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapter.ViewHolder >{
+    private  List<ApprovalMemberListItem> aaprovallist;
     private Context context;
 
-    public HomeTimelineRecyAdapter(List<HomeTimelineListItem> timelineList, Context context) {
-        this.timelineList = timelineList;
+    public ApprovalListAdapter(List<ApprovalMemberListItem> approvalmemlist, Context context) {
+        this.aaprovallist = approvalmemlist;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder( @NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.hometimelineitem,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.approvalmemberlistitem,parent,false);
           //routelist_item: layout name of menu
         return  new ViewHolder(v);
 
@@ -32,11 +32,11 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        HomeTimelineListItem homeTimelineList = timelineList.get(position);
+        ApprovalMemberListItem approvememberlistitem = aaprovallist.get(position);
         //routeListItems: list variable
-        holder.membername.setText(homeTimelineList.getMemberName());
-        holder.memberlocation.setText(homeTimelineList.getMemberLocation());
-        holder.memberstationCode.setText(homeTimelineList.getMemberStationCode());
+        holder.membername.setText(approvememberlistitem.getMemberName());
+        holder.memberlocation.setText(approvememberlistitem.getMemberLocation());
+        holder.memberstationCode.setText(approvememberlistitem.getMemberStationCode());
 
 //        holder.textViewHead.setText(routeListItem.getHead());
 //        holder.textViewDesc.setText(routeListItem.getDesc());
@@ -45,7 +45,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
     @Override
     public int getItemCount() {
-        return timelineList.size();
+        return aaprovallist.size();
     }
 
     public  class  ViewHolder extends RecyclerView.ViewHolder {

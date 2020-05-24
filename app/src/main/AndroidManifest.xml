@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MemberDetailsActivity"></activity>
+        <activity android:name=".ApprovalListAdminActivity"></activity>
+        <activity android:name=".MemberDetailsActivity" />
         <activity android:name=".AddNewPostActivity" />
         <activity android:name=".UserProfileUpdateActivity" />
         <activity android:name=".UserRegistrationActivity" />
