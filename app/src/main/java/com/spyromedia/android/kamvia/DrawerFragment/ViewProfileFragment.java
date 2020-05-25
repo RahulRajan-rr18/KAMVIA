@@ -55,8 +55,9 @@ public class ViewProfileFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
-
-                        
+                        user_name.setText("");
+                        email.setText("");
+                        employee_no.setText("");
                         Intent home = new Intent(getContext(), MainActivity.class);
                         startActivity(home);
 
