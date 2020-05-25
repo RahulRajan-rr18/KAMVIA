@@ -11,9 +11,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -128,10 +133,18 @@ public class UserRegistrationActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
-                    Toast.makeText(UserRegistrationActivity.this, "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
-
+                    if (error instanceof NetworkError) {
+                    } else if (error instanceof ServerError) {
+                    } else if (error instanceof AuthFailureError) {
+                    } else if (error instanceof ParseError) {
+                    } else if (error instanceof NoConnectionError) {
+                    } else if (error instanceof TimeoutError) {
+                        Toast.makeText(UserRegistrationActivity.this,
+                                "Oops. Timeout error!",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
+
             }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
