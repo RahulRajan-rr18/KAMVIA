@@ -104,7 +104,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
     public void RegisterUser(){
 
-            String url = Globals.URL + "/user_registration.php";
+            String url = "http://18.220.53.162/kamvia/api/user_registration.php";
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -150,9 +150,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<>();
-                    params.put("username", first_name.getText().toString().trim() + last_name.getText().toString().trim());
-                    params.put("password", password.getText().toString().trim());
-                    params.put("mobno", mob_no.getText().toString().trim());
+                    params.put("USER_NAME", first_name.getText().toString().trim() + last_name.getText().toString().trim());
+                    params.put("PASSWORD", password.getText().toString().trim());
+                    params.put("MOBILE_NUMBER", mob_no.getText().toString().trim());
 
                     return params;
                 }
