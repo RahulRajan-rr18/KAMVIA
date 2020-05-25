@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void UserLogin() {
 
-        String url = "http://192.168.43.132/KAMVIA/user_login.php";
+        String url = Globals.URL + "/user_login.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

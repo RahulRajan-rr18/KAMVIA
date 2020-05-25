@@ -99,7 +99,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
     public void RegisterUser(){
 
-            String url = "http://192.168.43.132/KAMVIA/user_registration.php";
+            String url = Globals.URL + "/user_registration.php";
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
