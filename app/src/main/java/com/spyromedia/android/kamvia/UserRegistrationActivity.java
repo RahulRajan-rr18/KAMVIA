@@ -53,9 +53,12 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 try {
                     Boolean verification = verify();
                     if (verification) {
+
+                            RegisterUser();
+
                         //insert into database
-                        RegisterUser();
-                        Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
+
+                      Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
                     } else {
                         //   Toast.makeText(getBaseContext(), "Something went wrong", Toast.LENGTH_LONG).show();
                     }
@@ -154,10 +157,13 @@ public class UserRegistrationActivity extends AppCompatActivity {
                     params.put("PASSWORD", password.getText().toString().trim());
                     params.put("MOBILE_NUMBER", mob_no.getText().toString().trim());
 
+
                     return params;
                 }
             };
             requestQueue.add(stringRequest);
         }
+
+
 
 }
