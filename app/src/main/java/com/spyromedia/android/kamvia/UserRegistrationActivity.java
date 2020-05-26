@@ -153,9 +153,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<>();
-                    params.put("USER_NAME", first_name.getText().toString().trim() + last_name.getText().toString().trim());
-                    params.put("PASSWORD", password.getText().toString().trim());
-                    params.put("MOBILE_NUMBER", mob_no.getText().toString().trim());
+                    params.put("user_name", first_name.getText().toString().trim());
+                    params.put("password", password.getText().toString().trim());
+                    params.put("mobile_number", mob_no.getText().toString().trim());
 
 
                     return params;
