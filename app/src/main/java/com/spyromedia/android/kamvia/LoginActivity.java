@@ -66,6 +66,9 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
+                        Globals.USER_NAME = jsonObject.getString("user_name");
+                        Globals.MOBILE_NUMBER = jsonObject.getString("mobile_number");
+                        Globals.USER_ID = jsonObject.getString("user_id");
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent home = new Intent(LoginActivity.this, MainActivity.class);
