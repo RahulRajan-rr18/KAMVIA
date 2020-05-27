@@ -55,10 +55,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                     if (verification) {
 
                             RegisterUser();
-
-                        //insert into database
-
-                      Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
+                      //Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
                     } else {
                         //   Toast.makeText(getBaseContext(), "Something went wrong", Toast.LENGTH_LONG).show();
                     }
@@ -107,7 +104,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
     public void RegisterUser(){
 
-            String url = "http://18.220.53.162/kamvia/api/user_registration.php";
+            String url = "https://18.220.53.162/kamvia/api/insert.php";
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -138,6 +135,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     if (error instanceof NetworkError) {
                     } else if (error instanceof ServerError) {
+
+                        Toast.makeText(UserRegistrationActivity.this, "Server Error"+error, Toast.LENGTH_SHORT).show();
+
                     } else if (error instanceof AuthFailureError) {
                     } else if (error instanceof ParseError) {
                     } else if (error instanceof NoConnectionError) {
@@ -158,7 +158,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                     params.put("mobile_number", mob_no.getText().toString().trim());
 
 
-                    return params;
+                     return params;
                 }
             };
             requestQueue.add(stringRequest);
