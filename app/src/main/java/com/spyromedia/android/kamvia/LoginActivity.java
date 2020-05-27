@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void UserLogin() {
 
-        String url = Globals.URL + "/user_login.php";
+        String url = "http://18.220.53.162/kamvia/api/user_login.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -68,10 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                        Globals.USER_ID = jsonObject.getString("Userid");
-                        Globals.USER_NAME = jsonObject.getString("Mob_no");
-                        Globals.MOBILE_NUMBER = jsonObject.getString("User_name");
-                        Globals.PASSWORD = jsonObject.getString("Password");
                         Intent home = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(home);
 
