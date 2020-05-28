@@ -45,7 +45,7 @@ public class ViewProfileFragment extends Fragment {
     }
     public void ProfileDetails() {
 
-        String url = Globals.URL + "/list_user_details.php";
+        String url = "http://18.220.53.162/kamvia/api/list_user_details.php";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -55,11 +55,11 @@ public class ViewProfileFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
-                        user_name.setText("");
+                        Toast.makeText(getContext(), "Details found", Toast.LENGTH_LONG).show();
+                        String uname = jsonObject.getString("user_name");
+                        user_name.setText(uname);
                         email.setText("");
                         employee_no.setText("");
-                        Intent home = new Intent(getContext(), MainActivity.class);
-                        startActivity(home);
 
                     } else {
 
