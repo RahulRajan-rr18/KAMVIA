@@ -14,7 +14,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         
         name  =findViewById(R.id.tv_name);
         email = findViewById(R.id.tv_email);
-        home_district = findViewById(R.id.tv_homedistrict);
+        home_district = findViewById(R.id.tv_district);
 
         // TODO: 22-05-2020 just retrive 2 one or two details from db and put it into the fields 
     }

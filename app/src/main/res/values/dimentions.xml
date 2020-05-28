@@ -4,5 +4,6 @@
     <dimen name="viewprofilemargin">10dp</dimen>
     <dimen name="viewprofilepaddingleft">10dp</dimen>
     <dimen name="fivedp">5dp</dimen>
+    <dimen name="headingtextsize">20sp</dimen>
 
 </resources>
