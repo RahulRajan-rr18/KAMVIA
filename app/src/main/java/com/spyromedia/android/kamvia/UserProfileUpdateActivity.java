@@ -198,7 +198,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     public void Update_Profile() {
 
-        String url = "http://192.168.43.132/KAMVIA/user_profile_update.php";
+        String url = "http://18.220.53.162/kamvia/api/update_user_details.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -233,7 +233,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("member_id",Globals.USER_ID);
+                params.put("user_id",Globals.USER_ID);
                 params.put("name",name.getText().toString().trim());
                 params.put("mobile_no",Globals.MOBILE_NUMBER);
                 params.put("employee_no",employee_number.getText().toString().trim());
