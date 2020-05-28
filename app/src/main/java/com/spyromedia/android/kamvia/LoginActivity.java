@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -16,7 +18,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
 import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 
 import org.json.JSONException;
@@ -28,18 +29,27 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     EditText username, password;
-    Button login;
-
+    Button btn_login ;
+           TextView tv_register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        tv_register = findViewById(R.id.NotRegistered);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        login = findViewById(R.id.Login);
+        btn_login = findViewById(R.id.Login);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        tv_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent register = new Intent(LoginActivity.this,UserRegistrationActivity.class);
+                startActivity(register);
+            }
+        });
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Boolean verification = verify();
