@@ -36,6 +36,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     Spinner home_district, present_rto_district,membership_type;
 
+
+
     TextView errorDist,errorRtoDist;
     RadioGroup  member_fee_paid;
     Button photo_upload , upload_details;
@@ -73,6 +75,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_update);
+
+        getSupportActionBar().hide();
 
         dateofbirth = findViewById(R.id.id_dob);
         dateOfJoiningasamvi = findViewById(R.id.id_dateofjoining);

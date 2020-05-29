@@ -17,6 +17,9 @@ Button  btn_reset , btn_otpVerification;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+
+        getSupportActionBar().hide();
+
         error = findViewById(R.id.tv_numbernotfound);
         error.setVisibility(View.INVISIBLE);
 

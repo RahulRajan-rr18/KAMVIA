@@ -11,6 +11,8 @@ public class MemberDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_details);
+
+        getSupportActionBar().hide();
         
         name  =findViewById(R.id.tv_name);
         email = findViewById(R.id.tv_email);

@@ -18,11 +18,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="@dimen/viewprofilemargin"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="12dp"
             android:text="Member Details"
-            android:layout_centerVertical="true"
             android:textColor="@android:color/white"
-            android:textSize="25dp" />
+            android:textSize="@dimen/headingtextsize" />
 
         <TextView
             android:id="@+id/textView7"
@@ -35,7 +40,7 @@
             android:layout_marginEnd="11dp"
             android:text="Edit "
             android:textColor="@android:color/white"
-            android:textSize="25sp" />
+            android:textSize="@dimen/headingtextsize" />
     </RelativeLayout>>
 
     <RelativeLayout
@@ -58,6 +63,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
@@ -78,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Anilkumar PP"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,7 +93,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="PEN2345"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -101,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
                 android:text="anilkumarpp@gmail.com"
-                android:textSize="20sp" />
+                android:textSize="@dimen/condentsize"
+                />
 
             <TextView
                 android:id="@+id/tv_mobilenumber"
@@ -109,25 +116,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
                 android:text="9605825896"
-                android:textSize="20sp" />
+                android:textSize="@dimen/condentsize"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/fivedp"
                 android:layout_height="2dp"
-                android:background="@color/colorPrimary"/>
+                android:layout_marginTop="@dimen/fivedp"
+                android:background="@color/colorPrimary" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fivedp"
                 android:text="Address"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:textSize="@dimen/condentsize"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="2dp"
                 android:layout_height="2dp"
-                android:background="@color/colorPrimary"/>
+                android:layout_marginTop="2dp"
+                android:background="@color/colorPrimary" />
 
 
             <TextView
@@ -136,14 +146,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
                 android:text="House name"
-                android:textSize="20sp" />
+                android:textSize="@dimen/condentsize"
+                />
+
             <TextView
                 android:id="@+id/tv_homelocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Location"
-                android:textSize="20sp" />
+                android:textSize="@dimen/condentsize"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -156,7 +169,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
                     android:text="Palakkad"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -167,7 +180,7 @@
                     android:layout_marginRight="30dp"
                     android:gravity="center"
                     android:text="KL-51"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -186,7 +199,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
                     android:text="Kerala"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -197,23 +210,25 @@
                     android:layout_marginLeft="30dp"
                     android:gravity="center"
                     android:text="679502"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_state" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fivedp"
                 android:text="Other Details"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:textSize="@dimen/condentsize"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="2dp"
                 android:layout_height="2dp"
-                android:background="@color/colorPrimary"/>
+                android:layout_marginTop="2dp"
+                android:background="@color/colorPrimary" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -226,7 +241,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
                     android:text="Date of joing as AMVI:"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -237,7 +252,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text="12-05-2005"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView5" />
 
@@ -254,7 +269,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
                     android:text="Present RTO District:"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -265,15 +280,12 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text="Palakkad (KL-51)"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView6" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-
-
-
 
 
     </ScrollView>
