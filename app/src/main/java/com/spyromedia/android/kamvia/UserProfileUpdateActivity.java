@@ -213,13 +213,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
 
-                       // Toast.makeText(UserProfileUpdateActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
-
                         Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
 
                     } else {
-
-                       // Toast.makeText(UserProfileUpdateActivity.this, jsonObject.getString("message");, Toast.LENGTH_LONG).show();
 
                         Toast.makeText(UserProfileUpdateActivity.this, "Profile Updation Failed", Toast.LENGTH_LONG).show();
 
@@ -243,9 +239,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id",Globals.USER_ID.trim());
                 params.put("name",name.getText().toString().trim());
-                params.put("mobile_no",Globals.MOBILE_NUMBER);
+                ///params.put("mobile_no",Globals.MOBILE_NUMBER);
                 params.put("employee_no",employee_number.getText().toString().trim());
-//                params.put("email",email.getText().toString().trim());
+                params.put("email",email.getText().toString().trim());
 //                params.put("date_of_birth",dateofbirth.getText().toString().trim());
 //                params.put("address",add_line1.getText().toString().trim() + add_line2.getText().toString().trim());
 //                params.put("home_station_code",home_station_code.getText().toString().trim());
