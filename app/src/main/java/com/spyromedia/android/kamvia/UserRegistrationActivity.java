@@ -2,6 +2,7 @@ package com.spyromedia.android.kamvia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
@@ -34,6 +35,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
     EditText first_name, last_name, password, confirm_password, mob_no;
     Button register_btn;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +113,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
 
+                    progressDialog.dismiss();
+
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (!jsonObject.getBoolean("error")) {
@@ -133,6 +137,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
                     if (error instanceof NetworkError) {
                     } else if (error instanceof ServerError) {
 
@@ -157,11 +162,13 @@ public class UserRegistrationActivity extends AppCompatActivity {
                     params.put("password", password.getText().toString().trim());
                     params.put("mobile_number", mob_no.getText().toString().trim());
 
-
-                     return params;
+                    return params;
                 }
             };
             requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(UserRegistrationActivity.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
         }
 
 
