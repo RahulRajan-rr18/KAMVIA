@@ -202,7 +202,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     public void Update_Profile() {
 
-        String url = "http://18.220.53.162/kamvia/api/update_user_details.php";
+        String url = "http://18.220.53.162/kamvia/api/user_details.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -213,11 +213,13 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
 
+                       // Toast.makeText(UserProfileUpdateActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+
                         Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
 
                     } else {
-                        String message = jsonObject.getString("message");
-                        Toast.makeText(UserProfileUpdateActivity.this, message, Toast.LENGTH_LONG).show();
+
+                       // Toast.makeText(UserProfileUpdateActivity.this, jsonObject.getString("message");, Toast.LENGTH_LONG).show();
 
                         Toast.makeText(UserProfileUpdateActivity.this, "Profile Updation Failed", Toast.LENGTH_LONG).show();
 
@@ -239,19 +241,19 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id",Globals.USER_ID);
+                params.put("user_id",Globals.USER_ID.trim());
                 params.put("name",name.getText().toString().trim());
                 params.put("mobile_no",Globals.MOBILE_NUMBER);
                 params.put("employee_no",employee_number.getText().toString().trim());
-                params.put("email",email.getText().toString().trim());
-                params.put("date_of_birth",dateofbirth.getText().toString().trim());
-                params.put("address",add_line1.getText().toString().trim() + add_line2.getText().toString().trim());
-                params.put("home_station_code",home_station_code.getText().toString().trim());
-                params.put("home_station",home_station_code.getText().toString().trim());
-                params.put("date_of_joining",dateOfJoiningasamvi.getText().toString().trim());
-                params.put("present_station_code",present_station_code.getText().toString().trim() + add_line2.getText().toString().trim());
-                params.put("present_station",present_station_code.getText().toString().trim());
-                params.put("state","Kerala");
+//                params.put("email",email.getText().toString().trim());
+//                params.put("date_of_birth",dateofbirth.getText().toString().trim());
+//                params.put("address",add_line1.getText().toString().trim() + add_line2.getText().toString().trim());
+//                params.put("home_station_code",home_station_code.getText().toString().trim());
+//                params.put("home_station",home_station_code.getText().toString().trim());
+//                params.put("date_of_joining",dateOfJoiningasamvi.getText().toString().trim());
+//                params.put("present_station_code",present_station_code.getText().toString().trim() + add_line2.getText().toString().trim());
+//                params.put("present_station",present_station_code.getText().toString().trim());
+//                params.put("state","Kerala");
                 return params;
             }
         };
