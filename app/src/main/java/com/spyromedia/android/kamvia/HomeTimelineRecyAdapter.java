@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRecyAdapter.ViewHolder >{
-    private  List<HomeTimelineListItem> timelineList;
+public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRecyAdapter.ViewHolder> {
+    private List<HomeTimelineListItem> timelineList;
     private Context context;
 
     public HomeTimelineRecyAdapter(List<HomeTimelineListItem> timelineList, Context context) {
@@ -23,13 +23,12 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
     }
 
 
-
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder( @NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.hometimelineitem,parent,false);
-          //routelist_item: layout name of menu
-        return  new ViewHolder(v,context,timelineList);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.hometimelineitem, parent, false);
+        //routelist_item: layout name of menu
+        return new ViewHolder(v, context, timelineList);
 
     }
 
@@ -51,16 +50,14 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         return timelineList.size();
     }
 
-    public  class  ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public  TextView membername;
+        public TextView membername;
         public TextView memberlocation;
         public TextView memberstationCode;
 
         List<HomeTimelineListItem> listItems = new ArrayList<HomeTimelineListItem>();
         Context context;
-
-
 
 
         public ViewHolder(View itemView, Context context, List<HomeTimelineListItem> timelineList) {
@@ -70,15 +67,23 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
             this.context = context;
 
             itemView.setOnClickListener(this);
-            membername =(TextView)itemView.findViewById(R.id.textview_membername);
-            memberlocation =(TextView)itemView.findViewById(R.id.textview_place);
-            memberstationCode = (TextView)itemView.findViewById(R.id.textview_stationcode);
+            membername = (TextView) itemView.findViewById(R.id.textview_membername);
+            memberlocation = (TextView) itemView.findViewById(R.id.textview_place);
+            memberstationCode = (TextView) itemView.findViewById(R.id.textview_stationcode);
         }
 
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(this.context,TimelineViewActivity.class);
+
+             int position = getAdapterPosition();
+            HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
+            Intent intent = new Intent(this.context, TimelineViewActivity.class);
+
+            intent.putExtra("heading",homeTimelineListItem.getMemberName());
+            intent.putExtra("condent",homeTimelineListItem.getMemberLocation());
+            intent.putExtra("post_id",homeTimelineListItem.getMemberStationCode());
+
             this.context.startActivity(intent);
 
 

@@ -72,7 +72,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
     private void parseJSON(){
 
-        String url = "http://18.220.53.162/kamvia/api/user_registration.php";
+        String url = "http://18.220.53.162/kamvia/api/users.php";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
