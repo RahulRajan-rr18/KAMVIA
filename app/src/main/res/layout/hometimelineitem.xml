@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +10,12 @@
     android:background="@drawable/listview">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/constraintLayout4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,34 +23,46 @@
             android:id="@+id/textview_membername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Albert"
-            android:textSize="@dimen/condentsize" />
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="user_id"
+            android:textSize="@dimen/condentsize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textview_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Kunnamkulam"
-            android:textSize="@dimen/condentsize" />
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Heading"
+            android:textSize="@dimen/condentsize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_stationcode" />
 
         <TextView
             android:id="@+id/textview_stationcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="KL56"
-            android:textSize="@dimen/condentsize" />
-    </LinearLayout>
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Condent"
+            android:textSize="@dimen/condentsize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_membername" />
 
+
+    </LinearLayout>
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="151dp"
-        android:layout_height="98dp"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
         android:src="@drawable/ic_person"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
