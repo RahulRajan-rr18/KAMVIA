@@ -80,9 +80,9 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
             HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
             Intent intent = new Intent(this.context, TimelineViewActivity.class);
 
-            intent.putExtra("heading",homeTimelineListItem.getMemberName());
-            intent.putExtra("condent",homeTimelineListItem.getMemberLocation());
-            intent.putExtra("post_id",homeTimelineListItem.getMemberStationCode());
+            intent.putExtra("post_id",homeTimelineListItem.getMemberName());
+            intent.putExtra("heading",homeTimelineListItem.getMemberLocation());
+            intent.putExtra("condent",homeTimelineListItem.getMemberStationCode());
 
             this.context.startActivity(intent);
 
