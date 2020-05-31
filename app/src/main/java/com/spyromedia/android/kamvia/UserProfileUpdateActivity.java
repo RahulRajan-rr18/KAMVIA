@@ -186,15 +186,15 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     //datepicker
     private void updateLabel() {
-        String myFormat = "YYYY/MM/DD"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ROOT);
+        String myFormat = "YYYY/MM/dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         dateofbirth.setText(sdf.format(myCalendar.getTime()));
 
     }
 
     private void updateLabel2() {
-        String myFormat = "YYYY/MM/DD"; //In which you need put here
+        String myFormat = "YYYY/MM/dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ROOT);
         dateOfJoiningasamvi.setText(sdf.format(myCalendar2.getTime()));
 
