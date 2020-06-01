@@ -31,18 +31,17 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SearchByNameFragement extends Fragment {
     RequestQueue requestQueue;
     AutoCompleteTextView SearchByname;
+    ArrayList<String> itemlistvalues;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_by_name, container, false);
 
-     //   String[] itemlistvalues = {"Raju", "Balu", "Raman", "KrishnanKutty", "Gopalan", "Ashok",
-       //         "Anjas", "Muhammed", "Chandran", "Anoop", "Aravind"};
-
         SearchByname = view.findViewById(R.id.searchbyname);
-      //  ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
+        //  ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
         //        android.R.layout.select_dialog_item, itemlistvalues);
-      //  SearchByname.setAdapter(arrayAdapter);
+        //  SearchByname.setAdapter(arrayAdapter);
 
         requestQueue = Volley.newRequestQueue(getContext());
         ListNames();
@@ -50,17 +49,15 @@ public class SearchByNameFragement extends Fragment {
         SearchByname.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                //Toast.makeText(getContext(), "Hola...", Toast.LENGTH_SHORT).show();
                 Intent results = new Intent(getActivity(), SearchByNameResultActivity.class);
+                results.putExtra("name",SearchByname.getText().toString());
                 startActivity(results);
-
             }
         });
         return view;
     }
 
-    private void ListNames(){
+    private void ListNames() {
 
         String url = "http://18.220.53.162/kamvia/api/users.php";
 
@@ -69,19 +66,15 @@ public class SearchByNameFragement extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
+                    itemlistvalues = new ArrayList<String>();
 
-                    List<String> responseList = new ArrayList<String>();
                     String name;
-
-                    for (int i=0; i<jsonArray.length(); i++){
-
-                        name = jsonArray.getJSONObject(i).getString("c_name");
-                        responseList.add(name);
-
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        name = jsonArray.getJSONObject(i).getString("name");
+                        itemlistvalues.add(name);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String> (getContext(),android.R.layout.simple_dropdown_item_1line, responseList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, itemlistvalues);
                     SearchByname.setAdapter(adapter);
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

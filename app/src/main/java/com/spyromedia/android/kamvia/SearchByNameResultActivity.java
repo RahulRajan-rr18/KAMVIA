@@ -47,26 +47,18 @@ public class SearchByNameResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_by_name_result);
-
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager ( this));
 
         resultList = new ArrayList<>();
 
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+
         requestQueue = Volley.newRequestQueue(this);
         parseJSON();
 
-      //  for (int i = 0; i < 10; i++) {
-
-      //      SearchResultRecyItem searchResultItem = new SearchResultRecyItem("Albert", "Kunnamkulam","KL52");
-     //       resultList.add(searchResultItem);
-      //  }
-
-    //    adapter = new SearchResultAdapter(resultList, this);
-
-    //    recyclerView.setAdapter(adapter);
 
     }
 
