@@ -344,7 +344,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_approve"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -358,7 +358,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btn_reject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
