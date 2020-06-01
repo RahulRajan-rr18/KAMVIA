@@ -81,6 +81,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
                         resultList.add(new SearchResultRecyItem(uname,location,stationcode));
                     }
+
                     adapter = new SearchResultAdapter(resultList,SearchByNameResultActivity.this);
                     recyclerView.setAdapter(adapter);
 
