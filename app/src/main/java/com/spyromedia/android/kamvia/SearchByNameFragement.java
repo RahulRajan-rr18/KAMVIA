@@ -31,23 +31,19 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SearchByNameFragement extends Fragment {
     RequestQueue requestQueue;
     AutoCompleteTextView SearchByname;
-    private RecyclerView recyclerView;
-    private SearchResultAdapter adapter;
-    private List<SearchResultRecyItem> resultList;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_by_name, container, false);
 
-        String[] itemlistvalues = {"Raju", "Balu", "Raman", "KrishnanKutty", "Gopalan", "Ashok",
-                "Anjas", "Muhammed", "Chandran", "Anoop", "Aravind"};
+     //   String[] itemlistvalues = {"Raju", "Balu", "Raman", "KrishnanKutty", "Gopalan", "Ashok",
+       //         "Anjas", "Muhammed", "Chandran", "Anoop", "Aravind"};
 
         SearchByname = view.findViewById(R.id.searchbyname);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.select_dialog_item, itemlistvalues);
-        SearchByname.setAdapter(arrayAdapter);
+      //  ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
+        //        android.R.layout.select_dialog_item, itemlistvalues);
+      //  SearchByname.setAdapter(arrayAdapter);
 
-        resultList = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(getContext());
         ListNames();
 
@@ -74,18 +70,17 @@ public class SearchByNameFragement extends Fragment {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
 
+                    List<String> responseList = new ArrayList<String>();
+                    String name;
+
                     for (int i=0; i<jsonArray.length(); i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        String uname = jsonObject.getString("name");
-                        String location = jsonObject.getString("home_station");
-                        String stationcode = jsonObject.getString("home_station_code");
-
-                        resultList.add(new SearchResultRecyItem(uname,location,stationcode));
+                        name = jsonArray.getJSONObject(i).getString("c_name");
+                        responseList.add(name);
 
                     }
-                    adapter = new SearchResultAdapter(resultList,getActivity());
-                    recyclerView.setAdapter(adapter);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String> (getContext(),android.R.layout.simple_dropdown_item_1line, responseList);
+                    SearchByname.setAdapter(adapter);
 
 
                 } catch (JSONException e) {
