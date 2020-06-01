@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Albert"
-            android:textSize="20sp" />
+            android:textSize="@dimen/condentsize" />
 
         <TextView
             android:id="@+id/textview_place"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Kunnamkulam"
-            android:textSize="20sp" />
+            android:textSize="@dimen/condentsize"  />
 
         <TextView
             android:id="@+id/textview_stationcode"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="KL56"
-            android:textSize="20sp" />
+            android:textSize="@dimen/condentsize"  />
     </LinearLayout>
 
     <LinearLayout

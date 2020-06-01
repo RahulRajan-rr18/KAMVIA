@@ -56,7 +56,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         public TextView memberlocation;
         public TextView memberstationCode;
 
-        List<HomeTimelineListItem> listItems = new ArrayList<HomeTimelineListItem>();
+             List<HomeTimelineListItem> listItems = new ArrayList<HomeTimelineListItem>();
         Context context;
 
 

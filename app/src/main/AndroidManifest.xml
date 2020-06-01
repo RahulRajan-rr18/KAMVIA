@@ -12,8 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".TimelineViewActivity"></activity>
-        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".ApprovalMemberDetailsActivity"
+
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
         <activity android:name=".ApprovalListAdminActivity" />
         <activity android:name=".MemberDetailsActivity" />
         <activity android:name=".AddNewPostActivity" />
