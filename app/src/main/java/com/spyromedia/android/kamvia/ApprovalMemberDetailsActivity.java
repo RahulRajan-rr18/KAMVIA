@@ -57,7 +57,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         });
 
     }
-    
+
     public void ApproveMember(){
 
         String url = "http://18.220.53.162/kamvia/api/approve_member.php";
@@ -120,7 +120,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
 
     public void RejectMember(){
 
-        String url = "http://18.220.53.162/kamvia/api/";
+        String url = "http://18.220.53.162/kamvia/api/reject_member.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -133,12 +133,12 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
 
-                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Member Approved", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Rejected", Toast.LENGTH_LONG).show();
 
 
                     } else {
 
-                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Approval failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Rejection failed", Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
