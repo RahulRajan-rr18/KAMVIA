@@ -6,27 +6,18 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +29,8 @@ public class SearchByNameResultActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
     private List<SearchResultRecyItem> resultList;
+    String name;
 
-    private RequestQueue requestQueue;
 
     //TextView ClassName, SpeakerId;
 
@@ -50,13 +41,12 @@ public class SearchByNameResultActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager ( this));
-
         resultList = new ArrayList<>();
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        name = intent.getStringExtra("name");
 
-        requestQueue = Volley.newRequestQueue(this);
+        // requestQueue = Volley.newRequestQueue(this);
         parseJSON();
 
 
@@ -65,6 +55,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
     private void parseJSON(){
 
         String url = "http://18.220.53.162/kamvia/api/users.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -94,7 +85,16 @@ public class SearchByNameResultActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        });
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("name", name.trim());
+
+                return params;
+            }
+        };
         requestQueue.add(jsonObjectRequest);
     }
 

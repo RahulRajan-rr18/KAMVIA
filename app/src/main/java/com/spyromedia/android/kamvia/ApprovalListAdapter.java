@@ -79,7 +79,7 @@ public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapte
             try {
 
                 Intent intent = new Intent(this.context, ApprovalMemberDetailsActivity.class);
-                intent.putExtra("post_id", approvalMemberListItem.getMemberName());
+                //intent.putExtra("", approvalMemberListItem.getMemberName());
 
                 this.context.startActivity(intent);
             } catch (Exception ex) {

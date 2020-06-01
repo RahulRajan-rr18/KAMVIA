@@ -60,11 +60,9 @@ public class SearchByLocationFragment extends Fragment {
         searchLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = searchLocation.getText().toString();
-                Toast.makeText(getContext(), "Something Selected" + item, Toast.LENGTH_SHORT).show();
-
 
                 Intent results = new Intent(getActivity(), SearchByLocationResultActivity.class);
+                results.putExtra("location",searchLocation.getText().toString());
                 startActivity(results);
 
             }
