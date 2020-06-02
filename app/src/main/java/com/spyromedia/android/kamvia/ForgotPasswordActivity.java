@@ -43,7 +43,6 @@ Button  btn_reset , btn_otpVerification , send_otp;
         getSupportActionBar().hide();
 
         mobile_number = findViewById(R.id.mobile_number);
-        send_otp = findViewById(R.id.send_otp);
 
         error = findViewById(R.id.tv_numbernotfound);
         error.setVisibility(View.INVISIBLE);
@@ -65,13 +64,6 @@ Button  btn_reset , btn_otpVerification , send_otp;
 
         btn_reset = findViewById(R.id.btn_reset);
         btn_reset.setVisibility(View.INVISIBLE);
-
-        send_otp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                VerifyNumber();
-            }
-        });
 
         btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
