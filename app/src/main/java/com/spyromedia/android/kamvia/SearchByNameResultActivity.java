@@ -69,8 +69,9 @@ public class SearchByNameResultActivity extends AppCompatActivity {
                         String uname = jsonObject.getString("name");
                         String location = jsonObject.getString("home_station");
                         String stationcode = jsonObject.getString("home_station_code");
+                        String user_id = jsonObject.getString("user_id");
 
-                        resultList.add(new SearchResultRecyItem(uname,location,stationcode));
+                        resultList.add(new SearchResultRecyItem(user_id,uname,location,stationcode));
                     }
 
                     adapter = new SearchResultAdapter(resultList,SearchByNameResultActivity.this);

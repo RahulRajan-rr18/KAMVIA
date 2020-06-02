@@ -12,12 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".TimelineViewActivity"></activity>
-        <activity android:name=".ApprovalMemberDetailsActivity"
-
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".TimelineViewActivity" />
+        <activity
+            android:name=".ApprovalMemberDetailsActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".ApprovalListAdminActivity" />
         <activity android:name=".MemberDetailsActivity" />
         <activity android:name=".AddNewPostActivity" />
@@ -29,11 +34,7 @@
         <activity
             android:name=".DrawerFragment.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

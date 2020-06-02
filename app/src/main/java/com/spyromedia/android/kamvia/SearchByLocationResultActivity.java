@@ -54,7 +54,7 @@ public class SearchByLocationResultActivity extends AppCompatActivity {
         String url = "http://18.220.53.162/kamvia/api/location.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -66,8 +66,9 @@ public class SearchByLocationResultActivity extends AppCompatActivity {
                         String uname = jsonObject.getString("name");
                         String location = jsonObject.getString("home_station");
                         String stationcode = jsonObject.getString("home_station_code");
+                        String  user_id = jsonObject.getString("user_id");
 
-                        resultList.add(new SearchResultRecyItem(uname,location,stationcode));
+                        resultList.add(new SearchResultRecyItem(user_id,uname,location,stationcode));
                     }
 
                     adapter = new SearchResultAdapter(resultList,SearchByLocationResultActivity.this);

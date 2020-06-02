@@ -1,5 +1,6 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.LauncherActivity;
 import android.content.Context;
 
 import android.content.Intent;
@@ -29,23 +30,16 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.searchresultitem,parent,false);
           //routelist_item: layout name of menu
         return  new ViewHolder(v,context,resultList);
-
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        SearchResultRecyItem speakerListItem = resultList.get(position);
+        SearchResultRecyItem searchresultitem = resultList.get(position);
         //routeListItems: list variable
-        holder.membername.setText(speakerListItem.getMemberName());
-        holder.memberlocation.setText(speakerListItem.getMemberLocation());
-        holder.memberstationCode.setText(speakerListItem.getMemberStationCode());
-
-//        holder.textViewHead.setText(routeListItem.getHead());
-//        holder.textViewDesc.setText(routeListItem.getDesc());
-
+        holder.membername.setText(searchresultitem.getMemberName());
+        holder.memberlocation.setText(searchresultitem.getMemberLocation());
+        holder.memberstationCode.setText(searchresultitem.getMemberStationCode());
     }
-
     @Override
     public int getItemCount() {
         return resultList.size();
@@ -56,11 +50,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         public TextView memberlocation;
         public TextView memberstationCode;
 
-
         List<SearchResultRecyItem> listItems = new ArrayList<SearchResultRecyItem>();
         Context context;
-
-
         public ViewHolder(View itemView, Context context, List<SearchResultRecyItem> resultList) {
             super(itemView);
 
@@ -72,17 +63,19 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             membername =(TextView)itemView.findViewById(R.id.textview_membername);
             memberlocation =(TextView)itemView.findViewById(R.id.textview_place);
             memberstationCode = (TextView)itemView.findViewById(R.id.textview_stationcode);
-//            textViewHead=(TextView)itemView.findViewById( R.id.textViewHead);
-//            textViewDesc=(TextView)itemView.findViewById( R.id.textViewDesc);
 
         }
 
         @Override
         public void onClick(View v) {
 
+            int position = getAdapterPosition();
+            SearchResultRecyItem listItem = this.listItems.get(position);
             Intent intent = new Intent(this.context,MemberDetailsActivity.class);
-            this.context.startActivity(intent);
+            String user_id = listItem.getUser_id();
+            intent.putExtra("user_id",user_id);
 
+            this.context.startActivity(intent);
         }
     }
 }

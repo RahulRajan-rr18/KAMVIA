@@ -42,17 +42,6 @@ public class SearchByLocationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_by_location, container, false);
         searchLocation = view.findViewById(R.id.searchLocation);
 
-//        String[] itemlistvalues = {"Raju", "Balu", "Raman", "KrishnanKutty", "Gopalan", "Ashok",
-//                "Anjas", "Muhammed", "Chandran", "Anoop", "Aravind"};
-//
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-//                android.R.layout.select_dialog_item, itemlistvalues);
-//        //Used to specify minimum number of
-//        //characters the user has to type in order to display the drop down hint.
-//        searchLocation.setThreshold(1);
-//        //Setting adapter
-//        searchLocation.setAdapter(arrayAdapter);
-
         requestQueue = Volley.newRequestQueue(getContext());
         ListNames();
 
