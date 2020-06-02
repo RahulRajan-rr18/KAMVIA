@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 TextView error;
-EditText et_Otp , btn_otp , newpassword , confirmPassword ;
+EditText et_Otp , btn_otp , newpassword , confirmPassword , mobile_number ;
 
 Button  btn_reset , btn_otpVerification;
     @Override
@@ -41,6 +41,8 @@ Button  btn_reset , btn_otpVerification;
         setContentView(R.layout.activity_forgot_password);
 
         getSupportActionBar().hide();
+
+        mobile_number = findViewById(R.id.mobile_number);
 
         error = findViewById(R.id.tv_numbernotfound);
         error.setVisibility(View.INVISIBLE);
@@ -104,7 +106,7 @@ Button  btn_reset , btn_otpVerification;
 
     public void ResetPassword(){
 
-        String url = "http://18.220.53.162/kamvia/api/";
+        String url = "http://18.220.53.162/kamvia/api/reset_password.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -156,7 +158,7 @@ Button  btn_reset , btn_otpVerification;
 
                 Map<String, String> params = new HashMap<>();
                 params.put("password", newpassword.getText().toString().trim());
-                params.put("user_id",Globals.USER_ID);
+                params.put("mobile_number",mobile_number.getText().toString().trim());
                 return params;
             }
         };
