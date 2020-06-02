@@ -22,9 +22,9 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                if(Globals.USER_ID.isEmpty()){
-                    Intent login=new Intent (SplashScreenActivity.this, LoginActivity.class);
-                    startActivity(login);
+                if(Globals.currentUser.USER_ID.equals("")){
+                    Intent I=new Intent (SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(I);
                 }
                 else{
                     Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
@@ -34,6 +34,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 finish();
             }
         },splash_timeout);
+        Globals.currentUser = Globals.loadLoginInfo(getBaseContext());
 
     }
 }

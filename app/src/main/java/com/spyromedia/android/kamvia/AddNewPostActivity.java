@@ -119,7 +119,7 @@ public class AddNewPostActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", Globals.USER_ID.toString().trim());
+                params.put("user_id", Globals.currentUser.USER_ID.trim());
                 params.put("post_heading", postHead.getText().toString().trim());
                 params.put("content", postContent.getText().toString().trim());
 

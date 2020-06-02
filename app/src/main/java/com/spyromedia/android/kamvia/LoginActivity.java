@@ -3,6 +3,7 @@ package com.spyromedia.android.kamvia;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,8 +30,9 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     EditText username, password;
-    Button btn_login ;
-           TextView tv_register;
+    Button btn_login;
+    TextView tv_register;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent register = new Intent(LoginActivity.this,UserRegistrationActivity.class);
+                Intent register = new Intent(LoginActivity.this, UserRegistrationActivity.class);
                 startActivity(register);
             }
         });
@@ -86,16 +88,24 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
-                       // Globals.USER_NAME = jsonObject.getString("user_name");
-                       // Globals.MOBILE_NUMBER = jsonObject.getString("mobile_number");
-                       // Globals.USER_ID = jsonObject.getString("user_id");
+                        // Globals.USER_NAME = jsonObject.getString("user_name");
+                        // Globals.MOBILE_NUMBER = jsonObject.getString("mobile_number");
+                        // Globals.USER_ID = jsonObject.getString("user_id");
+
+                        SharedPreferences preferences = getBaseContext().getSharedPreferences("settings", 0);
+                        SharedPreferences.Editor editor = preferences.edit();
+
 
                         String uname = jsonObject.getString("user_name");
                         String mobno = jsonObject.getString("mobile_number");
                         String uid = jsonObject.getString("user_id");
-                        Toast.makeText(LoginActivity.this, uname, Toast.LENGTH_LONG).show();
-                        Toast.makeText(LoginActivity.this, mobno, Toast.LENGTH_LONG).show();
-                        Toast.makeText(LoginActivity.this, uid, Toast.LENGTH_LONG).show();
+
+                        editor.putString("USER_ID", uid);
+                        editor.putString("USER_NAME", uname);
+                        editor.putString("MOBILE_NUMBER", mobno);
+                        editor.apply();
+
+
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent home = new Intent(LoginActivity.this, MainActivity.class);
@@ -134,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Boolean verify() {
 
-        if (username.getText().toString().isEmpty() == true){
+        if (username.getText().toString().isEmpty() == true) {
             username.setError("Enter registered Mobile number");
             return false;
         }

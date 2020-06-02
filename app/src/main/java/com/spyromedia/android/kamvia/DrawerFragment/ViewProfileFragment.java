@@ -83,7 +83,7 @@ public class ViewProfileFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("userid",Globals.USER_ID);
+                params.put("userid",Globals.currentUser.USER_ID);
                 return params;
             }
         };
