@@ -86,9 +86,16 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
-                        Globals.USER_NAME = jsonObject.getString("user_name");
-                        Globals.MOBILE_NUMBER = jsonObject.getString("mobile_number");
-                        Globals.USER_ID = jsonObject.getString("user_id");
+                       // Globals.USER_NAME = jsonObject.getString("user_name");
+                       // Globals.MOBILE_NUMBER = jsonObject.getString("mobile_number");
+                       // Globals.USER_ID = jsonObject.getString("user_id");
+
+                        String uname = jsonObject.getString("user_name");
+                        String mobno = jsonObject.getString("mobile_number");
+                        String uid = jsonObject.getString("user_id");
+                        Toast.makeText(LoginActivity.this, uname, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, mobno, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, uid, Toast.LENGTH_LONG).show();
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent home = new Intent(LoginActivity.this, MainActivity.class);
