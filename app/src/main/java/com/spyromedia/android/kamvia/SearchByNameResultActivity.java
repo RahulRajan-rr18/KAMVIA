@@ -54,10 +54,10 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
     private void parseJSON(){
 
-        String url = "http://18.220.53.162/kamvia/api/users.php";
+        String url = "http://18.220.53.162/kamvia/api/list.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
