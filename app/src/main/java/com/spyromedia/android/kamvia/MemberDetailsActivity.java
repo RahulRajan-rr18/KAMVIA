@@ -47,11 +47,9 @@ public class MemberDetailsActivity extends AppCompatActivity {
         pincode = findViewById(R.id.tv_pincode);
         home_location = findViewById(R.id.tv_homelocation);
 
-
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
         fetchDetails();
-
 
     }
 
@@ -67,10 +65,15 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
                     JSONArray jsonArray = response.getJSONArray("data");
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
+
                     String uname = jsonObject.getString("name");
                     String location = jsonObject.getString("home_station");
                     String stationcode = jsonObject.getString("home_station_code");
                     String user_id = jsonObject.getString("user_id");
+
+                    name.setText(uname);
+
+
 
 
                 } catch (JSONException e) {
