@@ -54,14 +54,14 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
     private void parseJSON(){
 
-        String url = "http://18.220.53.162/kamvia/api/list.php";
+        String url = "http://18.220.53.162/kamvia/api/users.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
+                try {                    JSONArray jsonArray = response.getJSONArray("data");
+
 
                     for (int i=0; i<jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
