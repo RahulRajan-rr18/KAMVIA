@@ -61,20 +61,18 @@ public class MemberDetailsActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
                 try {
-
                     JSONArray jsonArray = response.getJSONArray("data");
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                    String uname = jsonObject.getString("name");
-                    String location = jsonObject.getString("home_station");
-                    String stationcode = jsonObject.getString("home_station_code");
-                    String user_id = jsonObject.getString("user_id");
+                    for (int i=0; i<jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    name.setText(uname);
-
-
-
+                        String uname = jsonObject.getString("name");
+                        String location = jsonObject.getString("home_station");
+                        String stationcode = jsonObject.getString("home_station_code");
+                        String user_id = jsonObject.getString("user_id");
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
