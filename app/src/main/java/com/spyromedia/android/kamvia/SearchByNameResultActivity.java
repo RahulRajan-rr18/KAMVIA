@@ -12,12 +12,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +43,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_by_name_result);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager ( this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         resultList = new ArrayList<>();
 
         Intent intent = getIntent();
@@ -52,7 +55,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
     }
 
-    private void parseJSON(){
+    private void parseJSON() {
 
         String url = "http://18.220.53.162/kamvia/api/users.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -60,10 +63,11 @@ public class SearchByNameResultActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {                    JSONArray jsonArray = response.getJSONArray("data");
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
 
 
-                    for (int i=0; i<jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                         String uname = jsonObject.getString("name");
@@ -71,10 +75,10 @@ public class SearchByNameResultActivity extends AppCompatActivity {
                         String stationcode = jsonObject.getString("home_station_code");
                         String user_id = jsonObject.getString("user_id");
 
-                        resultList.add(new SearchResultRecyItem(user_id,uname,location,stationcode));
+                        resultList.add(new SearchResultRecyItem(user_id, uname, location, stationcode));
                     }
 
-                    adapter = new SearchResultAdapter(resultList,SearchByNameResultActivity.this);
+                    adapter = new SearchResultAdapter(resultList, SearchByNameResultActivity.this);
                     recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {
