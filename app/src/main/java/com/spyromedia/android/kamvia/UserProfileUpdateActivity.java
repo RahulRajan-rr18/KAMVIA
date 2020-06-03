@@ -137,28 +137,10 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
                 Boolean verify = vefifyDetails();
                 if(verify == true){
-                   // Update_Profile();
+                    Update_Profile();
                     Toast.makeText(UserProfileUpdateActivity.this, "Validation Success", Toast.LENGTH_SHORT).show();
                     //database code
                 }
-            }
-        });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.parse("package:" + getPackageName()));
-            finish();
-            startActivity(intent);
-            return;
-        }
-
-        photo_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, 100);
             }
         });
 
@@ -230,7 +212,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     public void Update_Profile() {
 
-        String url = "http://18.220.53.162/kamvia/api/user_details.php";
+        String url = "http://18.220.53.162/kamvia/api/update.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -265,11 +247,11 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-             //   params.put("user_id",Globals.USER_ID.trim());
+                params.put("user_id","14032566");
                 params.put("name",name.getText().toString().trim());
-                ///params.put("mobile_no",Globals.MOBILE_NUMBER);
-                params.put("employee_no",employee_number.getText().toString().trim());
                 params.put("email",email.getText().toString().trim());
+              //  params.put("employee_no",employee_number.getText().toString().trim());
+                ///params.put("mobile_no",Globals.MOBILE_NUMBER);
 //                params.put("date_of_birth",dateofbirth.getText().toString().trim());
 //                params.put("address",add_line1.getText().toString().trim() + add_line2.getText().toString().trim());
 //                params.put("home_station_code",home_station_code.getText().toString().trim());
@@ -284,78 +266,4 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-
-            //getting the image Uri
-            Uri imageUri = data.getData();
-            try {
-                //getting bitmap object from uri
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-
-                //calling the method uploadBitmap to upload image
-                uploadBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /*
-     * The method is taking Bitmap as an argument
-     * then it will return the byte[] array for the given bitmap
-     * and we will send this array to the server
-     * here we are using PNG Compression with 80% quality
-     * you can give quality between 0 to 100
-     * 0 means worse quality
-     * 100 means best quality
-     * */
-    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
-    }
-
-    private void uploadBitmap(final Bitmap bitmap) {
-
-        String URL = "http://18.220.53.162/kamvia/api/image_upload.php";
-
-        //our custom volley request
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, URL,
-                new Response.Listener<NetworkResponse>() {
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-                        try {
-                            JSONObject obj = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-            @Override
-            protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
-                Map<String, VolleyMultipartRequest.DataPart> params = new HashMap<>();
-                long imagename = System.currentTimeMillis();
-                params.put("pic", new VolleyMultipartRequest.DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
-        };
-
-        //adding the request to volley
-        Volley.newRequestQueue(this).add(volleyMultipartRequest);
-    }
 }
