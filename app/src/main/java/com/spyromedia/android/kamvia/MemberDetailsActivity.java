@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -72,6 +73,8 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         String location = jsonObject.getString("home_station");
                         String stationcode = jsonObject.getString("home_station_code");
                         String user_id = jsonObject.getString("user_id");
+                        Toast.makeText(MemberDetailsActivity.this, uname, Toast.LENGTH_SHORT).show();
+
                     }
 
                 } catch (JSONException e) {
