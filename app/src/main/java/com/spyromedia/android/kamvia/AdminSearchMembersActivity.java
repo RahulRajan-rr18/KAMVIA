@@ -1,6 +1,7 @@
 package com.spyromedia.android.kamvia;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -44,6 +45,10 @@ public class AdminSearchMembersActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         ListNames();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager( this));
+        resultList = new ArrayList<>();
+
 
         search_field.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
