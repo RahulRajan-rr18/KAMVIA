@@ -247,7 +247,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id","14032566");
+                params.put("user_id",Globals.currentUser.USER_ID);
                 params.put("name",name.getText().toString().trim());
                 params.put("email",email.getText().toString().trim());
               //  params.put("employee_no",employee_number.getText().toString().trim());
