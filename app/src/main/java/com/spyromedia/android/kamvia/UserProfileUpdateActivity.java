@@ -221,6 +221,10 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+                    Toast.makeText(UserProfileUpdateActivity.this, message, Toast.LENGTH_LONG).show();
+
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
