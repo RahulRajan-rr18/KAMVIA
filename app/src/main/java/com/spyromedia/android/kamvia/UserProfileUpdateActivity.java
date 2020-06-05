@@ -253,7 +253,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id",Globals.currentUser.USER_ID);
                 params.put("name",name.getText().toString().trim());
-                params.put("employee_no",employee_number.getText().toString().trim());
+                params.put("employee_number",employee_number.getText().toString().trim());
                 params.put("email",email.getText().toString().trim());
               //  params.put("mobile_no",Globals.currentUser.MOBILE_NUMBER);
                 params.put("date_of_birth",dateofbirth.getText().toString().trim());
