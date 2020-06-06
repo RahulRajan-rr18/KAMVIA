@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +19,16 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +37,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
             present_rto_dist_and_code, house_name, pincode, home_location;
     ProgressDialog progressDialog;
     String user_id;
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,9 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
-        FetchDetails();
+       // FetchDetails();
+        
+        MemberDetails();
 
     }
 
@@ -69,13 +77,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String name = jsonObject.getString("name");
-                } catch (JSONException e) {
-                    e.printStackTrace();
 
-                }
 
             }
         }, new Response.ErrorListener() {
@@ -114,5 +116,40 @@ public class MemberDetailsActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
+    public void MemberDetails(){
+
+        String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                for (int i = 0; i < response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String name = jsonObject.getString("name");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        progressDialog.dismiss();
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id.trim());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
 
 }
