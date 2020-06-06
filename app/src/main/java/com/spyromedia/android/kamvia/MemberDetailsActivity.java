@@ -129,12 +129,10 @@ public class MemberDetailsActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
-                    
+
                     for (int i = 0; i < jsonArray.length(); i++) {
                         String name = jsonArray.getJSONObject(i).getString("name");
-
                     }
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
