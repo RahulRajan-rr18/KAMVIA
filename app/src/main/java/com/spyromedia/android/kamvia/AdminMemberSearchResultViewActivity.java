@@ -45,6 +45,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_member_search_result_view);
+        getSupportActionBar().hide();
 
 
         Intent intent = getIntent();

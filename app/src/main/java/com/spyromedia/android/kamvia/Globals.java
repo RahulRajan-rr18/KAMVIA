@@ -26,7 +26,7 @@ public class Globals {
             cu.USER_ID=sharedPreferences.getString("USER_ID","");
             cu.USER_NAME=sharedPreferences.getString("USER_NAME","");
             cu.MOBILE_NUMBER=sharedPreferences.getString("MOBILE_NUMBER","");
-            cu.USER_ROLE= sharedPreferences.getString("USER_ROLE","member");
+            cu.USER_ROLE= sharedPreferences.getString("USER_ROLE","Admin");
         }catch (Exception e){
             Log.d("loadLoginInfo", e.getMessage());
         }finally {
