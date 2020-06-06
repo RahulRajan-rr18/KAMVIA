@@ -59,7 +59,9 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
-        FetchDetails();
+        //FetchDetails();
+        MemberDetails();
+
     }
 
 
@@ -117,5 +119,41 @@ public class MemberDetailsActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
+    private void MemberDetails() {
+
+        String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String name = jsonArray.getJSONObject(i).getString("name");
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id.trim());
+                return params;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
 
 }
