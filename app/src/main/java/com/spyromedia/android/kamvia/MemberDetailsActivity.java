@@ -65,7 +65,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
     public void FetchDetails(){
 
-        String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
