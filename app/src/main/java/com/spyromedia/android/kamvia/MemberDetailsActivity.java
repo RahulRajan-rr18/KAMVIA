@@ -119,6 +119,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
     public void MemberDetails() {
 
         String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
