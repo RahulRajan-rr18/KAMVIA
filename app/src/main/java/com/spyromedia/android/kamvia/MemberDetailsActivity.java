@@ -71,15 +71,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (!jsonObject.getBoolean("error")) {
-
-
-
-                    } else {
-
-                        Toast.makeText(MemberDetailsActivity.this, "Registration  Failed", Toast.LENGTH_LONG).show();
-
-                    }
+                    String name = jsonObject.getString("name");
                 } catch (JSONException e) {
                     e.printStackTrace();
 
