@@ -18,11 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,12 +53,12 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
-        RegisterUser();
+        FetchDetails();
 
     }
 
 
-    public void RegisterUser(){
+    public void FetchDetails(){
 
         String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
