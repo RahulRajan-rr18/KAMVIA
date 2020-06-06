@@ -60,7 +60,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
        // FetchDetails();
-        
+
         MemberDetails();
 
     }
@@ -116,29 +116,30 @@ public class MemberDetailsActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
-    public void MemberDetails(){
+    public void MemberDetails() {
 
         String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
 
-                for (int i = 0; i < response.length(); i++){
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        String name = jsonObject.getString("name");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        progressDialog.dismiss();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String name = jsonArray.getJSONObject(i).getString("name");
+
                     }
-                }
 
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                error.printStackTrace();
             }
         }){
             @Override
@@ -148,8 +149,8 @@ public class MemberDetailsActivity extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(jsonObjectRequest);
+
     }
 
 }
