@@ -2,6 +2,7 @@ package com.spyromedia.android.kamvia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -25,10 +26,8 @@ import java.util.Map;
 public class MemberDetailsActivity extends AppCompatActivity {
     TextView name, email, home_district, employee_number, mobile_number, dateofjoing_amvi,
             present_rto_dist_and_code, house_name, pincode, home_location;
-
-
+    ProgressDialog progressDialog;
     String user_id;
-    JSONObject details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +55,14 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
     private void fetchDetails() {
 
-        String url = "http://18.220.53.162/kamvia/api/list_user_details.php";
+        String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
+                progressDialog.dismiss();
 
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
@@ -70,10 +71,11 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                         String uname = jsonObject.getString("name");
-                        String location = jsonObject.getString("home_station");
-                        String stationcode = jsonObject.getString("home_station_code");
                         String user_id = jsonObject.getString("user_id");
+                        String email = jsonObject.getString("email");
                         Toast.makeText(MemberDetailsActivity.this, uname, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MemberDetailsActivity.this, user_id, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MemberDetailsActivity.this, email, Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -92,14 +94,15 @@ public class MemberDetailsActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("userid", user_id);
+                params.put("user_id", user_id);
 
                 return params;
             }
         };
         requestQueue.add(jsonObjectRequest);
-
-
+        progressDialog = new ProgressDialog(MemberDetailsActivity.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
     }
 
 }
