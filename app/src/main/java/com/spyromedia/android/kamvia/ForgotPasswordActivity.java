@@ -98,9 +98,11 @@ Button  btn_reset , btn_otpVerification , send_otp;
             public void onResponse(String response) {
 
 
-
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+
+                    Toast.makeText(ForgotPasswordActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(ForgotPasswordActivity.this, "Password Reset Successfully", Toast.LENGTH_LONG).show();
@@ -162,6 +164,10 @@ Button  btn_reset , btn_otpVerification , send_otp;
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+
+                    Toast.makeText(ForgotPasswordActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+
+
                     if (!jsonObject.getBoolean("error")) {
 
                         ResetPassword();
