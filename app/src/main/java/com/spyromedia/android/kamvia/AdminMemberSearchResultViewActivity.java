@@ -22,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -36,9 +35,9 @@ import java.util.Map;
 public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
     Button btn_promoteAdmin;
-    TextView name , employeenumber , mobilenumber , email , date_of_birth, housename ,
-            home_location , district , pincode , home_rto_code  , date_of_joining , current_station_dis_wtcode ;
-   String user_id;
+    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,
+            tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
+    String user_id;
     ProgressDialog progressDialog;
 
     @Override
@@ -49,22 +48,22 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        intent.getStringExtra(user_id);
+        user_id = intent.getStringExtra("user_id");
 
-        name= findViewById(R.id.tv_name);
-        employeenumber= findViewById(R.id.tv_employeenumber);
-        mobilenumber= findViewById(R.id.mob_no);
-        email = findViewById(R.id.tv_email);
-        date_of_birth = findViewById(R.id.tv_dateofbirth);
-        housename = findViewById(R.id.tv_housename);
-        home_location = findViewById(R.id.tv_homelocation);
-        district = findViewById(R.id.tv_district);
-        pincode = findViewById(R.id.tv_pincode);
-        home_rto_code = findViewById(R.id.tv_homelocation);
-        date_of_joining = findViewById(R.id.tv_joiningdate);
-        current_station_dis_wtcode = findViewById(R.id.tv_presentrtodist);
+        tv_name = findViewById(R.id.tv_name);
+        tv_employeenumber = findViewById(R.id.tv_employeenumber);
+        tv_mobilenumber = findViewById(R.id.tv_mobilenumber);
+        tv_email = findViewById(R.id.tv_email);
+        tv_date_of_birth = findViewById(R.id.tv_dateofbirth);
+        tv_housename = findViewById(R.id.tv_housename);
+        tv_home_location = findViewById(R.id.tv_homelocation);
+        tv_district = findViewById(R.id.tv_district);
+        tv_pincode = findViewById(R.id.tv_pincode);
+        tv_home_rto_code = findViewById(R.id.tv_homestationcode);
+        tv_date_of_joining = findViewById(R.id.tv_joiningdate);
+        tv_current_station_dis_wtcode = findViewById(R.id.tv_presentrtodist);
 
-        fetchMemberDetails();
+        FetchDetails();
 
         btn_promoteAdmin = findViewById(R.id.btn_promoteasadmin);
         btn_promoteAdmin.setOnClickListener(new View.OnClickListener() {
@@ -94,38 +93,52 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
 
     }
-    private void fetchMemberDetails() {
 
-        String url = "http://18.220.53.162/kamvia/api/list_user_details.php";
+    public void FetchDetails() {
+
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 progressDialog.dismiss();
-
-
                 try {
-                    JSONArray jsonArray = response.getJSONArray("data");
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                    for (int i=0; i<jsonArray.length(); i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String name = jsonObject1.optString("name");
+                        String email = jsonObject1.optString("email");
+                        String emp_no = jsonObject1.optString("employee_number");
+                        String mob_no = jsonObject1.optString("whatsapp_number");
+                        String dob = jsonObject1.optString("date_of_birth");
+                        String housename = jsonObject1.optString("address");
+                        String location = jsonObject1.optString("home_location");
+                        String district = jsonObject1.optString("home_district");
+                        String pincode = jsonObject1.optString("home_pincode");
+                        String h_rto_code = jsonObject1.optString("home_station_code");
+                        String home_station = jsonObject1.optString("home_station");
+                        String current_station = jsonObject1.optString("present_rto_district");
+                        String cu_rto_code = jsonObject1.optString("present_station_code");
+                        String date_of_joining = jsonObject1.optString("date_of_joining");
 
-                        name.setText(jsonObject.getString("name"));
-                        employeenumber.setText(jsonObject.getString("employee_number"));
-                        mobilenumber.setText(jsonObject.getString("whatsapp_number"));
-                        date_of_birth.setText(jsonObject.getString("date_of_birth"));
-                        housename.setText(jsonObject.getString("address"));
-                        home_location.setText(jsonObject.getString("home_location"));
-                        district.setText(jsonObject.getString("home_district"));
-                        pincode.setText(jsonObject.getString("home_pincode"));
-                        home_rto_code.setText(jsonObject.getString("home_station_code"));
-                        home_rto_code.setText(jsonObject.getString("home_station_code"));
-                        date_of_joining.setText(jsonObject.getString("date_of_joining"));
-                        current_station_dis_wtcode.setText(jsonObject.getString("present_rto_district")+
-                                jsonObject.getString("  present_station_code"));
+                        tv_name.setText(name);
+                        tv_mobilenumber.setText(mob_no);
+                        tv_employeenumber.setText(emp_no);
+                        tv_email.setText(email);
+                        tv_date_of_birth.setText(dob);
+                        tv_housename.setText(housename);
+                        tv_home_location.setText(location);
+                        tv_district.setText(district);
+                        tv_pincode.setText(pincode);
+                        tv_home_rto_code.setText(h_rto_code);
+                        tv_date_of_joining.setText(date_of_joining);
+                        tv_current_station_dis_wtcode.setText(current_station +"  "+ cu_rto_code);
+
 
                     }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -136,25 +149,36 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
 
-                error.printStackTrace();
+                    Toast.makeText(AdminMemberSearchResultViewActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(AdminMemberSearchResultViewActivity.this,
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
             }
+
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("userid", user_id);
+                params.put("user_id", user_id.trim());
+
 
                 return params;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(stringRequest);
         progressDialog = new ProgressDialog(AdminMemberSearchResultViewActivity.this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
-
-
     }
 
 
@@ -192,7 +216,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this, "Server Error"+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminMemberSearchResultViewActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
@@ -209,7 +233,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id",user_id);
+                params.put("user_id", user_id);
                 return params;
             }
         };

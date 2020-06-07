@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -28,13 +26,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MemberDetailsActivity extends AppCompatActivity {
-    TextView name, email, home_district, employee_number, mobile_number, dateofjoing_amvi,
-            present_rto_dist_and_code, house_name, pincode, home_location;
+    TextView tv_name, tv_email, tv_home_district, tv_employee_number, tv_mobile_number,
+            tv_present_rto_dist_and_code, tv_house_name, tv_pincode, tv_home_location, tv_homeStationCode,tv_dateOfJoing;
     ProgressDialog progressDialog;
     String user_id;
     RequestQueue requestQueue;
@@ -46,26 +43,27 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        name = findViewById(R.id.tv_name);
-        email = findViewById(R.id.tv_email);
-        home_district = findViewById(R.id.tv_district);
-        employee_number = findViewById(R.id.tv_employeenumber);
-        mobile_number = findViewById(R.id.tv_mobilenumber);
-        dateofjoing_amvi = findViewById(R.id.tv_joiningdate);
-        present_rto_dist_and_code = findViewById(R.id.tv_presentrtodist);
-        house_name = findViewById(R.id.tv_housename);
-        pincode = findViewById(R.id.tv_pincode);
-        home_location = findViewById(R.id.tv_homelocation);
+        tv_name = findViewById(R.id.name_tv);
+        tv_email = findViewById(R.id.email_tv);
+        tv_mobile_number = findViewById(R.id.mobilenumber_tv);
+        tv_employee_number = findViewById(R.id.empno_tv);
+
+        tv_house_name = findViewById(R.id.housename_tv);
+        tv_home_location = findViewById(R.id.homelocation_tv);
+        tv_home_district = findViewById(R.id.district_tv);
+        tv_pincode = findViewById(R.id.pincode_tv);
+        tv_dateOfJoing = findViewById(R.id.joiningdate_tv);
+        tv_homeStationCode = findViewById(R.id.homestationcode_tv);
+        tv_present_rto_dist_and_code = findViewById(R.id.presentrtodist_tv);
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
         FetchDetails();
-        //MemberDetails();
 
     }
 
 
-    public void FetchDetails(){
+    public void FetchDetails() {
 
         String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -75,11 +73,36 @@ public class MemberDetailsActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 try {
-                   // JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String name = jsonObject.getString("name");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                        String name = jsonObject1.optString("name");
+                        String email = jsonObject1.optString("email");
+                        String emp_no = jsonObject1.optString("employee_number");
+                        String mob_no = jsonObject1.optString("whatsapp_number");
+                        String housename = jsonObject1.optString("address");
+                        String location = jsonObject1.optString("home_location");
+                        String district = jsonObject1.optString("home_district");
+                        String pincode = jsonObject1.optString("home_pincode");
+                        String h_rto_code = jsonObject1.optString("home_station_code");
+                        String current_station = jsonObject1.optString("present_rto_district");
+                        String cu_rto_code = jsonObject1.optString("present_station_code");
+
+
+
+                        tv_name.setText(name);
+                        tv_email.setText(email);
+                        tv_mobile_number.setText(mob_no);
+                        tv_employee_number.setText(emp_no);
+                        tv_house_name.setText(housename);
+                        tv_home_location.setText(location);
+                        tv_home_district.setText(district);
+                        tv_pincode.setText(pincode);
+                        tv_homeStationCode.setText(h_rto_code);
+                        tv_present_rto_dist_and_code.setText(current_station + "(" + cu_rto_code +")");
+
+
                     }
 
                 } catch (JSONException e) {
@@ -94,7 +117,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(MemberDetailsActivity.this, "Server Error"+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MemberDetailsActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
@@ -147,7 +170,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
