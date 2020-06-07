@@ -183,7 +183,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
 
     public void promoteAdmin(final String user_id) {
-        String url = "http://18.220.53.162/kamvia/api/promote_admin.php";
+        String url = "http://18.220.53.162/kamvia/api/PromoteAsAdmin.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -193,16 +193,10 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (!jsonObject.getBoolean("error")) {
+                    String message = jsonObject.getString("message");
 
-                        Toast.makeText(AdminMemberSearchResultViewActivity.this, "Member Promoted as Admin", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminMemberSearchResultViewActivity.this, message, Toast.LENGTH_LONG).show();
 
-
-                    } else {
-
-                        Toast.makeText(AdminMemberSearchResultViewActivity.this, "Something Went Wrong ", Toast.LENGTH_LONG).show();
-
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
 
@@ -233,12 +227,11 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", user_id);
+                params.put("user_id", user_id.trim());
                 return params;
             }
         };
         requestQueue.add(stringRequest);
-
 
     }
 }
