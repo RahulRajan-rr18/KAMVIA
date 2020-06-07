@@ -48,8 +48,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     Spinner home_district, present_rto_district,membership_type;
 
-
-
     TextView errorDist,errorRtoDist;
     RadioGroup  member_fee_paid;
     Button photo_upload , upload_details;
@@ -255,7 +253,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                 params.put("name",name.getText().toString().trim());
                 params.put("employee_number",employee_number.getText().toString().trim());
                 params.put("email",email.getText().toString().trim());
-              //  params.put("mobile_no",Globals.currentUser.MOBILE_NUMBER);
+                params.put("mobile_number",Globals.currentUser.MOBILE_NUMBER);
                 params.put("date_of_birth",dateofbirth.getText().toString().trim());
                 params.put("address",add_line1.getText().toString().trim() + add_line2.getText().toString().trim());
                 params.put("home_station_code",home_station_code.getText().toString().trim());
@@ -264,6 +262,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                 params.put("present_station_code",present_station_code.getText().toString().trim() + add_line2.getText().toString().trim());
                 params.put("present_station",present_station_code.getText().toString().trim());
                 params.put("state","Kerala");
+                params.put("home_pincode",pincode.getText().toString().trim());
                 return params;
             }
         };
