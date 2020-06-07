@@ -243,6 +243,7 @@
                     android:gravity="center"
                     android:text="12-05-2005"
                     android:textSize="@dimen/condentsize"
+                    android:paddingLeft="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView13" />
 
