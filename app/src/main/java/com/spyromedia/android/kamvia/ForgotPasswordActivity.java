@@ -43,35 +43,19 @@ Button  btn_reset , btn_otpVerification , send_otp;
         getSupportActionBar().hide();
 
         mobile_number = findViewById(R.id.mobile_number);
-
         error = findViewById(R.id.tv_numbernotfound);
-        error.setVisibility(View.INVISIBLE);
-
         et_Otp = findViewById(R.id.et_otp);
-        et_Otp.setVisibility(View.INVISIBLE);
-
         btn_otpVerification = findViewById(R.id.btn_otpverify);
-        btn_otpVerification.setVisibility(View.INVISIBLE);
-
         btn_otp = findViewById(R.id.et_otp);
-        btn_otp.setVisibility(View.INVISIBLE);
-
         newpassword = findViewById(R.id.newpasswrod);
-        confirmPassword = findViewById(R.id.confirmpassword);
-
-        newpassword.setVisibility(View.INVISIBLE);
-        confirmPassword.setVisibility(View.INVISIBLE);
-
         btn_reset = findViewById(R.id.btn_reset);
-        btn_reset.setVisibility(View.INVISIBLE);
-
         btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     Boolean verification = verify();
                     if (verification) {
-                        ResetPassword();
+                        VerifyNumber();
                         //Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
                     } else {
                         //   Toast.makeText(getBaseContext(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -106,7 +90,7 @@ Button  btn_reset , btn_otpVerification , send_otp;
 
     public void ResetPassword(){
 
-        String url = "http://18.220.53.162/kamvia/api/reset_password.php";
+        String url = "http://18.220.53.162/kamvia/api/ResetPassword.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -167,7 +151,7 @@ Button  btn_reset , btn_otpVerification , send_otp;
 
     public void VerifyNumber(){
 
-        String url = "http://18.220.53.162/kamvia/api/check_number.php";
+        String url = "http://18.220.53.162/kamvia/api/CheckNumber.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -180,7 +164,8 @@ Button  btn_reset , btn_otpVerification , send_otp;
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
 
-                        Toast.makeText(ForgotPasswordActivity.this, "Registered using this number", Toast.LENGTH_LONG).show();
+                        ResetPassword();
+                       // Toast.makeText(ForgotPasswordActivity.this, "Registered using this number", Toast.LENGTH_LONG).show();
                         // here we can call otp function
 
                     } else {
