@@ -117,7 +117,7 @@ public class SearchByNameResultActivity extends AppCompatActivity {
                 return params;
             }
         };
-        
+
         requestQueue.add(stringRequest);
         progressDialog = new ProgressDialog(SearchByNameResultActivity.this);
         progressDialog.setMessage("Loading....");
