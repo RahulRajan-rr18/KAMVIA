@@ -45,7 +45,6 @@ public class SearchByLocationFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getContext());
         ListNames();
 
-
         searchLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -58,6 +57,7 @@ public class SearchByLocationFragment extends Fragment {
         });
 
         return view;
+
     }
 
     private void ListNames() {
@@ -91,6 +91,5 @@ public class SearchByLocationFragment extends Fragment {
         });
         requestQueue.add(jsonObjectRequest);
     }
-
 
 }

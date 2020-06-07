@@ -78,7 +78,9 @@ public class SearchByNameResultActivity extends AppCompatActivity {
                         String  user_id = jsonObject.getString("user_id");
 
                         resultList.add(new SearchResultRecyItem(user_id,name,location,stationcode));
+
                     }
+
                     adapter = new SearchResultAdapter(resultList,SearchByNameResultActivity.this);
                     recyclerView.setAdapter(adapter);
 
@@ -112,15 +114,15 @@ public class SearchByNameResultActivity extends AppCompatActivity {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name.trim());
-
-
                 return params;
             }
         };
+        
         requestQueue.add(stringRequest);
         progressDialog = new ProgressDialog(SearchByNameResultActivity.this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
+
     }
 
 }

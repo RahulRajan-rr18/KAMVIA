@@ -1,18 +1,27 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -31,6 +40,7 @@ public class SearchByLocationResultActivity extends AppCompatActivity {
     private SearchResultAdapter adapter;
     private List<SearchResultRecyItem> resultList;
     String location;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -40,60 +50,77 @@ public class SearchByLocationResultActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         recyclerView.setLayoutManager(new LinearLayoutManager ( this));
         resultList = new ArrayList<>();
 
-        parseJSON();
+        Intent intent = getIntent();
+        location = intent.getStringExtra("location");
 
+        FetchDetails();
 
     }
-    private void parseJSON(){
 
-        String url = "http://18.220.53.162/kamvia/api/location.php";
+    public void FetchDetails(){
+
+        String url = "http://18.220.53.162/kamvia/api/LocationLike.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
+                progressDialog.dismiss();
                 try {
-                    JSONArray jsonArray = response.getJSONArray("data");
 
-                    for (int i=0; i<jsonArray.length(); i++){
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                        String uname = jsonObject.getString("name");
+                        String name = jsonObject.getString("name");
                         String location = jsonObject.getString("home_station");
                         String stationcode = jsonObject.getString("home_station_code");
                         String  user_id = jsonObject.getString("user_id");
 
-                        resultList.add(new SearchResultRecyItem(user_id,uname,location,stationcode));
+                        resultList.add(new SearchResultRecyItem(user_id,name,location,stationcode));
                     }
-
                     adapter = new SearchResultAdapter(resultList,SearchByLocationResultActivity.this);
                     recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                progressDialog.dismiss();
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+
+                    Toast.makeText(SearchByLocationResultActivity.this, "Server Error"+error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(SearchByLocationResultActivity.this,
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
             }
+
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("home_station", location.trim());
-
+                params.put("location", location.trim());
                 return params;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(SearchByLocationResultActivity.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
     }
 
 }

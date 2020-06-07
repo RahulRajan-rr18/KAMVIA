@@ -34,10 +34,6 @@ public class SearchByNameFragement extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_by_name, container, false);
 
         SearchByname = view.findViewById(R.id.searchbyname);
-        //  ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-        //        android.R.layout.select_dialog_item, itemlistvalues);
-        //  SearchByname.setAdapter(arrayAdapter);
-
         requestQueue = Volley.newRequestQueue(getContext());
         ListNames();
 
