@@ -75,8 +75,12 @@ public class MemberDetailsActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
-                 //   Toast.makeText(MemberDetailsActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                   // JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String name = jsonObject.getString("name");
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
