@@ -59,8 +59,8 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
-        //FetchDetails();
-        MemberDetails();
+        FetchDetails();
+        //MemberDetails();
 
     }
 
@@ -76,7 +76,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    Toast.makeText(MemberDetailsActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(MemberDetailsActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -121,7 +121,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
     private void MemberDetails() {
 
-        String url = "http://18.220.53.162/kamvia/api/MemberDetails.php";
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
