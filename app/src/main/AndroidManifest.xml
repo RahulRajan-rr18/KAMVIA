@@ -35,6 +35,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SearchByNameResultActivity" />
         <activity android:name=".SearchByLocationResultActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
+
         <activity
             android:name=".DrawerFragment.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />

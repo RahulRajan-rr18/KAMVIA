@@ -16,15 +16,15 @@ package com.spyromedia.android.kamvia;
 
 		}
 
-		public String getMember_id() {
-			return member_id;
-		}
-
 		public String getMemberStationCode() {
 			return memberStationCode;
 		}
 
-		public ApprovalMemberListItem(String member_id,String memberName, String memberLocation, String memberLocationCode) {
+		public String getMember_id() {
+			return member_id;
+		}
+
+		public ApprovalMemberListItem(String memberName, String memberLocation, String memberLocationCode,String member_id) {
 			this.memberName = memberName;
 			this.memberLocation = memberLocation;
             this.memberStationCode = memberLocationCode;

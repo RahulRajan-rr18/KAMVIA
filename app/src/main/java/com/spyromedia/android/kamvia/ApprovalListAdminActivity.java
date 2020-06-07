@@ -58,11 +58,11 @@ public class ApprovalListAdminActivity extends AppCompatActivity {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                         String uname = jsonObject.getString("name");
-                        String location = jsonObject.getString("employee_number");
-                        String stationcode = jsonObject.getString("home_station");
+                        String home_location_code = jsonObject.getString("home_station_code");
+                        String home_station = jsonObject.getString("home_station");
                         String member_id = jsonObject.getString("user_id");
 
-                        approvallist.add(new ApprovalMemberListItem(uname,location,stationcode,member_id));
+                        approvallist.add(new ApprovalMemberListItem(uname,home_station,home_location_code,member_id));
                     }
                     adapter = new ApprovalListAdapter(approvallist,ApprovalListAdminActivity.this);
                     approval_recyclerView.setAdapter(adapter);

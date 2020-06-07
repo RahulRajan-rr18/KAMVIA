@@ -37,8 +37,8 @@ public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapte
         ApprovalMemberListItem approvememberlistitem = aprovallist.get(position);
         //routeListItems: list variable
         holder.membername.setText(approvememberlistitem.getMemberName());
-        holder.memberlocation.setText(approvememberlistitem.getMemberLocation());
-        holder.memberstationCode.setText(approvememberlistitem.getMemberStationCode());
+        holder.mobilenumber.setText(approvememberlistitem.getMemberLocation());
+        holder.homestation.setText(approvememberlistitem.getMemberStationCode());
 
     }
 
@@ -49,8 +49,8 @@ public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView membername;
-        public TextView memberlocation;
-        public TextView memberstationCode;
+        public TextView mobilenumber;
+        public TextView homestation;
 
         List<ApprovalMemberListItem> listItems = new ArrayList<ApprovalMemberListItem>();
         Context context;
@@ -64,8 +64,8 @@ public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapte
 
             itemView.setOnClickListener(this);
             membername = (TextView) itemView.findViewById(R.id.textview_membername);
-            memberlocation = (TextView) itemView.findViewById(R.id.textview_place);
-            memberstationCode = (TextView) itemView.findViewById(R.id.textview_stationcode);
+            homestation = (TextView) itemView.findViewById(R.id.tv_condent);
+            mobilenumber = (TextView) itemView.findViewById(R.id.textview_heading);
 
 
         }

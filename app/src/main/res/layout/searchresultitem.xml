@@ -24,7 +24,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textview_place"
+            android:id="@+id/textview_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -32,7 +32,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textview_stationcode"
+            android:id="@+id/tv_condent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

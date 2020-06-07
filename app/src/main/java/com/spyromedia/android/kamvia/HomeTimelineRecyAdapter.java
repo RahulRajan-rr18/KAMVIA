@@ -38,9 +38,9 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
         HomeTimelineListItem homeTimelineList = timelineList.get(position);
         //routeListItems: list variable
-        holder.membername.setText(homeTimelineList.getMemberName());
-        holder.memberlocation.setText(homeTimelineList.getMemberLocation());
-        holder.memberstationCode.setText(homeTimelineList.getMemberStationCode());
+        holder.user_id.setText(homeTimelineList.getUserid());
+        holder.heading.setText(homeTimelineList.getHeading());
+        holder.condent.setText(homeTimelineList.getCondent());
 
 
     }
@@ -52,9 +52,9 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView membername;
-        public TextView memberlocation;
-        public TextView memberstationCode;
+        public TextView user_id;
+        public TextView heading;
+        public TextView condent;
 
              List<HomeTimelineListItem> listItems = new ArrayList<HomeTimelineListItem>();
         Context context;
@@ -67,9 +67,9 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
             this.context = context;
 
             itemView.setOnClickListener(this);
-            membername = (TextView) itemView.findViewById(R.id.textview_membername);
-            memberlocation = (TextView) itemView.findViewById(R.id.textview_place);
-            memberstationCode = (TextView) itemView.findViewById(R.id.textview_stationcode);
+            user_id = (TextView) itemView.findViewById(R.id.textview_membername);
+            heading = (TextView) itemView.findViewById(R.id.textview_heading);
+            condent = (TextView) itemView.findViewById(R.id.tv_condent);
         }
 
 
@@ -80,9 +80,9 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
             HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
             Intent intent = new Intent(this.context, TimelineViewActivity.class);
 
-            intent.putExtra("post_id",homeTimelineListItem.getMemberName());
-            intent.putExtra("heading",homeTimelineListItem.getMemberLocation());
-            intent.putExtra("condent",homeTimelineListItem.getMemberStationCode());
+            intent.putExtra("post_id",homeTimelineListItem.getUserid());
+            intent.putExtra("heading",homeTimelineListItem.getHeading());
+            intent.putExtra("condent",homeTimelineListItem.getCondent());
 
             this.context.startActivity(intent);
 

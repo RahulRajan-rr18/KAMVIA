@@ -1,5 +1,6 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,39 +33,40 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ApprovalMemberDetailsActivity extends AppCompatActivity {
-     Button btn_approve,btn_reject;
-     String  user_id;
-     ImageView user_photo;
-     TextView name , employeenumber , mobilenumber , email , date_of_birth, housename ,
-    home_location , district , pincode , home_rto_code  , date_of_joining , current_station_dis_wtcode ;
+    Button btn_approve, btn_reject;
+    String user_id;
+    ProgressDialog progressDialog;
+
+    ImageView user_photo;
+    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,
+            tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_approval);
+        getSupportActionBar().hide();
 
-        name= findViewById(R.id.tv_name);
-        employeenumber= findViewById(R.id.tv_employeenumber);
-        mobilenumber= findViewById(R.id.mob_no);
-        email = findViewById(R.id.tv_email);
-        date_of_birth = findViewById(R.id.tv_dateofbirth);
-        housename = findViewById(R.id.tv_housename);
-        home_location = findViewById(R.id.tv_homelocation);
-        district = findViewById(R.id.tv_district);
-        pincode = findViewById(R.id.tv_pincode);
-        home_rto_code = findViewById(R.id.tv_homelocation);
-        date_of_joining = findViewById(R.id.tv_joiningdate);
-        current_station_dis_wtcode = findViewById(R.id.tv_presentrtodist);
+        tv_name = findViewById(R.id.textview_name);
+        tv_employeenumber = findViewById(R.id.employeenumber);
+        tv_mobilenumber = findViewById(R.id.mobilenumber);
+        tv_email = findViewById(R.id.email);
+        tv_date_of_birth = findViewById(R.id.dateofbirth);
+        tv_housename = findViewById(R.id.housename);
+        tv_home_location = findViewById(R.id.homelocation);
+        tv_district = findViewById(R.id.district);
+        tv_pincode = findViewById(R.id.pincode);
+        tv_home_rto_code = findViewById(R.id.homestationcode);
+        tv_date_of_joining = findViewById(R.id. joiningdate);
+        tv_current_station_dis_wtcode = findViewById(R.id.presentrtodist);
 
 
         Intent intent = getIntent();
-          user_id = intent.getStringExtra("user_id");
-
+        user_id = intent.getStringExtra("user_id");
         btn_approve = findViewById(R.id.btn_approve);
         btn_reject = findViewById(R.id.btn_reject);
 
-        getSupportActionBar().hide();
-
-        fetchMemberDetails();
+        FetchDetails();
 
         btn_approve.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +83,97 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         });
 
     }
+    public void FetchDetails() {
 
-    public void ApproveMember(){
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                        String name = jsonObject1.optString("name");
+                        String email = jsonObject1.optString("email");
+                        String emp_no = jsonObject1.optString("employee_number");
+                        String mob_no = jsonObject1.optString("whatsapp_number");
+                        String housename = jsonObject1.optString("address");
+                        String location = jsonObject1.optString("home_location");
+                        String district = jsonObject1.optString("home_district");
+                        String pincode = jsonObject1.optString("home_pincode");
+                        String h_rto_code = jsonObject1.optString("home_station_code");
+                        String current_station = jsonObject1.optString("present_rto_district");
+                        String cu_rto_code = jsonObject1.optString("present_station_code");
+
+                        String date_of_birth = jsonObject1.optString("date_of_birth");
+                        String date_ofjoining = jsonObject1.optString("date_of_joining");
+
+
+
+                        tv_name.setText(name);
+                        tv_email.setText(email);
+                        tv_mobilenumber.setText(mob_no);
+                        tv_employeenumber.setText(emp_no);
+
+                        tv_housename.setText(housename);
+                        tv_home_location.setText(location);
+                        tv_district.setText(district);
+                        tv_pincode.setText(pincode);
+                        tv_home_rto_code.setText(h_rto_code);
+                        tv_date_of_birth.setText(date_of_birth);
+                        tv_date_of_joining.setText(date_ofjoining);
+                        tv_current_station_dis_wtcode.setText(current_station + "(" + cu_rto_code +")");
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+
+                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(ApprovalMemberDetailsActivity.this,
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id.trim());
+
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(ApprovalMemberDetailsActivity.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
+    }
+
+
+    public void ApproveMember() {
 
         String url = "http://18.220.53.162/kamvia/api/approve_member.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -90,7 +181,6 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
 
 
                 try {
@@ -118,7 +208,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error"+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
@@ -135,14 +225,14 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id",user_id);
+                params.put("user_id", user_id);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
     }
 
-    public void RejectMember(){
+    public void RejectMember() {
 
         String url = "http://18.220.53.162/kamvia/api/reject_member.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -150,7 +240,6 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
 
 
                 try {
@@ -178,7 +267,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error"+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
@@ -195,60 +284,12 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id","id");
+                params.put("user_id", "id");
                 return params;
             }
         };
         requestQueue.add(stringRequest);
     }
 
-    private void fetchMemberDetails() {
-
-        String url = "http://18.220.53.162/kamvia/api/list_user_details.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-
-                    for (int i=0; i<jsonArray.length(); i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                        String uname = jsonObject.getString("name");
-                        String location = jsonObject.getString("home_station");
-                        String stationcode = jsonObject.getString("home_station_code");
-                        String user_id = jsonObject.getString("user_id");
-
-                        Toast.makeText(ApprovalMemberDetailsActivity.this, uname, Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("userid", user_id);
-
-                return params;
-            }
-        };
-        requestQueue.add(jsonObjectRequest);
-
-
-    }
 
 }

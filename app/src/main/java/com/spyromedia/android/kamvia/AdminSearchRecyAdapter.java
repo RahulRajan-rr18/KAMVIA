@@ -59,8 +59,8 @@ public class AdminSearchRecyAdapter extends RecyclerView.Adapter<AdminSearchRecy
             itemView.setOnClickListener(this);
 
             membername =(TextView)itemView.findViewById(R.id.textview_membername);
-            memberlocation =(TextView)itemView.findViewById(R.id.textview_place);
-            memberstationCode = (TextView)itemView.findViewById(R.id.textview_stationcode);
+            memberlocation =(TextView)itemView.findViewById(R.id.textview_heading);
+            memberstationCode = (TextView)itemView.findViewById(R.id.tv_condent);
 
         }
 

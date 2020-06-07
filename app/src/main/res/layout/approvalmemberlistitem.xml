@@ -24,7 +24,7 @@
             android:textSize="@dimen/condentsize" />
 
         <TextView
-            android:id="@+id/textview_place"
+            android:id="@+id/textview_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -32,12 +32,12 @@
             android:textSize="@dimen/condentsize"  />
 
         <TextView
-            android:id="@+id/textview_stationcode"
+            android:id="@+id/tv_condent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="KL56"
-            android:textSize="@dimen/condentsize"  />
+            android:textSize="@dimen/condentsize" />
     </LinearLayout>
 
     <LinearLayout

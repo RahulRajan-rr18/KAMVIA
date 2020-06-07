@@ -53,12 +53,12 @@ Button  btn_reset , btn_otpVerification , send_otp;
             @Override
             public void onClick(View v) {
                 try {
-                    Boolean verification = verify();
+                    Boolean verification = true;
                     if (verification) {
                         VerifyNumber();
-                        //Toast.makeText(getBaseContext(), "Data validation success", Toast.LENGTH_LONG).show();
+
                     } else {
-                        //   Toast.makeText(getBaseContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+
                     }
                 } catch (Exception ex) {
                     System.err.println(ex.getMessage());
@@ -69,21 +69,21 @@ Button  btn_reset , btn_otpVerification , send_otp;
     }
 
     private Boolean verify() {
-        if (newpassword.getText().toString().isEmpty() == true) {
-
-            newpassword.setError("Please enter a password");
-            return false;
-        }
-        if (confirmPassword.getText().toString().isEmpty() == true) {
-
-            confirmPassword.setError("Please enter a password");
-            return false;
-        }
-
-        if (newpassword.getText().toString().equals(confirmPassword.getText().toString()) == false) {
-            confirmPassword.setError("Passwords not matching");
-            return false;
-        }
+//        if (newpassword.getText().toString().isEmpty() == true) {
+//
+//            newpassword.setError("Please enter a password");
+//            return false;
+//        }
+//        if (confirmPassword.getText().toString().isEmpty() == true) {
+//
+//            confirmPassword.setError("Please enter a password");
+//            return false;
+//        }
+//
+//        if (newpassword.getText().toString().equals(confirmPassword.getText().toString()) == false) {
+//            confirmPassword.setError("Passwords not matching");
+//            return false;
+//        }
 
         return true;
     }

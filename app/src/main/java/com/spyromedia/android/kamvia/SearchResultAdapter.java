@@ -1,6 +1,5 @@
 package com.spyromedia.android.kamvia;
 
-import android.app.LauncherActivity;
 import android.content.Context;
 
 import android.content.Intent;
@@ -61,8 +60,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             itemView.setOnClickListener(this);
 
             membername =(TextView)itemView.findViewById(R.id.textview_membername);
-            memberlocation =(TextView)itemView.findViewById(R.id.textview_place);
-            memberstationCode = (TextView)itemView.findViewById(R.id.textview_stationcode);
+            memberlocation =(TextView)itemView.findViewById(R.id.textview_heading);
+            memberstationCode = (TextView)itemView.findViewById(R.id.tv_condent);
 
         }
 

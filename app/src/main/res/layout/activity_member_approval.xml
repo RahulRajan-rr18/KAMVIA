@@ -74,7 +74,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_name"
+                    android:id="@+id/textview_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Anilkumar PP"
@@ -83,7 +83,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_employeenumber"
+                    android:id="@+id/employeenumber"
                     android:layout_width="129dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -97,7 +97,7 @@
 
 
             <TextView
-                android:id="@+id/tv_email"
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
@@ -105,7 +105,7 @@
                 android:textSize="@dimen/condentsize" />
 
             <TextView
-                android:id="@+id/tv_mobilenumber"
+                android:id="@+id/mobilenumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
@@ -134,7 +134,7 @@
 
 
             <TextView
-                android:id="@+id/tv_housename"
+                android:id="@+id/housename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
@@ -142,7 +142,7 @@
                 android:textSize="@dimen/condentsize" />
 
             <TextView
-                android:id="@+id/tv_homelocation"
+                android:id="@+id/homelocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -155,7 +155,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_district"
+                    android:id="@+id/district"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
@@ -165,7 +165,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_homestationcode"
+                    android:id="@+id/homestationcode"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
@@ -195,7 +195,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_pincode"
+                    android:id="@+id/pincode"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
@@ -237,7 +237,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_dateofbirth"
+                    android:id="@+id/dateofbirth"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -265,7 +265,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_joiningdate"
+                    android:id="@+id/joiningdate"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -293,7 +293,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_presentrtodist"
+                    android:id="@+id/presentrtodist"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -302,34 +302,6 @@
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView6" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="3dp"
-                    android:text="Present Station:"
-                    android:textSize="@dimen/condentsize"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_presentdistrict"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Palakkad"
-                    android:textSize="@dimen/condentsize"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView15" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

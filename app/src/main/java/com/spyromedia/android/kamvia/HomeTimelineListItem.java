@@ -2,27 +2,27 @@ package com.spyromedia.android.kamvia;
 
 	public class HomeTimelineListItem {
 
-		private  String memberName;
-		private  String memberLocation;
-		private  String memberStationCode;
+		private  String userid;
+		private  String heading;
+		private  String condent;
 
-		public String getMemberName() {
-			return memberName;
+		public String getUserid() {
+			return userid;
 		}
 
-		public String getMemberLocation() {
-			return memberLocation;
+		public String getHeading() {
+			return heading;
 
 		}
 
-		public String getMemberStationCode() {
-			return memberStationCode;
+		public String getCondent() {
+			return condent;
 		}
 
-		public HomeTimelineListItem(String memberName, String memberLocation, String memberLocationCode) {
-			this.memberName = memberName;
-			this.memberLocation = memberLocation;
-            this.memberStationCode = memberLocationCode;
+		public HomeTimelineListItem(String userid, String heading, String condent) {
+			this.userid = userid;
+			this.heading = heading;
+            this.condent = condent;
 		}
 
 }

@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textview_place"
+            android:id="@+id/textview_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -39,10 +39,10 @@
             android:text="Heading"
             android:textSize="@dimen/condentsize"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_stationcode" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_condent" />
 
         <TextView
-            android:id="@+id/textview_stationcode"
+            android:id="@+id/tv_condent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
