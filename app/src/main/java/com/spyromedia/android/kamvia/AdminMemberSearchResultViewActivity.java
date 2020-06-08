@@ -39,6 +39,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
     String user_id;
     ProgressDialog progressDialog;
+    Button btn_removeMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
+        btn_removeMember = findViewById(R.id.btn_remove_member);
 
         tv_name = findViewById(R.id.tv_name);
         tv_employeenumber = findViewById(R.id.tv_employeenumber);
@@ -64,6 +66,14 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         tv_current_station_dis_wtcode = findViewById(R.id.tv_presentrtodist);
 
         FetchDetails();
+
+        btn_removeMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AdminMemberSearchResultViewActivity.this, "Remove this member from user_details", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         btn_promoteAdmin = findViewById(R.id.btn_promoteasadmin);
         btn_promoteAdmin.setOnClickListener(new View.OnClickListener() {

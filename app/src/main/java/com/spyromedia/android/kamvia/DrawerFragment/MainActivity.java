@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,14 +15,21 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.spyromedia.android.kamvia.Globals;
+import com.spyromedia.android.kamvia.MemberDetailsActivity;
 import com.spyromedia.android.kamvia.R;
 import com.spyromedia.android.kamvia.SearchByLocationFragment;
 import com.spyromedia.android.kamvia.SearchByNameFragement;
@@ -38,14 +46,16 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button userUpdate, btnLogin;
     private DrawerLayout drawer;
-     String[] user = new String[1];
-
+    ProgressDialog progressDialog;
+    String user_id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        user_id = Globals.currentUser.USER_ID;
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.id_admincorner:
               //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
 
-               checkCredentials();
+                CheckCredentials();
                 break;
             case R.id.search_name:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchByNameFragement()).commit();
@@ -110,49 +120,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onBackPressed();
     }
 
-    public void checkCredentials() {
+    public void CheckCredentials() {
 
-        String url = "http://18.220.53.162/kamvia/api/userinfo.php";
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
+                progressDialog.dismiss();
                 try {
-                    JSONArray jsonArray = response.getJSONArray("data");
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
+                        String 	user_role = jsonObject1.optString("member_type");
+                        if(user_role.equals("Admin")){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
+                        }
+                        else {
 
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    String user_role = jsonObject.getString("user_role");
+                            Toast.makeText(MainActivity.this, "This is Restricted to Admins Only", Toast.LENGTH_SHORT).show();
+                        }
 
-                    if (user_role.equals("Admin")) {
-
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Only Admin can Access this session", Toast.LENGTH_SHORT).show();
                     }
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Only Admin can access to this session", Toast.LENGTH_SHORT).show();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                progressDialog.dismiss();
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+
+                    Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(MainActivity.this,
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
             }
+
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("name", Globals.currentUser.USER_ID);
+                params.put("user_id", user_id.trim());
+
 
                 return params;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
     }
 
 

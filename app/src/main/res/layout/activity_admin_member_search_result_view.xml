@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ApprovalMemberDetailsActivity">
+    tools:context=".AdminMemberSearchResultViewActivity">
     <RelativeLayout
         android:id="@+id/relativeLayout4"
         android:layout_width="match_parent"
@@ -348,6 +348,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
 
+            <Button
+                android:id="@+id/btn_remove_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@android:color/holo_red_dark"
+                android:text="Remove this member"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
         </LinearLayout>
 
     </ScrollView>

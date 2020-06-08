@@ -83,7 +83,7 @@
                     android:id="@+id/name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Anilkumar PP"
+                    android:text="name"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +93,7 @@
                     android:layout_width="129dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="PEN2345"
+                    android:text="empno"
                     android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -107,18 +107,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
-                android:text="anilkumarpp@gmail.com"
-                android:textSize="@dimen/condentsize"
-                />
+                android:text="email"
+                android:textSize="@dimen/condentsize" />
 
             <TextView
                 android:id="@+id/mobilenumber_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
-                android:text="9605825896"
-                android:textSize="@dimen/condentsize"
-                />
+                android:text="mob number"
+                android:textSize="@dimen/condentsize" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -168,7 +166,7 @@
                     android:id="@+id/district_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Palakkad"
+                    android:text="district"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -179,7 +177,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:gravity="center"
-                    android:text="KL-51"
+                    android:text="home_loc_code"
                     android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -209,7 +207,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="679502"
+                    android:text="pin"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/state_tv"
@@ -251,7 +249,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="12-05-2005"
+                    android:text="date"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView5" />
@@ -279,7 +277,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="Palakkad (KL-51)"
+                    android:text="working_station"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView6" />
