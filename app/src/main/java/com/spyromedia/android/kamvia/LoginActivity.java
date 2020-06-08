@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +28,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText username, password;
+    EditText mobile_number, password;
     Button btn_login;
     TextView tv_register;
 
@@ -40,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         tv_register = findViewById(R.id.NotRegistered);
-        username = findViewById(R.id.username);
+        mobile_number = findViewById(R.id.username);
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.Login);
 
@@ -88,9 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
-                        // Globals.USER_NAME = jsonObject.getString("user_name");
-                        // Globals.MOBILE_NUMBER = jsonObject.getString("mobile_number");
-                        // Globals.USER_ID = jsonObject.getString("user_id");
 
                         SharedPreferences preferences = getBaseContext().getSharedPreferences("settings", 0);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -110,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent home = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(home);
+                        finish();
 
                     } else {
 
@@ -133,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("username", username.getText().toString().trim());
+                params.put("username", mobile_number.getText().toString().trim());
                 params.put("password", password.getText().toString().trim());
 
                 return params;
@@ -144,8 +141,8 @@ public class LoginActivity extends AppCompatActivity {
 
     Boolean verify() {
 
-        if (username.getText().toString().isEmpty() == true) {
-            username.setError("Enter registered Mobile number");
+        if (mobile_number.getText().toString().isEmpty() == true) {
+            mobile_number.setError("Enter registered Mobile number");
             return false;
         }
 

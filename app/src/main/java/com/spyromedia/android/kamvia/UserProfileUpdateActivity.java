@@ -108,6 +108,10 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         errorRtoDist = findViewById(R.id.error_rto_dist);
         membership_type = findViewById(R.id.id_memtype);
 
+        String uname = Globals.currentUser.USER_NAME;
+        name.setText(uname);
+
+
         dateofbirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
