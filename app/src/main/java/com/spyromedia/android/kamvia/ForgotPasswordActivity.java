@@ -102,17 +102,7 @@ Button  btn_reset , btn_otpVerification , send_otp;
                     JSONObject jsonObject = new JSONObject(response);
 
                     Toast.makeText(ForgotPasswordActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
-
-                    if (!jsonObject.getBoolean("error")) {
-
-                        Toast.makeText(ForgotPasswordActivity.this, "Password Reset Successfully", Toast.LENGTH_LONG).show();
-
-
-                    } else {
-
-                        Toast.makeText(ForgotPasswordActivity.this, "Password Reset  Failed", Toast.LENGTH_LONG).show();
-
-                    }
+                    
                 } catch (JSONException e) {
                     e.printStackTrace();
 
@@ -167,18 +157,6 @@ Button  btn_reset , btn_otpVerification , send_otp;
 
                     Toast.makeText(ForgotPasswordActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
 
-
-                    if (!jsonObject.getBoolean("error")) {
-
-                        ResetPassword();
-                       // Toast.makeText(ForgotPasswordActivity.this, "Registered using this number", Toast.LENGTH_LONG).show();
-                        // here we can call otp function
-
-                    } else {
-
-                        Toast.makeText(ForgotPasswordActivity.this, "Not registered with this number", Toast.LENGTH_LONG).show();
-
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
 
