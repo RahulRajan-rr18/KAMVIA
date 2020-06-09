@@ -102,7 +102,7 @@ Button  btn_reset , btn_otpVerification , send_otp;
                     JSONObject jsonObject = new JSONObject(response);
 
                     Toast.makeText(ForgotPasswordActivity.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
-                    
+
                 } catch (JSONException e) {
                     e.printStackTrace();
 
