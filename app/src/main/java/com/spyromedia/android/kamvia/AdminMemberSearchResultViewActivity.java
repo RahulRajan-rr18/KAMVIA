@@ -70,7 +70,24 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         btn_removeMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AdminMemberSearchResultViewActivity.this, "Remove this member from user_details", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminMemberSearchResultViewActivity.this);
+                builder.setTitle(R.string.app_name);
+                builder.setMessage("Are you sure to forward ?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+
+                        DeleteMember(user_id);
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
 
@@ -191,7 +208,6 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
-
     public void promoteAdmin(final String user_id) {
         String url = "http://18.220.53.162/kamvia/api/PromoteAsAdmin.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -244,4 +260,58 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+
+    public void DeleteMember(final String user_id) {
+        String url = "http://18.220.53.162/kamvia/api/DeleteMember.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String message = jsonObject.getString("message");
+
+                    Toast.makeText(AdminMemberSearchResultViewActivity.this, message, Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+
+                    Toast.makeText(AdminMemberSearchResultViewActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(AdminMemberSearchResultViewActivity.this,
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id.trim());
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+
+    }
+
 }
