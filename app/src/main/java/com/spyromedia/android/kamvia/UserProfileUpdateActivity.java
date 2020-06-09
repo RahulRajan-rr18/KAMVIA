@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     TextView errorDist,errorRtoDist;
     RadioGroup  member_fee_paid;
+    RadioButton radioButton;
     Button photo_upload , upload_details;
     EditText dateofbirth, dateOfJoiningasamvi;
     EditText name, email, employee_number, add_line1, add_line2, pincode, state, home_station_code, present_station_code;
@@ -111,6 +113,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         String uname = Globals.currentUser.USER_NAME;
         name.setText(uname);
 
+        int selectedId = member_fee_paid.getCheckedRadioButtonId();
+        radioButton = findViewById(selectedId);
+        Toast.makeText(UserProfileUpdateActivity.this,radioButton.getText(), Toast.LENGTH_SHORT).show();
 
         dateofbirth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,6 +272,12 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                 params.put("present_station",present_station_code.getText().toString().trim());
                 params.put("state","Kerala");
                 params.put("home_pincode",pincode.getText().toString().trim());
+                params.put("home_district",home_district.getSelectedItem().toString().trim());
+                params.put("fee_paid",radioButton.getText().toString().trim());
+                params.put("member_type",membership_type.getSelectedItem().toString().trim());
+                params.put("present_rto_district",present_rto_district.getSelectedItem().toString().trim());
+
+
                 return params;
             }
         };
