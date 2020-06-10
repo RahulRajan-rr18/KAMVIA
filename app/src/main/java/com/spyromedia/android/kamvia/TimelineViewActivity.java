@@ -25,7 +25,7 @@ public class TimelineViewActivity extends AppCompatActivity {
 
         tv_heading.setText(""+getIntent().getStringExtra("heading"));
         tv_condent.setText(""+getIntent().getStringExtra("condent"));
-        tv_link.setText(""+getIntent().getStringExtra("post_id"));
+        tv_link.setText(""+getIntent().getStringExtra(""));
 
 
         backarrow = findViewById(R.id.iv_backarrow);

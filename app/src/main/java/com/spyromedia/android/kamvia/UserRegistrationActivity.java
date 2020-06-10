@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
-    EditText first_name, last_name, password, confirm_password, mob_no;
+    EditText  password, confirm_password, mob_no;
     Button register_btn;
     ProgressDialog progressDialog;
 
@@ -43,8 +43,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_registration);
 
         register_btn = findViewById(R.id.register_btn);
-        first_name = findViewById(R.id.first_name);
-        last_name = findViewById(R.id.last_name);
         password = findViewById(R.id.password);
         confirm_password = findViewById(R.id.confirm_password);
         mob_no = findViewById(R.id.mob_no);
@@ -67,16 +65,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
             }
 
             private Boolean verify() {
-                if (first_name.getText().toString().isEmpty() == true) {
 
-                    first_name.setError("Please enter first name");
-                    return false;
-                }
-                if (last_name.getText().toString().isEmpty() == true) {
-
-                    last_name.setError("Please enter last name");
-                    return false;
-                }
                 if (mob_no.length() < 10) {
                     mob_no.setError("Enter a valid mobile number");
                 }
@@ -158,7 +147,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<>();
-                    params.put("user_name", first_name.getText().toString().trim() + last_name.getText().toString().trim());
                     params.put("password", password.getText().toString().trim());
                     params.put("mobile_number", mob_no.getText().toString().trim());
 

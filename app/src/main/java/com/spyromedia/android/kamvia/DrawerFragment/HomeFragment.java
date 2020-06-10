@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
                         String user_id = jsonObject.getString("user_id");
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
-                        timelinelist.add(new HomeTimelineListItem(user_id,heading,condent));
+                        timelinelist.add(new HomeTimelineListItem("",heading,condent));
 
                     }
 

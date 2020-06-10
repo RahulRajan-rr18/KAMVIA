@@ -15,14 +15,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textview_membername"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="user_id"
@@ -34,6 +33,7 @@
             android:id="@+id/textview_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="Heading"
@@ -56,13 +56,13 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="130dp"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_person"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="130dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/ic_person"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

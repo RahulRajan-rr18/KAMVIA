@@ -32,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -234,6 +235,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
+                        Intent home = new Intent(UserProfileUpdateActivity.this , HomeFragment.class);
+                        startActivity(home);
 
                     } else {
 
