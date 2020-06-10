@@ -60,7 +60,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         FetchDetails();
 
     }
-    
+
     public void FetchDetails() {
 
         String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
