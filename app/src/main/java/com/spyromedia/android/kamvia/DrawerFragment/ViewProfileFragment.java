@@ -1,10 +1,12 @@
 package com.spyromedia.android.kamvia.DrawerFragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.LoginActivity;
 import com.spyromedia.android.kamvia.R;
+import com.spyromedia.android.kamvia.UserProfileUpdateActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +35,7 @@ import java.util.Map;
 public class ViewProfileFragment extends Fragment {
 
     TextView user_name,email,employee_no;
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -51,6 +55,8 @@ public class ViewProfileFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
+                progressDialog.dismiss();
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -75,6 +81,8 @@ public class ViewProfileFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                progressDialog.dismiss();
+
                 Toast.makeText(getContext(), "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
 
             }
@@ -88,5 +96,8 @@ public class ViewProfileFragment extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading......");
+        progressDialog.show();
     }
 }

@@ -34,7 +34,6 @@ public class MemberDetailsActivity extends AppCompatActivity {
             tv_present_rto_dist_and_code, tv_house_name, tv_pincode, tv_home_location, tv_homeStationCode,tv_dateOfJoing;
     ProgressDialog progressDialog;
     String user_id;
-    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         FetchDetails();
 
     }
-
-
+    
     public void FetchDetails() {
 
         String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
@@ -144,41 +142,6 @@ public class MemberDetailsActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(MemberDetailsActivity.this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
-    }
-
-    private void MemberDetails() {
-
-        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        String name = jsonArray.getJSONObject(i).getString("name");
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("user_id", user_id.trim());
-                return params;
-            }
-        };
-        requestQueue.add(jsonObjectRequest);
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -46,9 +47,8 @@ import java.util.Map;
 public class UserProfileUpdateActivity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
     final Calendar myCalendar2 = Calendar.getInstance();
-
     Spinner home_district, present_rto_district,membership_type;
-
+    ProgressDialog progressDialog;
     TextView errorDist,errorRtoDist;
     RadioGroup  member_fee_paid;
     RadioButton radioButton;
@@ -223,6 +223,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
+                progressDialog.dismiss();
+
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
@@ -246,6 +248,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                progressDialog.dismiss();
 
                 Toast.makeText(UserProfileUpdateActivity.this, "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
 
@@ -273,12 +277,13 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                 params.put("fee_paid",radioButton.getText().toString().trim());
                 params.put("member_type",membership_type.getSelectedItem().toString().trim());
                 params.put("present_rto_district",present_rto_district.getSelectedItem().toString().trim());
-
-
                 return params;
             }
         };
         requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(UserProfileUpdateActivity.this);
+        progressDialog.setMessage("Loading......");
+        progressDialog.show();
     }
 
 }

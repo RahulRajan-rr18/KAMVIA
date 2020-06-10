@@ -2,12 +2,14 @@ package com.spyromedia.android.kamvia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText mobile_number, password;
     Button btn_login;
     TextView tv_register;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
+                progressDialog.dismiss();
+
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
@@ -122,6 +127,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                progressDialog.dismiss();
+
                 Toast.makeText(LoginActivity.this, "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
 
             }
@@ -137,6 +144,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setMessage("Loading......");
+        progressDialog.show();
     }
 
     Boolean verify() {
