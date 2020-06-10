@@ -115,7 +115,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
         int selectedId = member_fee_paid.getCheckedRadioButtonId();
         radioButton = findViewById(selectedId);
-        Toast.makeText(UserProfileUpdateActivity.this,radioButton.getText(), Toast.LENGTH_SHORT).show();
 
         dateofbirth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,8 +144,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                 Boolean verify = vefifyDetails();
                 if(verify == true){
                     Update_Profile();
-                    Toast.makeText(UserProfileUpdateActivity.this, "Validation Success", Toast.LENGTH_SHORT).show();
-                    //database code
                 }
             }
         });
