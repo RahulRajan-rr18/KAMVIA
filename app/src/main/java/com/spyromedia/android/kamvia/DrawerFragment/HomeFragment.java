@@ -56,23 +56,23 @@ public class HomeFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getContext());
         parseJSON();
 
-        Button login = view.findViewById(R.id.id_login);
-        Button btn_register = view.findViewById(R.id.id_userupdate);
-        btn_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent reg = new Intent(getContext(), UserRegistrationActivity.class);
-                startActivity(reg);
-            }
-        });
+        //Button login = view.findViewById(R.id.id_login);
+    //    Button btn_register = view.findViewById(R.id.id_userupdate);
+//        btn_register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent reg = new Intent(getContext(), UserRegistrationActivity.class);
+//                startActivity(reg);
+//            }
+//        });
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+//        login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), LoginActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
     }

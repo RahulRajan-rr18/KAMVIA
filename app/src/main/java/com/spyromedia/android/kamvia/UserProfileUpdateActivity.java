@@ -49,7 +49,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
     final Calendar myCalendar2 = Calendar.getInstance();
     Spinner home_district, present_rto_district,membership_type;
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog , ImageUploadProgressBar;
     TextView errorDist,errorRtoDist;
     RadioGroup  member_fee_paid;
     RadioButton radioButton;
@@ -91,6 +91,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+
         dateofbirth = findViewById(R.id.id_dob);
         dateOfJoiningasamvi = findViewById(R.id.id_dateofjoining);
         name = findViewById(R.id.name);
@@ -111,8 +112,31 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         errorRtoDist = findViewById(R.id.error_rto_dist);
         membership_type = findViewById(R.id.id_memtype);
 
-        String uname = Globals.currentUser.USER_NAME;
-        name.setText(uname);
+        //upload_details.setAlpha(.5f);
+      //  upload_details.setClickable(false);
+        upload_details.setVisibility(View.INVISIBLE);
+
+
+
+        photo_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 100);
+            }
+
+
+        });
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.READ_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//            intent.setType("image/*");
+//            // startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+//            finish();
+//            startActivity(intent);
+//            return;
+//        }
 
         int selectedId = member_fee_paid.getCheckedRadioButtonId();
         radioButton = findViewById(selectedId);
@@ -151,7 +175,87 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+
+            //getting the image Uri
+            Uri imageUri = data.getData();
+            try {
+                //getting bitmap object from uri
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+
+                //calling the method uploadBitmap to upload image
+                uploadBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+    private void uploadBitmap(final Bitmap bitmap) {
+
+        String URL = "http://18.220.53.162/kamvia/api/image_upload.php";
+
+        //our custom volley request
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, URL,
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        ImageUploadProgressBar.dismiss();
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                            //upload_details.setAlpha(.1f);
+                          // upload_details.setClickable(true);
+                            upload_details.setVisibility(View.VISIBLE);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ImageUploadProgressBar.dismiss();
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
+                Map<String, VolleyMultipartRequest.DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("pic", new VolleyMultipartRequest.DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+        ImageUploadProgressBar = new ProgressDialog(UserProfileUpdateActivity.this);
+        ImageUploadProgressBar.setMessage("Uploading Image......");
+        ImageUploadProgressBar.setCancelable(false);
+        ImageUploadProgressBar.show();
+
+    }
+
+
     private Boolean vefifyDetails() {
+        if(name.getText().toString().trim().isEmpty() == true){
+            name.setError("Name reqired");
+            return  false;
+        }
         if(email.getText().toString().trim().isEmpty() == true){
             email.setError("Email reqired");
             return  false;
@@ -207,14 +311,12 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
         dateofbirth.setText(sdf.format(myCalendar.getTime()));
 
     }
-
     private void updateLabel2() {
         String myFormat = "YYYY/MM/dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ROOT);
         dateOfJoiningasamvi.setText(sdf.format(myCalendar2.getTime()));
 
     }
-
     public void Update_Profile() {
 
         String url = "http://18.220.53.162/kamvia/api/UserProleUpdate.php";
@@ -237,6 +339,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity {
                         Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
                         Intent home = new Intent(UserProfileUpdateActivity.this , HomeFragment.class);
                         startActivity(home);
+                        finish();
 
                     } else {
 

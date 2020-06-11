@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/holo_purple">
+    android:background="#DCD4D4">
 
-    <AutoCompleteTextView
-        android:id="@+id/searchbyname"
+    <AutoCompleteTextView    android:id="@+id/searchbyname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/mainwindowviews"
-        android:hint="Enter Name"
+        android:hint="Type Name"
         android:layout_margin="10dp"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

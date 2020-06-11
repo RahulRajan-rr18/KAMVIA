@@ -20,14 +20,14 @@ public class ChangePasswordFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chang_password,container,false);
 
-        Button test = view.findViewById(R.id.test);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CheckInt.class);
-                startActivity(intent);
-            }
-        });
+//        Button test = view.findViewById(R.id.test);
+//        test.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), CheckInt.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return  view;
     }

@@ -47,8 +47,7 @@
                     android:background="@drawable/mainwindowviews"
                     android:ems="10"
                     android:hint="Name"
-                    android:focusable="false"
-                    android:inputType="none" />
+                     />
 
                 <EditText
                     android:id="@+id/email"
