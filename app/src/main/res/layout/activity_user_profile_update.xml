@@ -331,21 +331,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center_vertical"
-                        android:text="Upload Photo"
-                        android:textAlignment="gravity"
-                        android:textSize="20dp" />
+
 
                     <Button
-                        android:id="@+id/btn_uploadphoto"
+                        android:id="@+id/btn_pickImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text="choose photo" />
+                        android:text="Pick " />
+
+                    <ImageView
+                        android:id="@+id/imagepicked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_person" />
+                    <Button
+                        android:id="@+id/btn_upload_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Upload Image" />
                 </LinearLayout>
 
                 <Button
