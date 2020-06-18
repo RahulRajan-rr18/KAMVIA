@@ -101,6 +101,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         getSupportActionBar().hide();
 
 
+
         dateofbirth = findViewById(R.id.id_dob);
         dateOfJoiningasamvi = findViewById(R.id.id_dateofjoining);
         name = findViewById(R.id.name);
@@ -123,6 +124,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         membership_type = findViewById(R.id.id_memtype);
 
         profile_image = findViewById(R.id.imagepicked);
+        upload_detailsButton.setVisibility(View.INVISIBLE);
+
 
         pickImageButton.setOnClickListener(this);
         uploadImageButton.setOnClickListener(this);
@@ -369,6 +372,10 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 super.onPostExecute(s);
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                if(s.equals("Image Uploaded Successfully")){
+                    upload_detailsButton.setVisibility(View.VISIBLE);
+
+                }
             }
 
             @Override
