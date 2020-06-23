@@ -4,7 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -26,6 +31,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +42,8 @@ public class MemberDetailsActivity extends AppCompatActivity {
             tv_present_rto_dist_and_code, tv_house_name, tv_pincode, tv_home_location, tv_homeStationCode,tv_dateOfJoing;
     ProgressDialog progressDialog;
     String user_id;
+    ImageView UserImage;
+    Button getImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +64,60 @@ public class MemberDetailsActivity extends AppCompatActivity {
         tv_dateOfJoing = findViewById(R.id.joiningdate_tv);
         tv_homeStationCode = findViewById(R.id.homestationcode_tv);
         tv_present_rto_dist_and_code = findViewById(R.id.presentrtodist_tv);
+        UserImage = findViewById(R.id.imageview_userimage);
+        getImage = findViewById(R.id.btn_getImage);
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
         FetchDetails();
+        getImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FetchImage();
+            }
+        });
 
     }
+
+    private void FetchImage() {
+            String id = "12337";
+            class GetImage extends AsyncTask<String,Void,Bitmap> {
+                ProgressDialog loading;
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    loading = ProgressDialog.show(MemberDetailsActivity.this, "Uploading...", null,true,true);
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap b) {
+                    super.onPostExecute(b);
+                    loading.dismiss();
+                    UserImage.setImageBitmap(b);
+                }
+
+                @Override
+                protected Bitmap doInBackground(String... params) {
+                    String id = params[0];
+                    String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id="+id;
+                    URL url = null;
+                    Bitmap image = null;
+                    try {
+                        url = new URL(add);
+                        image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return image;
+                }
+            }
+
+            GetImage gi = new GetImage();
+            gi.execute(id);
+        }
 
     public void FetchDetails() {
 

@@ -364,7 +364,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(UserProfileUpdateActivity.this, "Uploading Image", "Please wait...", true, true);
+                loading = ProgressDialog.show(UserProfileUpdateActivity.this, "Uploading Image ..", "Please wait...", true, true);
+                loading.setCancelable(false);
             }
 
             @Override
