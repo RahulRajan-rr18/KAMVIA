@@ -6,5 +6,6 @@
     <dimen name="fivedp">5dp</dimen>
     <dimen name="headingtextsize">20sp</dimen>
     <dimen name="condentsize">17sp</dimen>
+    <dimen name="membertextsize">12dp</dimen>
 
 </resources>

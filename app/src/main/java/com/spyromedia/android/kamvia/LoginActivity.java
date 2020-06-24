@@ -1,7 +1,6 @@
 package com.spyromedia.android.kamvia;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,9 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,6 +20,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 
 import org.json.JSONException;
@@ -45,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         mobile_number = findViewById(R.id.username);
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.Login);
-
+        permissionCheck();
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,5 +167,28 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+
+    private void permissionCheck() {
+        Dexter.withContext(LoginActivity.this)
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        Toast.makeText(LoginActivity.this, "Permission is Granted", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        Toast.makeText(LoginActivity.this, "Please allow the storage permission in the settings", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
+                })
+                .check();
     }
 }
