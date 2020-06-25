@@ -46,17 +46,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-
         tv_register = findViewById(R.id.NotRegistered);
         mobile_number = findViewById(R.id.username);
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.Login);
-        permissionCheck();
+        //Check Runtime Permissions
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent register = new Intent(LoginActivity.this, UserRegistrationActivity.class);
-                startActivity(register);
+                if (checkStoragePermission())
+                    startActivity(register);
             }
         });
 
@@ -81,6 +81,31 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean checkStoragePermission() {
+
+        Dexter.withContext(LoginActivity.this)
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        Toast.makeText(LoginActivity.this, "Permission is Granted", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        Toast.makeText(LoginActivity.this, "Please allow the storage permission in the settings", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
+                })
+                .check();
+        return true;
     }
 
 
@@ -170,25 +195,4 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void permissionCheck() {
-        Dexter.withContext(LoginActivity.this)
-                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        Toast.makeText(LoginActivity.this, "Permission is Granted", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                        Toast.makeText(LoginActivity.this, "Please allow the storage permission in the settings", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                        permissionToken.continuePermissionRequest();
-                    }
-                })
-                .check();
-    }
 }
