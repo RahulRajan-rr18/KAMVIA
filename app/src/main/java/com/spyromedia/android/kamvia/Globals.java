@@ -16,6 +16,7 @@ public class Globals {
         public String USER_NAME = "";
         public String MOBILE_NUMBER = "";
         public  String USER_ROLE = "";
+        public  String VERIFICATION ="";
     }
     public static CurrentUser currentUser;
 
@@ -26,7 +27,11 @@ public class Globals {
             cu.USER_ID=sharedPreferences.getString("USER_ID","");
             cu.USER_NAME=sharedPreferences.getString("USER_NAME","");
             cu.MOBILE_NUMBER=sharedPreferences.getString("MOBILE_NUMBER","");
-            cu.USER_ROLE= sharedPreferences.getString("USER_ROLE","Admin");
+            cu.USER_ROLE= sharedPreferences.getString("USER_ROLE","");
+            cu.VERIFICATION= sharedPreferences.getString("VERIFICATION","");
+
+
+
         }catch (Exception e){
             Log.d("loadLoginInfo", e.getMessage());
         }finally {

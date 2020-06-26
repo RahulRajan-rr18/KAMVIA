@@ -2,6 +2,7 @@ package com.spyromedia.android.kamvia.DrawerFragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //fetching current verification status for restricting operations
+        CheckUserVerificationStatus();
         //Check Runtime Permissions
         user_id = Globals.currentUser.USER_ID;
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -68,6 +72,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+    private void CheckUserVerificationStatus() {
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                        SharedPreferences preferences = getBaseContext().getSharedPreferences("settings", 0);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        String 	user_role = jsonObject1.optString("verification_status");
+
+                        editor.putString("VERIFICATION", user_role);
+                        editor.apply();
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    SharedPreferences preferences = getBaseContext().getSharedPreferences("settings", 0);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    editor.putString("VERIFICATION", "notverified");
+                    editor.apply();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+
+                    Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(MainActivity.this,
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id.trim());
+
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

@@ -1,6 +1,8 @@
 package com.spyromedia.android.kamvia.DrawerFragment;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyAdapter;
 import com.spyromedia.android.kamvia.LoginActivity;
@@ -44,35 +49,39 @@ public class HomeFragment extends Fragment {
     RequestQueue requestQueue;
     RecyclerView home_recyclerview;
     ProgressDialog progressDialog;
+    TextView tv_userWarning;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         home_recyclerview = view.findViewById(R.id.home_recyclerview);
-        home_recyclerview.setHasFixedSize(true);
-        home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        timelinelist = new ArrayList<>();
 
-        requestQueue = Volley.newRequestQueue(getContext());
-        parseJSON();
+        String userverified = Globals.currentUser.VERIFICATION;
 
-        //Button login = view.findViewById(R.id.id_login);
-    //    Button btn_register = view.findViewById(R.id.id_userupdate);
-//        btn_register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent reg = new Intent(getContext(), UserRegistrationActivity.class);
-//                startActivity(reg);
-//            }
-//        });
 
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        if (userverified.equals("verified")) {
+
+            home_recyclerview.setHasFixedSize(true);
+            home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+            timelinelist = new ArrayList<>();
+
+            requestQueue = Volley.newRequestQueue(getContext());
+            parseJSON();
+
+            // home_recyclerview.setVisibility(View.INVISIBLE);
+
+        } else {
+
+            if (userverified.equals(null)){
+
+            }
+            else{
+                alertDialog();
+            }
+
+
+        }
+
 
         return view;
     }
@@ -89,17 +98,17 @@ public class HomeFragment extends Fragment {
                 try {
 
                     JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i =0; i <jsonArray.length() ; i++ ){
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String user_id = jsonObject.getString("user_id");
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
-                        timelinelist.add(new HomeTimelineListItem("",heading,condent));
+                        timelinelist.add(new HomeTimelineListItem("", heading, condent));
 
                     }
 
-                    adapter = new HomeTimelineRecyAdapter(timelinelist,getContext());
+                    adapter = new HomeTimelineRecyAdapter(timelinelist, getContext());
                     home_recyclerview.setAdapter(adapter);
 
                 } catch (JSONException e) {
@@ -119,4 +128,20 @@ public class HomeFragment extends Fragment {
         progressDialog.setMessage("Loading......");
         progressDialog.show();
     }
+
+    private void alertDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setMessage("You are not a Registered member. Please request for membership in userprofile update");
+        dialog.setTitle("Alert");
+        dialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+    }
+
 }
