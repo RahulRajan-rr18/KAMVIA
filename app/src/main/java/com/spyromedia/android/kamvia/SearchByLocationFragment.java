@@ -1,5 +1,7 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,8 +42,8 @@ public class SearchByLocationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_by_location, container, false);
-        searchLocation = view.findViewById(R.id.searchLocation);
 
+        searchLocation = view.findViewById(R.id.searchLocation);
         requestQueue = Volley.newRequestQueue(getContext());
         ListNames();
 
@@ -49,9 +51,18 @@ public class SearchByLocationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent results = new Intent(getActivity(), SearchByLocationResultActivity.class);
-                results.putExtra("location",searchLocation.getText().toString());
-                startActivity(results);
+                String userverified = Globals.currentUser.VERIFICATION;
+                if (userverified.equals("verified")) {
+                    Intent results = new Intent(getActivity(), SearchByLocationResultActivity.class);
+                    results.putExtra("location", searchLocation.getText().toString());
+                    startActivity(results);
+
+                } else {
+                    alertDialog();
+                }
+
+
+
 
             }
         });
@@ -91,5 +102,20 @@ public class SearchByLocationFragment extends Fragment {
         });
         requestQueue.add(jsonObjectRequest);
     }
+    private void alertDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setMessage("You are not a Registered member. Please request for membership.");
+        dialog.setTitle("Alert");
+        dialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+    }
+
 
 }

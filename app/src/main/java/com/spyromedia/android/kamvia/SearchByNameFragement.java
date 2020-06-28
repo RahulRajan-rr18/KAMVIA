@@ -1,5 +1,7 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,10 +17,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -40,9 +45,15 @@ public class SearchByNameFragement extends Fragment {
         SearchByname.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent results = new Intent(getActivity(), SearchByNameResultActivity.class);
-                results.putExtra("name",SearchByname.getText().toString());
-                startActivity(results);
+                String userverified = Globals.currentUser.VERIFICATION;
+                if (userverified.equals("verified")) {
+                    Intent results = new Intent(getActivity(), SearchByNameResultActivity.class);
+                    results.putExtra("name", SearchByname.getText().toString());
+                    startActivity(results);
+                } else {
+                    alertDialog();
+                }
+
             }
         });
         return view;
@@ -79,5 +90,21 @@ public class SearchByNameFragement extends Fragment {
         });
         requestQueue.add(jsonObjectRequest);
     }
+
+    private void alertDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setMessage("You are not a Registered member. Please request for membership.");
+        dialog.setTitle("Alert");
+        dialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+    }
+
 
 }

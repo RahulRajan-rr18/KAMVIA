@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
 
     private void alertDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setMessage("You are not a Registered member. Please request for membership in userprofile update");
+        dialog.setMessage("You are not a Registered member. Please request for membership in New Member");
         dialog.setTitle("Alert");
         dialog.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
