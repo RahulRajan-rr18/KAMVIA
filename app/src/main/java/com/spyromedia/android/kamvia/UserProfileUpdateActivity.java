@@ -377,6 +377,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                     upload_detailsButton.setVisibility(View.VISIBLE);
 
                 }
+                else{
+                    Toast.makeText(UserProfileUpdateActivity.this, "Something went Wrong", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -386,6 +389,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
                 HashMap<String, String> data = new HashMap<>();
                 data.put(UPLOAD_KEY, uploadImage);
+                data.put("user_id", Globals.currentUser.USER_ID);
 
                 String result = rh.sendPostRequest(UPLOAD_URL, data);
 

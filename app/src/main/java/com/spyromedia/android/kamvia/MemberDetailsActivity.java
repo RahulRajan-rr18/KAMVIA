@@ -6,6 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +51,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
     ImageView UserImage;
     Button getImage;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +72,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         tv_homeStationCode = findViewById(R.id.homestationcode_tv);
         tv_present_rto_dist_and_code = findViewById(R.id.presentrtodist_tv);
         UserImage = findViewById(R.id.imageview_userimage);
-        getImage = findViewById(R.id.btn_getImage);
+       // getImage = findViewById(R.id.btn_getImage);
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
@@ -73,34 +80,35 @@ public class MemberDetailsActivity extends AppCompatActivity {
         getImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FetchImage();
+            //    FetchImage();
             }
         });
 
     }
 
     private void FetchImage() {
-            String id = "12337";
+            String id = "12336";
             class GetImage extends AsyncTask<String,Void,Bitmap> {
-                ProgressDialog loading;
+               // ProgressDialog loading;
 
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
-                    loading = ProgressDialog.show(MemberDetailsActivity.this, "Uploading...", null,true,true);
+               //     loading = ProgressDialog.show(MemberDetailsActivity.this, "Uploading...", null,true,true);
                 }
 
                 @Override
                 protected void onPostExecute(Bitmap b) {
                     super.onPostExecute(b);
-                    loading.dismiss();
-                    UserImage.setImageBitmap(b);
+                   // Bitmap result = GetBitmapClippedCircle(b);
+                    Bitmap result = getCircularBitmap(b);
+                    UserImage.setImageBitmap(result);
                 }
 
                 @Override
                 protected Bitmap doInBackground(String... params) {
                     String id = params[0];
-                    String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id="+id;
+                    String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id="+user_id;
                     URL url = null;
                     Bitmap image = null;
                     try {
@@ -158,7 +166,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         tv_homeStationCode.setText(h_rto_code);
                         tv_present_rto_dist_and_code.setText(current_station + "(" + cu_rto_code +")");
 
-
+                        FetchImage();
                     }
 
                 } catch (JSONException e) {
@@ -201,5 +209,40 @@ public class MemberDetailsActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading....");
         progressDialog.show();
     }
+
+
+    public static Bitmap getCircularBitmap(Bitmap bitmap) {
+        Bitmap output;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        } else {
+            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        float r = 0;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            r = bitmap.getHeight() / 2;
+        } else {
+            r = bitmap.getWidth() / 2;
+        }
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(r, r, r, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
+
 
 }
