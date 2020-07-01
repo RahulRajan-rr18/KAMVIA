@@ -1,16 +1,9 @@
 package com.spyromedia.android.kamvia.DrawerFragment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -39,6 +32,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.R;
@@ -50,9 +44,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,37 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView headerImage;
     SharedPreferences sharedPreferences;
 
-    public static Bitmap getCircularBitmap(Bitmap bitmap) {
-        Bitmap output;
-
-        if (bitmap.getWidth() > bitmap.getHeight()) {
-            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        } else {
-            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
-        }
-
-        Canvas canvas = new Canvas(output);
-
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        float r = 0;
-
-        if (bitmap.getWidth() > bitmap.getHeight()) {
-            r = bitmap.getHeight() / 2;
-        } else {
-            r = bitmap.getWidth() / 2;
-        }
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawCircle(r, r, r, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        return output;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("MainActivity", "shared" + name);
         headerText.setText(name);
         try {
-            fetchImage();
+            /*fetchImage();*/
+            fetchImageGlide(this);
         } catch (Exception e) {
 
         }
@@ -137,7 +98,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void fetchImage() {
+    private void fetchImageGlide(Activity activity) {
+        String url = "http://18.220.53.162/kamvia/api/fetch_image.php?id=" + user_id;
+        Glide.with(activity)
+                .load(url)
+                .circleCrop()
+                .into(headerImage);
+
+    }
+
+    /*private void fetchImage() {
         String id = "12336";
         class GetImage extends AsyncTask<String, Void, Bitmap> {
             // ProgressDialog loading;
@@ -153,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onPostExecute(b);
                 // Bitmap result = GetBitmapClippedCircle(b);
                 if (b != null) {
-                    Bitmap result = getCircularBitmap(b);
-                    headerImage.setImageBitmap(result);
+                   *//* Bitmap result = getCircularBitmap(b);*//*
+     *//* headerImage.setImageBitmap(result);*//*
                 }
             }
 
@@ -163,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             protected Bitmap doInBackground(String... params) {
                 String id = params[0];
                 String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id=" + user_id;
+                Log.d("DoinBackground", "doInBackground: "+user_id);
                 URL url = null;
                 Bitmap image = null;
                 try {
@@ -179,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         GetImage gi = new GetImage();
         gi.execute(id);
-    }
+    }*/
 
 
     @Override
@@ -365,5 +336,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         requestQueue.add(stringRequest);
     }
 
+  /*  public static Bitmap getCircularBitmap(Bitmap bitmap) {
+        Bitmap output;
 
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        } else {
+            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        float r = 0;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            r = bitmap.getHeight() / 2;
+        } else {
+            r = bitmap.getWidth() / 2;
+        }
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(r, r, r, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+*/
 }
