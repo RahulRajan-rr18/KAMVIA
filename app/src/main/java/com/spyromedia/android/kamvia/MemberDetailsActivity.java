@@ -79,12 +79,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         user_id = intent.getStringExtra("user_id");
         Log.d(TAG, "onCreate: " + user_id);
         FetchDetails();
-        getImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            //    FetchImage();
-            }
-        });
+
 
     }
 
