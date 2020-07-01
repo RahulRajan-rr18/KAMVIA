@@ -49,7 +49,6 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Button userUpdate, btnLogin;
     private DrawerLayout drawer;
     ProgressDialog progressDialog;
     String user_id;

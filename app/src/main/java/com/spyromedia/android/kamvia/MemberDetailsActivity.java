@@ -79,12 +79,8 @@ public class MemberDetailsActivity extends AppCompatActivity {
         user_id = intent.getStringExtra("user_id");
         Log.d(TAG, "onCreate: " + user_id);
         FetchDetails();
-        getImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            //    FetchImage();
-            }
-        });
+
+
 
     }
 
@@ -96,13 +92,11 @@ public class MemberDetailsActivity extends AppCompatActivity {
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
-               //     loading = ProgressDialog.show(MemberDetailsActivity.this, "Uploading...", null,true,true);
                 }
 
                 @Override
                 protected void onPostExecute(Bitmap b) {
                     super.onPostExecute(b);
-                   // Bitmap result = GetBitmapClippedCircle(b);
                     Bitmap result = getCircularBitmap(b);
                     UserImage.setImageBitmap(result);
                 }
@@ -156,8 +150,6 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         String current_station = jsonObject1.optString("present_rto_district");
                         String cu_rto_code = jsonObject1.optString("present_station_code");
 
-
-
                         tv_name.setText(name);
                         tv_email.setText(email);
                         tv_mobile_number.setText(mob_no);
@@ -169,7 +161,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         tv_homeStationCode.setText(h_rto_code);
                         tv_present_rto_dist_and_code.setText(current_station + "(" + cu_rto_code +")");
 
-                        FetchImage();
+                       // FetchImage();
                     }
 
                 } catch (JSONException e) {
