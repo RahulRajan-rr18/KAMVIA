@@ -1,12 +1,11 @@
 package com.spyromedia.android.kamvia.DrawerFragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +21,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.spyromedia.android.kamvia.Globals;
-import com.spyromedia.android.kamvia.LoginActivity;
 import com.spyromedia.android.kamvia.R;
-import com.spyromedia.android.kamvia.UserProfileUpdateActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,6 +34,7 @@ public class ViewProfileFragment extends Fragment {
 
     TextView user_name,email,employee_no;
     ProgressDialog progressDialog;
+    String TAG = "ViewProfie";
 
     @Nullable
     @Override
@@ -49,7 +48,7 @@ public class ViewProfileFragment extends Fragment {
     }
     public void ProfileDetails() {
 
-        String url = "http://18.220.53.162/kamvia/api/list_user_details.php";
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -59,10 +58,14 @@ public class ViewProfileFragment extends Fragment {
                 progressDialog.dismiss();
 
                 try {
+                    JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject = new JSONObject(response);
+
+
                     if (!jsonObject.getBoolean("error")) {
                         Toast.makeText(getContext(), "Details found", Toast.LENGTH_LONG).show();
-                        String uname = jsonObject.getString("user_name");
+                        String uname = jsonObject.getString("name");
+                        Log.d(TAG, uname);
                         user_name.setText(uname);
                         email.setText("");
                         employee_no.setText("");

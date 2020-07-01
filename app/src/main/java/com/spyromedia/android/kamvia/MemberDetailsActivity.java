@@ -1,24 +1,24 @@
 package com.spyromedia.android.kamvia;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -50,6 +50,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
     String user_id;
     ImageView UserImage;
     Button getImage;
+    String TAG = "MemeberDetails";
 
 
     @Override
@@ -76,6 +77,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
+        Log.d(TAG, "onCreate: " + user_id);
         FetchDetails();
         getImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +139,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 try {
+                    Log.d(TAG, "onResponse: " + response);
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);

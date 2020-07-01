@@ -3,9 +3,21 @@ package com.spyromedia.android.kamvia.DrawerFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,6 +50,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +62,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     ProgressDialog progressDialog;
     String user_id;
+    TextView headerText;
+    ImageView headerImage;
+    SharedPreferences sharedPreferences;
 
+    public static Bitmap getCircularBitmap(Bitmap bitmap) {
+        Bitmap output;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        } else {
+            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        float r = 0;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            r = bitmap.getHeight() / 2;
+        } else {
+            r = bitmap.getWidth() / 2;
+        }
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(r, r, r, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +109,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         user_id = Globals.currentUser.USER_ID;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        headerText = headerView.findViewById(R.id.drawer_name);
+        headerImage = headerView.findViewById(R.id.drawer_icon);
+        //Apply the data to the drawer header.
+        String name = sharedPreferences.getString("USER_NAME", null);
+        Log.d("MainActivity", "shared" + name);
+        headerText.setText(name);
+        try {
+            fetchImage();
+        } catch (Exception e) {
+
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
+
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -73,70 +137,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void CheckUserVerificationStatus() {
-        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+    private void fetchImage() {
+        String id = "12336";
+        class GetImage extends AsyncTask<String, Void, Bitmap> {
+            // ProgressDialog loading;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            protected void onPreExecute() {
+                super.onPreExecute();
+                //     loading = ProgressDialog.show(MemberDetailsActivity.this, "Uploading...", null,true,true);
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap b) {
+                super.onPostExecute(b);
+                // Bitmap result = GetBitmapClippedCircle(b);
+                if (b != null) {
+                    Bitmap result = getCircularBitmap(b);
+                    headerImage.setImageBitmap(result);
+                }
+            }
+
+
+            @Override
+            protected Bitmap doInBackground(String... params) {
+                String id = params[0];
+                String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id=" + user_id;
+                URL url = null;
+                Bitmap image = null;
                 try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-                        SharedPreferences preferences = getBaseContext().getSharedPreferences("settings", 0);
-                        SharedPreferences.Editor editor = preferences.edit();
-
-                        String 	user_role = jsonObject1.optString("verification_status");
-
-                        editor.putString("VERIFICATION", user_role);
-                        editor.apply();
-
-
-                    }
-
-                } catch (JSONException e) {
+                    url = new URL(add);
+                    image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
-                    SharedPreferences preferences = getBaseContext().getSharedPreferences("settings", 0);
-                    SharedPreferences.Editor editor = preferences.edit();
-
-                    editor.putString("VERIFICATION", "notverified");
-                    editor.apply();
-
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
+                return image;
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                } else if (error instanceof ServerError) {
+        }
 
-                    Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
-
-                } else if (error instanceof AuthFailureError) {
-                } else if (error instanceof ParseError) {
-                } else if (error instanceof NoConnectionError) {
-                } else if (error instanceof TimeoutError) {
-                    Toast.makeText(MainActivity.this,
-                            "Oops. Timeout error!",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("user_id", user_id.trim());
-
-
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
+        GetImage gi = new GetImage();
+        gi.execute(id);
     }
 
 
@@ -253,6 +295,74 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
+    }
+
+    private void CheckUserVerificationStatus() {
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                        String Username = jsonObject1.optString("name");
+                        Log.d("MainActivity", Username);
+                        sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        String user_role = jsonObject1.optString("verification_status");
+
+                        editor.putString("VERIFICATION", user_role);
+                        editor.putString("USER_NAME", Username);
+                        editor.apply();
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("VERIFICATION", "notverified");
+                    editor.apply();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+
+                    Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(MainActivity.this,
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id.trim());
+
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
 
