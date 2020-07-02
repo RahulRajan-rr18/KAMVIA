@@ -97,8 +97,11 @@ public class MemberDetailsActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(Bitmap b) {
                     super.onPostExecute(b);
-                    Bitmap result = getCircularBitmap(b);
-                    UserImage.setImageBitmap(result);
+                    if(b != null){
+                        Bitmap result = getCircularBitmap(b);
+                        UserImage.setImageBitmap(result);
+                    }
+
                 }
 
                 @Override
@@ -120,7 +123,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
             }
 
             GetImage gi = new GetImage();
-            gi.execute(id);
+            gi.execute(user_id);
         }
 
     public void FetchDetails() {
@@ -161,7 +164,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         tv_homeStationCode.setText(h_rto_code);
                         tv_present_rto_dist_and_code.setText(current_station + "(" + cu_rto_code +")");
 
-                       // FetchImage();
+                        FetchImage();
                     }
 
                 } catch (JSONException e) {

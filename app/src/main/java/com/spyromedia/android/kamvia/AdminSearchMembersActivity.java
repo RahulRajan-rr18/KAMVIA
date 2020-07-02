@@ -115,6 +115,7 @@ public class AdminSearchMembersActivity extends AppCompatActivity {
                 try {
 
                     JSONArray jsonArray = new JSONArray(response);
+                    resultList.clear();
                     for (int i = 0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String name = jsonObject.getString("name");
