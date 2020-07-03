@@ -6,9 +6,18 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +52,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
     String user_id;
     ProgressDialog progressDialog;
     Button btn_removeMember;
+    ImageView profilePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +77,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         tv_home_rto_code = findViewById(R.id.tv_homestationcode);
         tv_date_of_joining = findViewById(R.id.tv_joiningdate);
         tv_current_station_dis_wtcode = findViewById(R.id.tv_presentrtodist);
+        profilePhoto = findViewById(R.id.imageview_userimage);
 
         FetchDetails();
 
@@ -162,9 +176,10 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                         tv_home_rto_code.setText(h_rto_code);
                         tv_date_of_joining.setText(date_of_joining);
                         tv_current_station_dis_wtcode.setText(current_station +"  "+ cu_rto_code);
-
+                        FetchImage();
 
                     }
+
 
 
                 } catch (JSONException e) {
@@ -313,5 +328,81 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+
+    private void FetchImage() {
+        String id = "12336";
+        class GetImage extends AsyncTask<String,Void,Bitmap> {
+            // ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap b) {
+                super.onPostExecute(b);
+                if(b != null){
+                    Bitmap result = getCircularBitmap(b);
+                    profilePhoto.setImageBitmap(result);
+                }
+
+            }
+
+            @Override
+            protected Bitmap doInBackground(String... params) {
+                String id = params[0];
+                String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id="+user_id;
+                URL url = null;
+                Bitmap image = null;
+                try {
+                    url = new URL(add);
+                    image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return image;
+            }
+        }
+
+        GetImage gi = new GetImage();
+        gi.execute(user_id);
+    }
+
+    public static Bitmap getCircularBitmap(Bitmap bitmap) {
+        Bitmap output;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        } else {
+            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        float r = 0;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            r = bitmap.getHeight() / 2;
+        } else {
+            r = bitmap.getWidth() / 2;
+        }
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(r, r, r, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
+
 
 }
