@@ -130,6 +130,20 @@ public class HomeFragment extends Fragment {
                         String verification_status = jsonObject1.optString("verification_status");
                         if (verification_status.equals("verified")) {
 
+
+
+                            SharedPreferences preferences = getContext().getSharedPreferences("settings", 0);
+                            SharedPreferences.Editor ed = preferences.edit();
+
+                            ed.putString("VERIFICATION", "verified");
+                            ed.putString("USER_NAME",Username);
+                            //editor.apply();
+                            ed.commit();
+                            Globals.currentUser.VERIFICATION="verified";
+                            Globals.currentUser.USER_NAME=Username;
+
+
+
                             home_recyclerview.setHasFixedSize(true);
                             home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
                             timelinelist = new ArrayList<>();

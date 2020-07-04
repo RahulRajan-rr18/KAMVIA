@@ -12,7 +12,7 @@ public class Globals {
         CurrentUser(){
 
         }
-        public String USER_ID ="000";
+        public String USER_ID ="";
         public String USER_NAME = "";
         public String MOBILE_NUMBER = "";
         public  String USER_ROLE = "";

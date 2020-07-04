@@ -68,13 +68,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         user_id = Globals.currentUser.USER_ID;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
+       // sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         headerText = headerView.findViewById(R.id.drawer_name);
         headerImage = headerView.findViewById(R.id.drawer_icon);
         //Apply the data to the drawer header.
-        String name = sharedPreferences.getString("USER_NAME", null);
+      //  String name = sharedPreferences.getString("USER_NAME", null);
+        String name = Globals.currentUser.USER_NAME;
+        if(name.equals(null)){
+            headerText.setText("");
+
+        }
         Log.d("MainActivity", "shared" + name);
         headerText.setText(name);
         try {
@@ -283,11 +288,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        String user_role = jsonObject1.optString("verification_status");
+                        String ver_status = jsonObject1.optString("verification_status");
 
-                        editor.putString("VERIFICATION", user_role);
+                        editor.putString("VERIFICATION", ver_status);
                         editor.putString("USER_NAME", Username);
-                        editor.apply();
+                        editor.commit();
+                        Globals.currentUser.VERIFICATION=ver_status;
+                        Globals.currentUser.USER_NAME=Username;
 
 
                     }
