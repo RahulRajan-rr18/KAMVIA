@@ -32,7 +32,9 @@
         <activity android:name=".AddNewPostActivity" />
         <activity android:name=".UserProfileUpdateActivity" />
         <activity android:name=".UserRegistrationActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
         <activity android:name=".SearchByNameResultActivity" />
         <activity android:name=".SearchByLocationResultActivity" />
         <activity android:name=".ForgotPasswordActivity" />
