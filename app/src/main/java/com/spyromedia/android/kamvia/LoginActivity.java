@@ -31,6 +31,8 @@ import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btn_login;
     TextView tv_register;
     ProgressDialog progressDialog;
+    private static char[] hextable = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,8 +174,9 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
+                String hashedPassword = md5(password.getText().toString().trim());
                 params.put("username", mobile_number.getText().toString().trim());
-                params.put("password", password.getText().toString().trim());
+                params.put("password",hashedPassword);
 
                 return params;
             }
@@ -196,6 +200,33 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private static String md5(String s)
+    {
+        MessageDigest digest;
+        try
+        {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(), 0, s.length());
+            byte[] bytes = digest.digest();
+
+            String hash = "";
+            for (int i = 0; i < bytes.length; ++i)
+            {
+                int di = (bytes[i] + 256) & 0xFF;
+                hash = hash + hextable[(di >> 4) & 0xF] + hextable[di & 0xF];
+            }
+
+            return hash;
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+        }
+
+        return "";
+    }
+
+
 
 
 }

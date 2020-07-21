@@ -28,6 +28,8 @@ import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +38,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
     EditText  password, confirm_password, mob_no;
     Button register_btn;
     ProgressDialog progressDialog;
+    private static char[] hextable = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +151,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<>();
-                    params.put("password", password.getText().toString().trim());
+
+                    String hashedPassword = md5(password.getText().toString().trim());
+                    params.put("password", hashedPassword);
                     params.put("mobile_number", mob_no.getText().toString().trim());
 
                     return params;
@@ -158,6 +164,32 @@ public class UserRegistrationActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading....");
         progressDialog.show();
         }
+
+    private static String md5(String s)
+    {
+        MessageDigest digest;
+        try
+        {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(), 0, s.length());
+            byte[] bytes = digest.digest();
+
+            String hash = "";
+            for (int i = 0; i < bytes.length; ++i)
+            {
+                int di = (bytes[i] + 256) & 0xFF;
+                hash = hash + hextable[(di >> 4) & 0xF] + hextable[di & 0xF];
+            }
+
+            return hash;
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+        }
+
+        return "";
+    }
+
 
 
 
