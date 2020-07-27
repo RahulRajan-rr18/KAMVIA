@@ -49,7 +49,8 @@ public class HomeFragment extends Fragment {
     @Nullable
     HomeTimelineRecyAdapter adapter;
     List<HomeTimelineListItem> timelinelist;
-    RequestQueue requestQueuegetTimeline, requestQueuegetUser;
+
+    RequestQueue requestQueuegetTimeline;
     RecyclerView home_recyclerview;
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
@@ -58,10 +59,12 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         home_recyclerview = view.findViewById(R.id.home_recyclerview);
+        home_recyclerview.setHasFixedSize(true);
+        home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        timelinelist = new ArrayList<>();
 
-        String userverified = Globals.currentUser.VERIFICATION;
-
-        CheckUserVerificationStatus();
+        requestQueuegetTimeline = Volley.newRequestQueue(getContext());
+        parseJSON();
 
 
 
@@ -111,107 +114,6 @@ public class HomeFragment extends Fragment {
         progressDialog.show();
     }
 
-    private void CheckUserVerificationStatus() {
-        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String Username = jsonObject1.optString("name");
-                        Log.d("MainActivity", Username);
-                        sharedPreferences = getContext().getSharedPreferences("settings", 0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                        String verification_status = jsonObject1.optString("verification_status");
-                        if (verification_status.equals("verified")) {
-
-
-
-                            SharedPreferences preferences = getContext().getSharedPreferences("settings", 0);
-                            SharedPreferences.Editor ed = preferences.edit();
-
-                            ed.putString("VERIFICATION", "verified");
-                            ed.putString("USER_NAME",Username);
-                            //editor.apply();
-                            ed.commit();
-                            Globals.currentUser.VERIFICATION="verified";
-                            Globals.currentUser.USER_NAME=Username;
-
-
-
-                            home_recyclerview.setHasFixedSize(true);
-                            home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-                            timelinelist = new ArrayList<>();
-
-                            requestQueuegetTimeline = Volley.newRequestQueue(getContext());
-                            parseJSON();
-
-                        } else {
-
-                            if (verification_status.equals(null)) {
-
-                            } else {
-                                alertDialog();
-                            }
-
-
-                        }
-
-                        editor.putString("VERIFICATION", verification_status);
-                        editor.putString("USER_NAME", Username);
-                        editor.apply();
-
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    sharedPreferences = getContext().getSharedPreferences("settings", 0);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                    editor.putString("VERIFICATION", "notverified");
-                    editor.apply();
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                } else if (error instanceof ServerError) {
-
-                    Toast.makeText(getContext(), "Server Error" + error, Toast.LENGTH_SHORT).show();
-
-                } else if (error instanceof AuthFailureError) {
-                } else if (error instanceof ParseError) {
-                } else if (error instanceof NoConnectionError) {
-                } else if (error instanceof TimeoutError) {
-                    Toast.makeText(getContext(),
-                            "Oops. Timeout error!",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                String user_id = Globals.currentUser.USER_ID;
-                params.put("user_id", user_id.trim());
-
-
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
 
 
     private void alertDialog() {

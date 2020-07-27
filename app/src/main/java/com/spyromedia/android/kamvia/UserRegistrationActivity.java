@@ -115,8 +115,16 @@ public class UserRegistrationActivity extends AppCompatActivity {
                             Toast.makeText(UserRegistrationActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                             Intent home = new Intent(UserRegistrationActivity.this, LoginActivity.class);
                             startActivity(home);
+                            finish();
 
-                        } else {
+                        }
+                        else if(jsonObject.getString("message").equals("User already registered"))
+                        {
+                            Toast.makeText(UserRegistrationActivity.this, "User Already Registered", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        else {
 
                             Toast.makeText(UserRegistrationActivity.this, "Registration  Failed", Toast.LENGTH_LONG).show();
 
@@ -153,6 +161,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
                     Map<String, String> params = new HashMap<>();
 
                     String hashedPassword = md5(password.getText().toString().trim());
+
                     params.put("password", hashedPassword);
                     params.put("mobile_number", mob_no.getText().toString().trim());
 

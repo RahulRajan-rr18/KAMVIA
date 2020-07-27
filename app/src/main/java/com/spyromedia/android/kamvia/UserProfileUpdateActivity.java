@@ -100,8 +100,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
         getSupportActionBar().hide();
 
-
-
         dateofbirth = findViewById(R.id.id_dob);
         dateOfJoiningasamvi = findViewById(R.id.id_dateofjoining);
         name = findViewById(R.id.name);
@@ -161,9 +159,14 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             public void onClick(View v) {
 
                 Boolean verify = vefifyDetails();
-                if (verify == true) {
-                    Update_Profile();
+
+                if(!Globals.isOnline(getApplicationContext())){
+
+                    if (verify == true) {
+                        Update_Profile();
+                    }
                 }
+
             }
         });
 
@@ -349,7 +352,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
@@ -372,13 +375,13 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
                 if(s.equals("Image Uploaded Successfully")){
                     upload_detailsButton.setVisibility(View.VISIBLE);
 
                 }
                 else{
-                    Toast.makeText(UserProfileUpdateActivity.this, "Something went Wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserProfileUpdateActivity.this, "Something went Wrong. Try Again", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -400,4 +403,5 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         UploadImage ui = new UploadImage();
         ui.execute(bitmap);
     }
+
 }

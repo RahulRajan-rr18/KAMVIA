@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -44,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView headerText;
     ImageView headerImage;
     SharedPreferences sharedPreferences;
+    String currentFragment;
 
 
     @Override
@@ -67,15 +72,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         user_id = Globals.currentUser.USER_ID;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       // sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
+        // sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         headerText = headerView.findViewById(R.id.drawer_name);
         headerImage = headerView.findViewById(R.id.drawer_icon);
         //Apply the data to the drawer header.
-      //  String name = sharedPreferences.getString("USER_NAME", null);
+        //  String name = sharedPreferences.getString("USER_NAME", null);
         String name = Globals.currentUser.USER_NAME;
-        if(name.equals(null)){
+        if (name.equals(null)) {
             headerText.setText("");
 
         }
@@ -174,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).addToBackStack(null).commit();
                 break;
             case R.id.id_admincorner:
-              //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
+                //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
 
                 CheckCredentials();
                 break;
@@ -194,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
+        @Override
     public void onBackPressed() {
 //        FragmentManager fragmentManager = getFragmentManager();
 //        int backCount = fragmentManager.getBackStackEntryCount();
@@ -206,173 +211,141 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void CheckCredentials() {
+        public void CheckCredentials () {
 
-        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+            String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                progressDialog.dismiss();
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    progressDialog.dismiss();
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                        String 	user_role = jsonObject1.optString("member_type");
-                        if(user_role.equals("Admin")){
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
+                            String user_role = jsonObject1.optString("member_type");
+                            if (user_role.equals("Admin")) {
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
+                            } else {
+
+                                Toast.makeText(MainActivity.this, "This is Restricted to Admins Only", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
-                        else {
 
-                            Toast.makeText(MainActivity.this, "This is Restricted to Admins Only", Toast.LENGTH_SHORT).show();
-                        }
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(MainActivity.this, "Only Admin can access to this session", Toast.LENGTH_SHORT).show();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(MainActivity.this, "Only Admin can access to this session", Toast.LENGTH_SHORT).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
+                    if (error instanceof NetworkError) {
+                    } else if (error instanceof ServerError) {
+
+                        Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                    } else if (error instanceof AuthFailureError) {
+                    } else if (error instanceof ParseError) {
+                    } else if (error instanceof NoConnectionError) {
+                    } else if (error instanceof TimeoutError) {
+                        Toast.makeText(MainActivity.this,
+                                "Oops. Timeout error!",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                if (error instanceof NetworkError) {
-                } else if (error instanceof ServerError) {
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
 
-                    Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+                    Map<String, String> params = new HashMap<>();
+                    params.put("user_id", user_id.trim());
 
-                } else if (error instanceof AuthFailureError) {
-                } else if (error instanceof ParseError) {
-                } else if (error instanceof NoConnectionError) {
-                } else if (error instanceof TimeoutError) {
-                    Toast.makeText(MainActivity.this,
-                            "Oops. Timeout error!",
-                            Toast.LENGTH_LONG).show();
+
+                    return params;
                 }
-            }
+            };
+            requestQueue.add(stringRequest);
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Loading....");
+            progressDialog.show();
+        }
 
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+        private void CheckUserVerificationStatus () {
+            String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-                Map<String, String> params = new HashMap<>();
-                params.put("user_id", user_id.trim());
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String Username = jsonObject1.optString("name");
+                            Log.d("MainActivity", Username);
+                            sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            String ver_status = jsonObject1.optString("verification_status");
+
+                            editor.putString("VERIFICATION", ver_status);
+                            editor.putString("USER_NAME", Username);
+                            editor.commit();
+                            Globals.currentUser.VERIFICATION = ver_status;
+                            Globals.currentUser.USER_NAME = Username;
 
 
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("Loading....");
-        progressDialog.show();
-    }
+                        }
 
-    private void CheckUserVerificationStatus() {
-        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String Username = jsonObject1.optString("name");
-                        Log.d("MainActivity", Username);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                         sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        String ver_status = jsonObject1.optString("verification_status");
-
-                        editor.putString("VERIFICATION", ver_status);
-                        editor.putString("USER_NAME", Username);
-                        editor.commit();
-                        Globals.currentUser.VERIFICATION=ver_status;
-                        Globals.currentUser.USER_NAME=Username;
-
+                        editor.putString("VERIFICATION", "notverified");
+                        editor.apply();
 
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (error instanceof NetworkError) {
+                    } else if (error instanceof ServerError) {
 
-                    editor.putString("VERIFICATION", "notverified");
-                    editor.apply();
+                        Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
+                    } else if (error instanceof AuthFailureError) {
+                    } else if (error instanceof ParseError) {
+                    } else if (error instanceof NoConnectionError) {
+                    } else if (error instanceof TimeoutError) {
+                        Toast.makeText(MainActivity.this,
+                                "Oops. Timeout error!",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                } else if (error instanceof ServerError) {
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
 
-                    Toast.makeText(MainActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+                    Map<String, String> params = new HashMap<>();
+                    params.put("user_id", user_id.trim());
 
-                } else if (error instanceof AuthFailureError) {
-                } else if (error instanceof ParseError) {
-                } else if (error instanceof NoConnectionError) {
-                } else if (error instanceof TimeoutError) {
-                    Toast.makeText(MainActivity.this,
-                            "Oops. Timeout error!",
-                            Toast.LENGTH_LONG).show();
+
+                    return params;
                 }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("user_id", user_id.trim());
-
-
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
-
-  /*  public static Bitmap getCircularBitmap(Bitmap bitmap) {
-        Bitmap output;
-
-        if (bitmap.getWidth() > bitmap.getHeight()) {
-            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        } else {
-            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+            };
+            requestQueue.add(stringRequest);
         }
 
-        Canvas canvas = new Canvas(output);
 
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        float r = 0;
-
-        if (bitmap.getWidth() > bitmap.getHeight()) {
-            r = bitmap.getHeight() / 2;
-        } else {
-            r = bitmap.getWidth() / 2;
-        }
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawCircle(r, r, r, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        return output;
     }
-*/
-}

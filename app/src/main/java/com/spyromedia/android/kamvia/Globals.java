@@ -2,7 +2,10 @@ package com.spyromedia.android.kamvia;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Globals {
 
@@ -37,6 +40,17 @@ public class Globals {
         }finally {
             return cu;
         }
+    }
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(context, "No Internet connection!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
 

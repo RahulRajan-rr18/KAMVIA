@@ -5,18 +5,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
+import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +25,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.navigation.NavigationView;
+import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,16 +39,18 @@ public class SearchByLocationFragment extends Fragment {
     AutoCompleteTextView searchLocation;
     ArrayList<String> itemlistvalues;
     RequestQueue requestQueue;
+    ImageView backButton;
+
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_by_location, container, false);
-
         searchLocation = view.findViewById(R.id.searchLocation);
         requestQueue = Volley.newRequestQueue(getContext());
         ListNames();
+
 
         searchLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,15 +66,13 @@ public class SearchByLocationFragment extends Fragment {
                     alertDialog();
                 }
 
-
-
-
             }
         });
 
         return view;
 
     }
+
 
     private void ListNames() {
 
@@ -116,6 +119,5 @@ public class SearchByLocationFragment extends Fragment {
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
-
 
 }
