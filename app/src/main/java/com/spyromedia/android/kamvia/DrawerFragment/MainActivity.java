@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -161,10 +160,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.id_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
                 break;
             case R.id.id_viewprofile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewProfileFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewProfileFragment()).addToBackStack(null).commit();
                 break;
             case R.id.id_addprofile:
                 Intent userprofileup = new Intent(MainActivity.this, UserProfileUpdateActivity.class);
@@ -172,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpdateProfileOptionFragment()).commit();
                 break;
             case R.id.id_changepassword:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).addToBackStack(null).commit();
                 break;
             case R.id.id_admincorner:
               //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
@@ -180,12 +179,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 CheckCredentials();
                 break;
             case R.id.search_name:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchByNameFragement()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchByNameFragement()).addToBackStack(null).commit();
 
                 break;
 
             case R.id.search_location:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchByLocationFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchByLocationFragment()).addToBackStack(null).commit();
 
 
                 //    Toast.makeText(this, "Search by Location", Toast.LENGTH_SHORT).show();
@@ -197,12 +196,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+//        FragmentManager fragmentManager = getFragmentManager();
+//        int backCount = fragmentManager.getBackStackEntryCount();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-        super.onBackPressed();
+
     }
 
     public void CheckCredentials() {
