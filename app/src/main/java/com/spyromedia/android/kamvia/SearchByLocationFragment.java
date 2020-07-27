@@ -12,12 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,14 +22,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.navigation.NavigationView;
-import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SearchByLocationFragment extends Fragment {
 
@@ -90,6 +87,9 @@ public class SearchByLocationFragment extends Fragment {
                         name = jsonArray.getJSONObject(i).getString("home_station");
                         itemlistvalues.add(name);
                     }
+                    Set<String> set = new HashSet<>(itemlistvalues);
+                    itemlistvalues.clear();
+                    itemlistvalues.addAll(set);
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, itemlistvalues);
                     searchLocation.setAdapter(adapter);
 
