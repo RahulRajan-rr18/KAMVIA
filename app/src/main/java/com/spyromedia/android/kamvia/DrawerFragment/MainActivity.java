@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                            String user_role = jsonObject1.optString("member_type");
+                            String user_role = jsonObject1.optString("user_role");
                             if (user_role.equals("Admin")) {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
                             } else {

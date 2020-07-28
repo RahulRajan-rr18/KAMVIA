@@ -332,21 +332,12 @@
                     android:orientation="horizontal">
 
 
-                    <Button
-                        android:id="@+id/btn_pickImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pick a profile Image"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <ImageView
                         android:id="@+id/imagepicked"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_weight="1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/btn_pickImage"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_person" />
 

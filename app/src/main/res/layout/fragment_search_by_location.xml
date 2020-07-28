@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:background="#DCD4D4">
 
 
@@ -12,12 +13,11 @@
         android:id="@+id/searchLocation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="10dp"
         android:background="@drawable/mainwindowviews"
         android:hint="Type Location"
         android:singleLine="true"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,19 @@
 package com.spyromedia.android.kamvia;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -54,7 +58,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     EditText dateofbirth, dateOfJoiningasamvi;
     EditText name, email, employee_number, add_line1, add_line2, pincode, state, home_station_code, present_station_code;
 
-    public static final String UPLOAD_URL = "http://18.220.53.162/kamvia/api/img.php";
+    public static final String UPLOAD_URL = "http://18.220.53.162/kamvia/api/api.php";
     public static final String UPLOAD_KEY = "image";
     public static final String TAG = "MY MESSAGE";
     private int PICK_IMAGE_REQUEST = 1;
@@ -114,7 +118,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         present_rto_district = findViewById(R.id.id_present_district);
         present_station_code = findViewById(R.id.present_station_code);
         member_fee_paid = findViewById(R.id.rd_group_feepaid);
-        pickImageButton = findViewById(R.id.btn_pickImage);
+        //pickImageButton = findViewById(R.id.btn_pickImage);
         uploadImageButton = findViewById(R.id.btn_upload_image);
         upload_detailsButton = findViewById(R.id.btn_upload);
         errorDist = findViewById(R.id.error_dist);
@@ -123,9 +127,18 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
         profile_image = findViewById(R.id.imagepicked);
         upload_detailsButton.setVisibility(View.INVISIBLE);
+        //checking storage permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:" + getPackageName()));
+            finish();
+            startActivity(intent);
+            return;
+        }
 
 
-        pickImageButton.setOnClickListener(this);
         uploadImageButton.setOnClickListener(this);
 
 
@@ -159,13 +172,16 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             public void onClick(View v) {
 
                 Boolean verify = vefifyDetails();
-
-                if(!Globals.isOnline(getApplicationContext())){
-
-                    if (verify == true) {
-                        Update_Profile();
-                    }
+                if (verify == true) {
+                    Update_Profile();
                 }
+//                if(!Globals.isOnline(getApplicationContext())){
+//
+//
+//                }
+//                else{
+//                    Toast.makeText(UserProfileUpdateActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });
@@ -319,89 +335,98 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
     @Override
     public void onClick(View v) {
-        if (v == pickImageButton) {
-            showFileChooser();
-        }
         if (v == uploadImageButton) {
-            uploadImage();
-        }
-    }
+            //showFileChooser();
 
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, 100);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            filePath = data.getData();
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            //getting the image Uri
+            Uri imageUri = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //getting bitmap object from uri
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                //displaying selected image to imageview
                 profile_image.setImageBitmap(bitmap);
+                //calling the method uploadBitmap to upload image
+                uploadBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+    private void uploadBitmap(final Bitmap bitmap) {
+
+        //getting the tag from the edittext
+       // final String tags = "2222222";
+
+        //our custom volley request
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+
+                            if(obj.get("message").equals("File uploaded successfully"))
+                            {
+                                upload_detailsButton.setVisibility(View.VISIBLE);
+
+                            }
+                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("tags", Globals.currentUser.USER_ID.trim());
+                return params;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                //long imagename = System.currentTimeMillis();
+                String imagename = Globals.currentUser.USER_ID;
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
     }
 
-    private void uploadImage() {
-        class UploadImage extends AsyncTask<Bitmap, Void, String> {
-
-            ProgressDialog loading;
-            RequestHandler rh = new RequestHandler();
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(UserProfileUpdateActivity.this, "Uploading Image ..", "Please wait...", true, true);
-                loading.setCancelable(false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-              //  Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                if(s.equals("Image Uploaded Successfully")){
-                    upload_detailsButton.setVisibility(View.VISIBLE);
-
-                }
-                else{
-                    Toast.makeText(UserProfileUpdateActivity.this, "Something went Wrong. Try Again", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
-
-                HashMap<String, String> data = new HashMap<>();
-                data.put(UPLOAD_KEY, uploadImage);
-                data.put("user_id", Globals.currentUser.USER_ID);
-
-                String result = rh.sendPostRequest(UPLOAD_URL, data);
-
-                return result;
-            }
-
-        }
-        UploadImage ui = new UploadImage();
-        ui.execute(bitmap);
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 
 }

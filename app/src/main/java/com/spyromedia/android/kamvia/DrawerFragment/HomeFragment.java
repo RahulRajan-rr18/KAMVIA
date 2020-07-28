@@ -48,9 +48,7 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
     @Nullable
     HomeTimelineRecyAdapter adapter;
-    List<HomeTimelineListItem> timelinelist;
-
-    RequestQueue requestQueuegetTimeline;
+    List<HomeTimelineListItem> timelinelist;RequestQueue requestQueuegetTimeline;
     RecyclerView home_recyclerview;
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;

@@ -57,7 +57,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         tv_district = findViewById(R.id.district);
         tv_pincode = findViewById(R.id.pincode);
         tv_home_rto_code = findViewById(R.id.homestationcode);
-        tv_date_of_joining = findViewById(R.id. joiningdate);
+        tv_date_of_joining = findViewById(R.id.joiningdate);
         tv_current_station_dis_wtcode = findViewById(R.id.presentrtodist);
 
 
@@ -83,6 +83,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         });
 
     }
+
     public void FetchDetails() {
 
         String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
@@ -113,7 +114,6 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                         String date_ofjoining = jsonObject1.optString("date_of_joining");
 
 
-
                         tv_name.setText(name);
                         tv_email.setText(email);
                         tv_mobilenumber.setText(mob_no);
@@ -126,7 +126,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                         tv_home_rto_code.setText(h_rto_code);
                         tv_date_of_birth.setText(date_of_birth);
                         tv_date_of_joining.setText(date_ofjoining);
-                        tv_current_station_dis_wtcode.setText(current_station + "(" + cu_rto_code +")");
+                        tv_current_station_dis_wtcode.setText(current_station + "(" + cu_rto_code + ")");
 
 
                     }
@@ -188,7 +188,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(ApprovalMemberDetailsActivity.this, "Member Approved", Toast.LENGTH_LONG).show();
-
+                        finish();
 
                     } else {
 
@@ -247,7 +247,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(ApprovalMemberDetailsActivity.this, "Rejected", Toast.LENGTH_LONG).show();
-
+                        finish();
 
                     } else {
 
