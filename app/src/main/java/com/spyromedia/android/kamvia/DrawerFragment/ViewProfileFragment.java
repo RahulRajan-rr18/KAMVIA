@@ -28,7 +28,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.spyromedia.android.kamvia.Globals;
-import com.spyromedia.android.kamvia.MemberDetailsActivity;
 import com.spyromedia.android.kamvia.R;
 
 import org.json.JSONArray;
@@ -40,20 +39,20 @@ import java.util.Map;
 
 public class ViewProfileFragment extends Fragment {
 
-    TextView user_name, email, employee_no;
+    TextView username, useremail, userphone, userrole;
     ProgressDialog progressDialog;
     ImageView profileimage;
     String TAG = "ViewProfie";
     String user_id;
-    String username;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_viewprofile, container, false);
-        user_name = view.findViewById(R.id.user_name);
-        email = view.findViewById(R.id.email);
-        employee_no = view.findViewById(R.id.employee_no);
+        View view = inflater.inflate(R.layout.fragment_viewprofilenew, container, false);
+        username = view.findViewById(R.id.username);
+        useremail = view.findViewById(R.id.useremailtext);
+        userphone = view.findViewById(R.id.userphonetext);
+        userrole = view.findViewById(R.id.userroletext);
         profileimage = view.findViewById(R.id.profileimage);
         user_id = Globals.currentUser.USER_ID;
         Log.d(TAG, "Current User" + user_id);
@@ -93,11 +92,13 @@ public class ViewProfileFragment extends Fragment {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                         String name = jsonObject1.optString("name");
-                        String cemail = jsonObject1.optString("email");
-                        String emp_no = jsonObject1.optString("employee_number");
-                        user_name.setText(name);
-                        email.setText(cemail);
-                        employee_no.setText(emp_no);
+                        String email = jsonObject1.optString("email");
+                        String phone = jsonObject1.optString("mobile_number");
+                        String role = jsonObject1.optString("user_role");
+                        username.setText(name);
+                        useremail.setText(email);
+                        userphone.setText(phone);
+                        userrole.setText(role);
                     }
 
                 } catch (JSONException e) {
