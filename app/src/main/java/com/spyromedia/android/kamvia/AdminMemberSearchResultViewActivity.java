@@ -175,11 +175,10 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                         tv_pincode.setText(pincode);
                         tv_home_rto_code.setText(h_rto_code);
                         tv_date_of_joining.setText(date_of_joining);
-                        tv_current_station_dis_wtcode.setText(current_station +"  "+ cu_rto_code);
+                        tv_current_station_dis_wtcode.setText(current_station + "  " + cu_rto_code);
                         FetchImage();
 
                     }
-
 
 
                 } catch (JSONException e) {
@@ -236,6 +235,9 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     String message = jsonObject.getString("message");
 
+                    if (jsonObject.getString("message").equals("Promoted as admin")) {
+                        finish();
+                    }
                     Toast.makeText(AdminMemberSearchResultViewActivity.this, message, Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
@@ -330,7 +332,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
     }
 
     private void FetchImage() {
-        class GetImage extends AsyncTask<String,Void,Bitmap> {
+        class GetImage extends AsyncTask<String, Void, Bitmap> {
             // ProgressDialog loading;
 
             @Override
@@ -341,7 +343,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Bitmap b) {
                 super.onPostExecute(b);
-                if(b != null){
+                if (b != null) {
                     Bitmap result = getCircularBitmap(b);
                     profilePhoto.setImageBitmap(result);
                 }
@@ -351,7 +353,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             @Override
             protected Bitmap doInBackground(String... params) {
                 String id = params[0];
-                String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id="+user_id;
+                String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id=" + user_id;
                 URL url = null;
                 Bitmap image = null;
                 try {
@@ -401,7 +403,6 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
     }
-
 
 
 }

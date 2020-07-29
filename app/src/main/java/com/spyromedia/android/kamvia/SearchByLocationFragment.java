@@ -36,8 +36,6 @@ public class SearchByLocationFragment extends Fragment {
     AutoCompleteTextView searchLocation;
     ArrayList<String> itemlistvalues;
     RequestQueue requestQueue;
-    ImageView backButton;
-
 
 
     @Nullable

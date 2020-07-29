@@ -85,7 +85,6 @@ public class MemberDetailsActivity extends AppCompatActivity {
     }
 
     private void FetchImage() {
-            String id = "12336";
             class GetImage extends AsyncTask<String,Void,Bitmap> {
                // ProgressDialog loading;
 
