@@ -64,7 +64,7 @@ public class ViewProfileFragment extends Fragment {
 
     private void fetchimage() {
         try{
-            String url = "http://18.220.53.162/kamvia/api/uploads/retrieveimage.php?file=" + user_id;
+            String url = "http://18.220.53.162/kamvia/api/uploads/" + user_id + ".png";
             Glide.with(getActivity())
                     .load(url)
                     .circleCrop()

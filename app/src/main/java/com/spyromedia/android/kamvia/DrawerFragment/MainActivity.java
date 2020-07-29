@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void fetchImageGlide(Activity activity) {
-        String url = "http://18.220.53.162/kamvia/api/uploads/retrieveimage.php?file=" + user_id;
+        String url = "http://18.220.53.162/kamvia/api/uploads/" + user_id + ".png";
         Glide.with(activity)
                 .load(url)
                 .circleCrop()
