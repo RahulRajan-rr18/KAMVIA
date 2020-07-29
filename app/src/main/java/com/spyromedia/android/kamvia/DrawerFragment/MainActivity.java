@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -47,7 +44,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -87,10 +83,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("MainActivity", "shared" + name);
         headerText.setText(name);
         try {
-            /*fetchImage();*/
             fetchImageGlide(this);
         } catch (Exception e) {
-
+            Log.d("ImageCaching", "ImageCatching Exception");
         }
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -107,58 +102,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void fetchImageGlide(Activity activity) {
-        String url = "http://18.220.53.162/kamvia/api/fetch_image.php?id=" + user_id;
+        String url = "http://18.220.53.162/kamvia/api/uploads/retrieveimage.php?file=" + user_id;
         Glide.with(activity)
                 .load(url)
                 .circleCrop()
                 .into(headerImage);
 
     }
-
-    /*private void fetchImage() {
-        String id = "12336";
-        class GetImage extends AsyncTask<String, Void, Bitmap> {
-            // ProgressDialog loading;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                //     loading = ProgressDialog.show(MemberDetailsActivity.this, "Uploading...", null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap b) {
-                super.onPostExecute(b);
-                // Bitmap result = GetBitmapClippedCircle(b);
-                if (b != null) {
-                   *//* Bitmap result = getCircularBitmap(b);*//*
-     *//* headerImage.setImageBitmap(result);*//*
-                }
-            }
-
-
-            @Override
-            protected Bitmap doInBackground(String... params) {
-                String id = params[0];
-                String add = "http://18.220.53.162/kamvia/api/fetch_image.php?id=" + user_id;
-                Log.d("DoinBackground", "doInBackground: "+user_id);
-                URL url = null;
-                Bitmap image = null;
-                try {
-                    url = new URL(add);
-                    image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return image;
-            }
-        }
-
-        GetImage gi = new GetImage();
-        gi.execute(id);
-    }*/
 
 
     @Override
@@ -167,9 +117,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.id_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
                 break;
-            case R.id.id_viewprofile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewProfileFragment()).addToBackStack(null).commit();
-                break;
+//            case R.id.id_viewprofile:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewProfileFragment()).addToBackStack(null).commit();
+//                break;
             case R.id.id_addprofile:
                 Intent userprofileup = new Intent(MainActivity.this, UserProfileUpdateActivity.class);
                 startActivity(userprofileup);
