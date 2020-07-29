@@ -6,8 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.R;
 
@@ -32,23 +33,40 @@ import java.util.Map;
 
 public class ViewProfileFragment extends Fragment {
 
-    TextView user_name,email,employee_no;
+    TextView user_name, email, employee_no;
     ProgressDialog progressDialog;
+    ImageView profileimage;
     String TAG = "ViewProfie";
+    String user_id;
+    String username;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_viewprofile,container,false);
-        user_name = view.findViewById(R.id.user_name);
+        View view = inflater.inflate(R.layout.fragment_viewprofile, container, false);
+        user_name = view.findViewById(R.id.username);
         email = view.findViewById(R.id.email);
         employee_no = view.findViewById(R.id.employee_no);
+        profileimage = view.findViewById(R.id.profileimage);
+        user_id = Globals.currentUser.USER_ID;
+        Log.d(TAG, "Current User" + user_id);
         ProfileDetails();
+        fetchimage();
         return view;
     }
+
+
+    private void fetchimage() {
+        String url = "http://18.220.53.162/kamvia/api/uploads/retrieveimage.php?file=" + user_id;
+        Glide.with(getActivity())
+                .load(url)
+                .circleCrop()
+                .into(profileimage);
+    }
+
     public void ProfileDetails() {
 
-        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php?user_id=" + user_id;
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -59,24 +77,17 @@ public class ViewProfileFragment extends Fragment {
 
                 try {
                     JSONArray jsonArray = new JSONArray(response);
-                    JSONObject jsonObject = new JSONObject(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-
-                    if (!jsonObject.getBoolean("error")) {
-                        Toast.makeText(getContext(), "Details found", Toast.LENGTH_LONG).show();
-                        String uname = jsonObject.getString("name");
-                        Log.d(TAG, uname);
-                        user_name.setText(uname);
-                        email.setText("");
-                        employee_no.setText("");
-
-                    } else {
-
-                        Toast.makeText(getContext(), "No details found", Toast.LENGTH_LONG).show();
+                        username = jsonObject1.optString("name");
+                        Log.d(TAG, "onResponse: " + user_name);
 
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.d(TAG, "onResponse: Error Occured" + e);
                 }
 
             }
@@ -86,7 +97,7 @@ public class ViewProfileFragment extends Fragment {
 
                 progressDialog.dismiss();
 
-                Toast.makeText(getContext(), "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onErrorResponse: ERoorr");
 
             }
         }) {
@@ -102,5 +113,6 @@ public class ViewProfileFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading......");
         progressDialog.show();
+
     }
 }

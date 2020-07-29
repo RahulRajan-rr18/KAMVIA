@@ -74,11 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         headerText = headerView.findViewById(R.id.drawer_name);
         headerImage = headerView.findViewById(R.id.drawer_icon);
         //Apply the data to the drawer header.
-        //  String name = sharedPreferences.getString("USER_NAME", null);
         String name = Globals.currentUser.USER_NAME;
         if (name.equals(null)) {
             headerText.setText("");
-
         }
         Log.d("MainActivity", "shared" + name);
         headerText.setText(name);
@@ -88,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.d("ImageCaching", "ImageCatching Exception");
         }
 
+        viewProfileFragment();
         navigationView.setNavigationItemSelectedListener(this);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -99,6 +98,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.id_home);
         }
 
+    }
+
+    private void viewProfileFragment() {
+        headerImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewProfileFragment()).addToBackStack(null).commit();
+            }
+        });
     }
 
     private void fetchImageGlide(Activity activity) {
