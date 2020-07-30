@@ -12,22 +12,25 @@
             android:id="@+id/id_addprofile"
             android:icon="@drawable/ic_profile_add"
             android:title="New Member Registration" />
-        <item
-            android:id="@+id/id_changepassword"
-            android:icon="@drawable/ic_change_pwd"
-            android:title="Change Password" />
+        <!--        <item-->
+        <!--            android:id="@+id/id_changepassword"-->
+        <!--            android:icon="@drawable/ic_change_pwd"-->
+        <!--            android:title="Change Password" />-->
         <item
             android:id="@+id/id_admincorner"
-            android:icon="@drawable/ic_admin"
+            android:icon="@drawable/admin_panel_settings_24px"
             android:title="Admins Corner" />
     </group>
 
-    <item android:title="Search People"
-        android:icon="@drawable/ic_search">
+    <item android:title="Search">
         <menu>
-            <item android:id="@+id/search_name"
+            <item
+                android:id="@+id/search_name"
+                android:icon="@drawable/perm_identity_24px"
                 android:title="Search By Name " />
-            <item android:id="@+id/search_location"
+            <item
+                android:id="@+id/search_location"
+                android:icon="@drawable/location_on_24px"
                 android:title="Search by Location" />
         </menu>
     </item>

@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(userprofileup);
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpdateProfileOptionFragment()).commit();
                 break;
-            case R.id.id_changepassword:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).addToBackStack(null).commit();
-                break;
+//            case R.id.id_changepassword:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).addToBackStack(null).commit();
+//                break;
             case R.id.id_admincorner:
                 //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
 
