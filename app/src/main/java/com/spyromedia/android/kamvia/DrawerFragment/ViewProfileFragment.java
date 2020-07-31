@@ -1,6 +1,8 @@
 package com.spyromedia.android.kamvia.DrawerFragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +29,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 import com.spyromedia.android.kamvia.Globals;
+import com.spyromedia.android.kamvia.LoginActivity;
 import com.spyromedia.android.kamvia.R;
 
 import org.json.JSONArray;
@@ -36,15 +40,17 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ViewProfileFragment extends Fragment {
 
     TextView username, useremail, userphone, userrole;
     ProgressDialog progressDialog;
     ImageView profileimage;
+    SharedPreferences sharedPreferences;
     String TAG = "ViewProfie";
     String user_id;
-
+    MaterialButton logoutbtn;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,16 +60,34 @@ public class ViewProfileFragment extends Fragment {
         userphone = view.findViewById(R.id.userphonetext);
         userrole = view.findViewById(R.id.userroletext);
         profileimage = view.findViewById(R.id.profileimage);
+        logoutbtn = view.findViewById(R.id.logout_btn);
         user_id = Globals.currentUser.USER_ID;
         Log.d(TAG, "Current User" + user_id);
         FetchDetails();
         fetchimage();
+        logOutsession();
         return view;
+    }
+
+    private void logOutsession() {
+        logoutbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("settings", 0);
+                sharedPreferences.edit().clear().apply();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
+
+            }
+        });
     }
 
 
     private void fetchimage() {
-        try{
+        try {
             String url = "http://18.220.53.162/kamvia/api/uploads/" + user_id + ".png";
             Glide.with(getActivity())
                     .load(url)
