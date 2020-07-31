@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:layout_marginLeft="2dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginRight="2dp">
+    android:padding="5dp"
+    android:layout_margin="3dp"
+   >
     <!--    app:cardCornerRadius="8dp"-->
     <!--    app:cardElevation="3dp"-->
 
@@ -13,47 +13,44 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-<!--        android:background="@drawable/gradient"-->
+        android:padding="@dimen/layoutpadding">
+        <!--        android:background="@drawable/gradient"-->
 
 
         <TextView
             android:id="@+id/textview_membername"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="5dp"
             android:text="Dummy"
             android:textSize="@dimen/membertextsize"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_condent"
 
             />
 
         <TextView
             android:id="@+id/textview_heading"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/adamina"
-            android:textStyle="bold"
             android:text="Heading"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_condent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/adamina"
             android:text="Condent"
-            android:textSize="20sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_heading" />
 

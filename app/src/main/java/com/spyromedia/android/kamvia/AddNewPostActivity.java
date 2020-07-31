@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -26,20 +28,23 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 
-
 public class AddNewPostActivity extends AppCompatActivity {
 
-    EditText postHead ;
+    EditText postHead;
     EditText postContent;
+    ProgressDialog progressDialog;
     public static final String UPLOAD_URL = "http://18.220.53.162/kamvia/api/pdfUpload.php";
 
     //Pdf request code
@@ -53,11 +58,11 @@ public class AddNewPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
-        Button chooseFile , uploadPost;
+        Button chooseFile, uploadPost;
         chooseFile = findViewById(R.id.choose_file);
         postHead = findViewById(R.id.postheading);
         postContent = findViewById(R.id.postcontent);
-
+        getSupportActionBar().hide();
         requestStoragePermission();
 
         uploadPost = findViewById(R.id.buttonuploadpost);
@@ -66,10 +71,10 @@ public class AddNewPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Boolean verify = verifyPost();
 
-                if(verify == true){
-                   // AddNewPost();
+                if (verify == true) {
+                    AddNewPost();
                     // add file post to database
-                    uploadMultipart();
+                    //uploadMultipart();
 
                 }
             }
@@ -83,9 +88,10 @@ public class AddNewPostActivity extends AppCompatActivity {
         });
 
     }
+
     Boolean verifyPost() {
 
-        if (postHead.getText().toString().isEmpty()){
+        if (postHead.getText().toString().isEmpty()) {
             postHead.setError("Add a heading");
             return false;
         }
@@ -97,7 +103,7 @@ public class AddNewPostActivity extends AppCompatActivity {
         return true;
     }
 
-    public void AddNewPost(){
+    public void AddNewPost() {
 
         String url = "http://18.220.53.162/kamvia/api/addnewpost.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -105,12 +111,15 @@ public class AddNewPostActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                progressDialog.dismiss();
+
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(AddNewPostActivity.this, "Post Added Successfully", Toast.LENGTH_LONG).show();
+                        finish();
 
                     } else {
 
@@ -124,12 +133,15 @@ public class AddNewPostActivity extends AppCompatActivity {
 
             }
         }, new Response.ErrorListener() {
+
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(AddNewPostActivity.this, "Server Error"+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewPostActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
@@ -154,8 +166,10 @@ public class AddNewPostActivity extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
+        progressDialog = new ProgressDialog(AddNewPostActivity.this);
+        progressDialog.setMessage("Uploading.....");
+        progressDialog.show();
     }
-
 
 
     public void uploadMultipart() {
@@ -207,6 +221,7 @@ public class AddNewPostActivity extends AppCompatActivity {
         //And finally ask for the permission
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -215,6 +230,7 @@ public class AddNewPostActivity extends AppCompatActivity {
             filePath = data.getData();
         }
     }
+
     //This method will be called when the user will tap on allow or deny
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

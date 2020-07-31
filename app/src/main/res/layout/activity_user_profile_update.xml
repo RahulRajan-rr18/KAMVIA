@@ -160,14 +160,15 @@
                         android:textSize="20dp" />
 
                     <Spinner
-                        android:id="@+id/id_district"
+                        android:id="@+id/listDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:entries="@array/district_list"
                         android:hint="Dist" />
-                     <TextView
+
+                    <TextView
                          android:id="@+id/error_dist"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"

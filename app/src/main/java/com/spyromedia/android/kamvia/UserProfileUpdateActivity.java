@@ -112,7 +112,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         employee_number = findViewById(R.id.employee_number);
         add_line1 = findViewById(R.id.add_line1);
         add_line2 = findViewById(R.id.add_line2);
-        home_district = findViewById(R.id.id_district);
+        home_district = findViewById(R.id.listDistrict);
         pincode = findViewById(R.id.pincode);
         state = findViewById(R.id.state);
         home_station_code = findViewById(R.id.home_station_code);
@@ -267,12 +267,12 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             return false;
         }
 
-        if (!ImageUploaded) {
-            Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            return false;
-        }
+//        if (!ImageUploaded) {
+//            Snackbar snackbar = Snackbar
+//                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//            return false;
+     //   }
         return true;
 
     }
