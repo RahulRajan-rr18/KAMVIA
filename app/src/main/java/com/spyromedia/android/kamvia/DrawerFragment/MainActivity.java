@@ -238,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<>();
-                    Log.d("MainActivity", "getParams: " + user_id);
                     params.put("user_id", user_id.trim());
 
 
@@ -314,7 +313,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     Map<String, String> params = new HashMap<>();
                     params.put("user_id", user_id.trim());
-                    Log.d("MainActivity", "getParams: " + user_id);
 
                     return params;
                 }

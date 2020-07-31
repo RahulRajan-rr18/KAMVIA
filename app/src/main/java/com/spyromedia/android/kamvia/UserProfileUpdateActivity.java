@@ -25,8 +25,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -37,7 +35,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
-import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
+import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -105,7 +103,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_update);
-
         getSupportActionBar().hide();
 
         dateofbirth = findViewById(R.id.id_dob);
@@ -318,7 +315,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                         try{
 
                             Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
-                            Intent home = new Intent(UserProfileUpdateActivity.this, HomeFragment.class);
+                            Intent home = new Intent(UserProfileUpdateActivity.this, MainActivity.class);
                             startActivity(home);
 
                         }catch (Exception ex){
