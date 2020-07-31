@@ -1,8 +1,5 @@
 package com.spyromedia.android.kamvia;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -14,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +23,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -33,6 +34,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
 
 import org.json.JSONException;
@@ -61,7 +63,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     public static final String UPLOAD_URL = "http://18.220.53.162/kamvia/api/api.php";
     public static final String UPLOAD_KEY = "image";
     public static final String TAG = "MY MESSAGE";
-    private int PICK_IMAGE_REQUEST = 1;
+    private final int PICK_IMAGE_REQUEST = 1;
     private Bitmap bitmap;
     private Uri filePath;
 
@@ -191,23 +193,23 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
     private Boolean vefifyDetails() {
         if (name.getText().toString().trim().isEmpty() == true) {
-            name.setError("Name reqired");
+            name.setError("Name required");
             return false;
         }
         if (email.getText().toString().trim().isEmpty() == true) {
-            email.setError("Email reqired");
+            email.setError("Email required");
             return false;
         }
         if (employee_number.getText().toString().trim().isEmpty() == true) {
-            employee_number.setError("PEN reqired");
+            employee_number.setError("PEN required");
             return false;
         }
         if (add_line1.getText().toString().trim().isEmpty() == true) {
-            add_line1.setError("Reqired");
+            add_line1.setError("Required");
             return false;
         }
         if (add_line2.getText().toString().trim().isEmpty() == true) {
-            add_line2.setError("Reqired");
+            add_line2.setError("Required");
             return false;
         }
 
@@ -216,24 +218,31 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             return false;
         }
         if (home_station_code.getText().toString().trim().isEmpty() == true) {
-            home_station_code.setError("Home station code reqired");
+            home_station_code.setError("Home station code required");
             return false;
         }
         if (present_station_code.getText().toString().trim().isEmpty() == true) {
-            present_station_code.setError("Present station code reqired");
+            present_station_code.setError("Present station code required");
             return false;
         }
         if (dateofbirth.getText().toString().isEmpty() == true) {
-            dateofbirth.setText("Reqired");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your DOB", Snackbar.LENGTH_LONG);
+            snackbar.show();
+
             return false;
         }
         if (home_district.getSelectedItem().toString().equals("Choose")) {
-            errorDist.setError("Please choose your district");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please choose your district", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
 
         if (present_rto_district.getSelectedItem().toString().equals("Choose")) {
-            errorRtoDist.setError("Please choose current district");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please select your present RTO", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
 
@@ -288,6 +297,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.d(TAG, "onResponse: Updation Failed");
                 }
 
             }
@@ -297,7 +307,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
                 progressDialog.dismiss();
 
-                Toast.makeText(UserProfileUpdateActivity.this, "Error:" + error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -372,17 +381,21 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 new Response.Listener<NetworkResponse>() {
                     @Override
                     public void onResponse(NetworkResponse response) {
+
+                        progressDialog.dismiss();
                         try {
                             JSONObject obj = new JSONObject(new String(response.data));
 
-                            if(obj.get("message").equals("File uploaded successfully"))
-                            {
+                            if (obj.get("message").equals("File uploaded successfully")) {
                                 upload_detailsButton.setVisibility(View.VISIBLE);
 
+                            } else {
+                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                             }
-                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "onResponse: Profile Image Uploading Failed");
                         }
                     }
                 },
@@ -421,6 +434,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
         //adding the request to volley
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
+        progressDialog = new ProgressDialog(UserProfileUpdateActivity.this);
+        progressDialog.setMessage("Loading......");
+        progressDialog.show();
     }
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
