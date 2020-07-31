@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -43,7 +44,9 @@
         <activity android:name=".UserRegistrationActivity" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:noHistory="true"/>
+
         <activity android:name=".SearchByNameResultActivity" />
         <activity android:name=".SearchByLocationResultActivity" />
         <activity

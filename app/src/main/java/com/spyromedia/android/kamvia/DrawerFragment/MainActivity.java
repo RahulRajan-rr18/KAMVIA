@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView headerText;
     ImageView headerImage;
     SharedPreferences sharedPreferences;
-    String currentFragment;
+
 
 
     @Override
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         headerImage = headerView.findViewById(R.id.drawer_icon);
         //Apply the data to the drawer header.
         String name = Globals.currentUser.USER_NAME;
-        if (name.equals(null)) {
+        if (name.equals("")) {
             headerText.setText("");
         }
         Log.d("MainActivity", "shared" + name);
@@ -84,6 +85,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fetchImageGlide(this);
         } catch (Exception e) {
             Log.d("ImageCaching", "ImageCatching Exception");
+        }
+
+        String status = Globals.currentUser.VERIFICATION;
+        if((status.equals("verified") || status.equals("notverified")) ){
+            Toast.makeText(MainActivity.this, "Not Requested for Membership", Toast.LENGTH_SHORT).show();
+
+            Menu menuNav=navigationView.getMenu();
+            MenuItem nav_item2 = menuNav.findItem(R.id.id_addprofile);
+            nav_item2.setEnabled(false)  ;
         }
 
         viewProfileFragment();
@@ -159,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
         @Override
-    public void onBackPressed() {
+        public void onBackPressed() {
 //        FragmentManager fragmentManager = getFragmentManager();
 //        int backCount = fragmentManager.getBackStackEntryCount();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -243,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+
                     try {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -252,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                            String ver_status = jsonObject1.optString("verification_status");
+                             String ver_status = jsonObject1.optString("verification_status");
 
                             editor.putString("VERIFICATION", ver_status);
                             editor.putString("USER_NAME", Username);
@@ -268,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        editor.putString("VERIFICATION", "notverified");
+                        editor.putString("VERIFICATION", "notrequested");
                         editor.apply();
 
                     }
