@@ -454,7 +454,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 Map<String, DataPart> params = new HashMap<>();
                 //long imagename = System.currentTimeMillis();
                 String imagename = Globals.currentUser.USER_ID;
-                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                params.put("pic", new DataPart(imagename + ".jpg", getFileDataFromDrawable(bitmap)));
                 return params;
             }
         };
@@ -468,8 +468,10 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }
+
+
 
 }

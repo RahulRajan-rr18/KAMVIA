@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,6 +60,8 @@ public class HomeFragment extends Fragment {
         home_recyclerview = view.findViewById(R.id.home_recyclerview);
         home_recyclerview.setHasFixedSize(true);
         home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        home_recyclerview.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
         timelinelist = new ArrayList<>();
 
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());
