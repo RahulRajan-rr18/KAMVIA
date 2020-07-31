@@ -62,12 +62,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        user_id = Globals.currentUser.USER_ID;
+
         //fetching current verification status for restricting operations
         CheckUserVerificationStatus();
         //Check Runtime Permissions
-        user_id = Globals.currentUser.USER_ID;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
         // sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);

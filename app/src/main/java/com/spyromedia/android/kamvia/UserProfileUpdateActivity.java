@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -176,13 +178,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 if (verify) {
                     Update_Profile();
                 }
-//                if(!Globals.isOnline(getApplicationContext())){
-//
-//
-//                }
-//                else{
-//                    Toast.makeText(UserProfileUpdateActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
-//                }
 
             }
         });
@@ -194,35 +189,35 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         if (name.getText().toString().trim().isEmpty()) {
             name.setError("Name required");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your name", Snackbar.LENGTH_LONG);
+                    .make(name, "Please enter your name", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (email.getText().toString().trim().isEmpty()) {
             email.setError("Email required");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your email", Snackbar.LENGTH_LONG);
+                    .make(email, "Please enter your email", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (employee_number.getText().toString().trim().isEmpty()) {
             employee_number.setError("PEN required");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your employee", Snackbar.LENGTH_LONG);
+                    .make(employee_number, "Please enter your employee number", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (add_line1.getText().toString().trim().isEmpty()) {
             add_line1.setError("Required");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter address", Snackbar.LENGTH_LONG);
+                    .make(add_line1, "Please enter address", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (add_line2.getText().toString().trim().isEmpty()) {
             add_line2.setError("Required");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your address", Snackbar.LENGTH_LONG);
+                    .make(add_line2, "Please enter your address", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
@@ -230,47 +225,47 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         if (pincode.getText().toString().trim().isEmpty()) {
             pincode.setError("Please enter the pincode");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your pincode", Snackbar.LENGTH_LONG);
+                    .make(pincode, "Please enter your pincode", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (home_station_code.getText().toString().trim().isEmpty()) {
             home_station_code.setError("Home station code required");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your home station code", Snackbar.LENGTH_LONG);
+                    .make(home_station_code, "Please enter your home station code", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (present_station_code.getText().toString().trim().isEmpty()) {
             present_station_code.setError("Present station code required");
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your present station code", Snackbar.LENGTH_LONG);
+                    .make(present_station_code, "Please enter your present station code", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (dateofbirth.getText().toString().isEmpty()) {
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please enter your DOB", Snackbar.LENGTH_LONG);
+                    .make(dateofbirth, "Please enter your DOB", Snackbar.LENGTH_LONG);
             snackbar.show();
 
             return false;
         }
         if (home_district.getSelectedItem().toString().equals("Choose")) {
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please choose your district", Snackbar.LENGTH_LONG);
+                    .make(home_district, "Please choose your district", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
 
         if (present_rto_district.getSelectedItem().toString().equals("Choose")) {
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please select your present RTO", Snackbar.LENGTH_LONG);
+                    .make(present_rto_district, "Please select your present RTO", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
         if (dateOfJoiningasamvi.getText().toString().isEmpty()) {
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please select your present Station Code", Snackbar.LENGTH_LONG);
+                    .make(dateOfJoiningasamvi, "Please select your present Station Code", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
         }
@@ -320,10 +315,20 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
                     if (!jsonObject.getBoolean("error")) {
 
-                        Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
-                        Intent home = new Intent(UserProfileUpdateActivity.this, HomeFragment.class);
-                        startActivity(home);
-                        finish();
+                        try{
+
+                            Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
+                            Intent home = new Intent(UserProfileUpdateActivity.this, HomeFragment.class);
+                            startActivity(home);
+
+                        }catch (Exception ex){
+                            ex.getMessage();
+
+                        }
+
+
+
+//
 
                     } else {
 
