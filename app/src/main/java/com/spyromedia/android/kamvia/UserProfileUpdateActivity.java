@@ -59,7 +59,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     Button pickImageButton, upload_detailsButton, uploadImageButton;
     EditText dateofbirth, dateOfJoiningasamvi;
     EditText name, email, employee_number, add_line1, add_line2, pincode, state, home_station_code, present_station_code;
-
+    Boolean ImageUploaded = false;
     public static final String UPLOAD_URL = "http://18.220.53.162/kamvia/api/api.php";
     public static final String UPLOAD_KEY = "image";
     public static final String TAG = "MY MESSAGE";
@@ -173,7 +173,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             public void onClick(View v) {
 
                 Boolean verify = vefifyDetails();
-                if (verify == true) {
+                if (verify) {
                     Update_Profile();
                 }
 //                if(!Globals.isOnline(getApplicationContext())){
@@ -272,8 +272,15 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(getCurrentFocus(), "Please select your present Station Code", Snackbar.LENGTH_LONG);
             snackbar.show();
+            return false;
         }
 
+        if (ImageUploaded) {
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            return false;
+        }
         return true;
 
     }
@@ -393,10 +400,12 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 profile_image.setImageBitmap(bitmap);
                 //calling the method uploadBitmap to upload image
                 uploadBitmap(bitmap);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        ImageUploaded = true;
     }
 
     private void uploadBitmap(final Bitmap bitmap) {

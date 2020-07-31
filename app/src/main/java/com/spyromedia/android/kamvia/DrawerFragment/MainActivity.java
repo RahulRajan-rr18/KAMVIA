@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         headerText = headerView.findViewById(R.id.drawer_name);
         headerImage = headerView.findViewById(R.id.drawer_icon);
         //Apply the data to the drawer header.
+        Log.d("MainActivity", "This is userid" + user_id);
         String name = Globals.currentUser.USER_NAME;
         if (name.equals("")) {
             headerText.setText("");
@@ -265,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                             editor.putString("VERIFICATION", ver_status);
                             editor.putString("USER_NAME", Username);
-                            editor.commit();
+                            editor.apply();
                             Globals.currentUser.VERIFICATION = ver_status;
                             Globals.currentUser.USER_NAME = Username;
 
