@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -89,11 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         String status = Globals.currentUser.VERIFICATION;
         if((status.equals("verified") || status.equals("notverified")) ){
-            Toast.makeText(MainActivity.this, "Not Requested for Membership", Toast.LENGTH_SHORT).show();
-
-            Menu menuNav=navigationView.getMenu();
+            // Toast.makeText(MainActivity.this, "Not Requested for Membership", Toast.LENGTH_SHORT).show();
+            /*Menu menuNav=navigationView.getMenu();
             MenuItem nav_item2 = menuNav.findItem(R.id.id_addprofile);
-            nav_item2.setEnabled(false)  ;
+            nav_item2.setEnabled(false);*/
         }
 
         viewProfileFragment();

@@ -128,7 +128,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         membership_type = findViewById(R.id.id_memtype);
 
         profile_image = findViewById(R.id.imagepicked);
-        upload_detailsButton.setVisibility(View.INVISIBLE);
         //checking storage permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -192,40 +191,64 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
 
     private Boolean vefifyDetails() {
-        if (name.getText().toString().trim().isEmpty() == true) {
+        if (name.getText().toString().trim().isEmpty()) {
             name.setError("Name required");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your name", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
-        if (email.getText().toString().trim().isEmpty() == true) {
+        if (email.getText().toString().trim().isEmpty()) {
             email.setError("Email required");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your email", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
-        if (employee_number.getText().toString().trim().isEmpty() == true) {
+        if (employee_number.getText().toString().trim().isEmpty()) {
             employee_number.setError("PEN required");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your employee", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
-        if (add_line1.getText().toString().trim().isEmpty() == true) {
+        if (add_line1.getText().toString().trim().isEmpty()) {
             add_line1.setError("Required");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter address", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
-        if (add_line2.getText().toString().trim().isEmpty() == true) {
+        if (add_line2.getText().toString().trim().isEmpty()) {
             add_line2.setError("Required");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your address", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
 
-        if (pincode.getText().toString().trim().isEmpty() == true) {
+        if (pincode.getText().toString().trim().isEmpty()) {
             pincode.setError("Please enter the pincode");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your pincode", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
-        if (home_station_code.getText().toString().trim().isEmpty() == true) {
+        if (home_station_code.getText().toString().trim().isEmpty()) {
             home_station_code.setError("Home station code required");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your home station code", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
-        if (present_station_code.getText().toString().trim().isEmpty() == true) {
+        if (present_station_code.getText().toString().trim().isEmpty()) {
             present_station_code.setError("Present station code required");
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please enter your present station code", Snackbar.LENGTH_LONG);
+            snackbar.show();
             return false;
         }
-        if (dateofbirth.getText().toString().isEmpty() == true) {
+        if (dateofbirth.getText().toString().isEmpty()) {
             Snackbar snackbar = Snackbar
                     .make(getCurrentFocus(), "Please enter your DOB", Snackbar.LENGTH_LONG);
             snackbar.show();
@@ -244,6 +267,11 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                     .make(getCurrentFocus(), "Please select your present RTO", Snackbar.LENGTH_LONG);
             snackbar.show();
             return false;
+        }
+        if (dateOfJoiningasamvi.getText().toString().isEmpty()) {
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please select your present Station Code", Snackbar.LENGTH_LONG);
+            snackbar.show();
         }
 
         return true;
@@ -387,7 +415,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                             JSONObject obj = new JSONObject(new String(response.data));
 
                             if (obj.get("message").equals("File uploaded successfully")) {
-                                upload_detailsButton.setVisibility(View.VISIBLE);
 
                             } else {
                                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
