@@ -275,7 +275,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             return false;
         }
 
-        if (ImageUploaded) {
+        if (!ImageUploaded) {
             Snackbar snackbar = Snackbar
                     .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
             snackbar.show();
@@ -405,7 +405,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 e.printStackTrace();
             }
         }
-        ImageUploaded = true;
     }
 
     private void uploadBitmap(final Bitmap bitmap) {
@@ -424,6 +423,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                             JSONObject obj = new JSONObject(new String(response.data));
 
                             if (obj.get("message").equals("File uploaded successfully")) {
+                                ImageUploaded = true;
 
                             } else {
                                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
