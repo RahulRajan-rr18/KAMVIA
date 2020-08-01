@@ -77,7 +77,7 @@
                     android:id="@+id/textview_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Anilkumar PP"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -87,7 +87,7 @@
                     android:layout_width="129dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="PEN2345"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
-                android:text="anilkumarpp@gmail.com"
+                android:text=""
                 android:textSize="@dimen/condentsize" />
 
             <TextView
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
-                android:text="9605825896"
+                android:text=""
                 android:textSize="@dimen/condentsize" />
 
             <LinearLayout
@@ -138,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
-                android:text="House name"
+                android:text=""
                 android:textSize="@dimen/condentsize" />
 
             <TextView
@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Location"
+                android:text=""
                 android:textSize="@dimen/condentsize" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -159,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
-                    android:text="Palakkad"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -170,7 +170,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:gravity="center"
-                    android:text="KL-51"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -189,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
-                    android:text="Kerala"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -200,7 +200,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:gravity="center"
-                    android:text="679502"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_state" />
@@ -233,6 +233,7 @@
                     android:layout_marginTop="3dp"
                     android:text="Date of birth:"
                     android:textSize="@dimen/condentsize"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -241,7 +242,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="12-05-2005"
+                    android:text=""
+
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView13" />
@@ -261,6 +263,7 @@
                     android:layout_marginTop="3dp"
                     android:text="Date of joing as AMVI:"
                     android:textSize="@dimen/condentsize"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -270,7 +273,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="12-05-2005"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView5" />
@@ -289,6 +292,7 @@
                     android:layout_marginTop="3dp"
                     android:text="Present Station:"
                     android:textSize="@dimen/condentsize"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -298,7 +302,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="Palakkad (KL-51)"
+                    android:text=""
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView6" />

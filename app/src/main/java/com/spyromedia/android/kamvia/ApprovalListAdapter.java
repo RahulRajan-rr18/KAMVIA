@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapter.ViewHolder> {
-    private List<ApprovalMemberListItem> aprovallist;
-    private Context context;
+    private final List<ApprovalMemberListItem> aprovallist;
+    private final Context context;
 
     public ApprovalListAdapter(List<ApprovalMemberListItem> approvalmemlist, Context context) {
         this.aprovallist = approvalmemlist;
@@ -40,6 +40,7 @@ public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapte
         holder.mobilenumber.setText(approvememberlistitem.getMemberLocation());
         holder.homestation.setText(approvememberlistitem.getMemberStationCode());
 
+
     }
 
     @Override
@@ -63,9 +64,9 @@ public class ApprovalListAdapter extends RecyclerView.Adapter<ApprovalListAdapte
             this.context = context;
 
             itemView.setOnClickListener(this);
-            membername = (TextView) itemView.findViewById(R.id.textview_membername);
-            homestation = (TextView) itemView.findViewById(R.id.tv_condent);
-            mobilenumber = (TextView) itemView.findViewById(R.id.textview_heading);
+            membername = itemView.findViewById(R.id.textview_membername);
+            homestation = itemView.findViewById(R.id.tv_condent);
+            mobilenumber = itemView.findViewById(R.id.textview_heading);
 
 
         }

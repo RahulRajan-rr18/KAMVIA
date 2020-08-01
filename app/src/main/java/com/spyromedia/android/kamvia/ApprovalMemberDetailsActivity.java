@@ -1,5 +1,6 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +61,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         tv_home_rto_code = findViewById(R.id.homestationcode);
         tv_date_of_joining = findViewById(R.id.joiningdate);
         tv_current_station_dis_wtcode = findViewById(R.id.presentrtodist);
+        user_photo = findViewById(R.id.imageview_userimage);
 
 
         Intent intent = getIntent();
@@ -66,6 +69,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         btn_approve = findViewById(R.id.btn_approve);
         btn_reject = findViewById(R.id.btn_reject);
 
+        FetchImage(this);
         FetchDetails();
 
         btn_approve.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +86,15 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void FetchImage(Activity activity) {
+
+        String url = "http://18.220.53.162/kamvia/api/uploads/" + user_id + ".png";
+        Glide.with(activity)
+                .load(url)
+                .circleCrop()
+                .into(user_photo);
     }
 
     public void FetchDetails() {
