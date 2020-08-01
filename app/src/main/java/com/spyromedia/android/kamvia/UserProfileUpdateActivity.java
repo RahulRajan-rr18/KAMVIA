@@ -72,6 +72,12 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
     boolean check = true;
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
     final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
         @Override
@@ -302,7 +308,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             @Override
             public void onResponse(String response) {
 
-                progressDialog.dismiss();
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);

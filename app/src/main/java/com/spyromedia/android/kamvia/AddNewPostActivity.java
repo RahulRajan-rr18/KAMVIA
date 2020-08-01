@@ -1,10 +1,5 @@
 package com.spyromedia.android.kamvia;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -48,7 +48,14 @@ public class AddNewPostActivity extends AppCompatActivity {
     public static final String UPLOAD_URL = "http://18.220.53.162/kamvia/api/pdfUpload.php";
 
     //Pdf request code
-    private int PICK_PDF_REQUEST = 1;
+    private final int PICK_PDF_REQUEST = 1;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
     //Uri to store the image uri
@@ -73,6 +80,7 @@ public class AddNewPostActivity extends AppCompatActivity {
 
                 if (verify == true) {
                     AddNewPost();
+                    finish();
                     // add file post to database
                     //uploadMultipart();
 
@@ -111,7 +119,6 @@ public class AddNewPostActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                progressDialog.dismiss();
 
 
                 try {
@@ -119,7 +126,7 @@ public class AddNewPostActivity extends AppCompatActivity {
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(AddNewPostActivity.this, "Post Added Successfully", Toast.LENGTH_LONG).show();
-                        finish();
+
 
                     } else {
 

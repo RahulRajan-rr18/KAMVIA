@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         user_id = Globals.currentUser.USER_ID;
-
+        Log.d("MainActivity", "Userid" + user_id);
         //fetching current verification status for restricting operations
         CheckUserVerificationStatus();
         //Check Runtime Permissions
