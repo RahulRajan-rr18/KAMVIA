@@ -153,7 +153,6 @@ public class SearchByNameFragement extends Fragment {
                         String user_id = jsonObject.getString("user_id");
 
                         resultList.add(new SearchResultRecyItem(user_id, name, location, stationcode));
-
                     }
 
                     adapter = new SearchResultAdapter(resultList, getContext());

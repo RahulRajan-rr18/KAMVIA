@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -19,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -30,8 +31,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class ApprovalMemberDetailsActivity extends AppCompatActivity {
     Button btn_approve, btn_reject;
     String user_id;
@@ -40,6 +39,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
     ImageView user_photo;
     TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,
             tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

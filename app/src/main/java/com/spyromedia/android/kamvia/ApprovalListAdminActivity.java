@@ -1,9 +1,11 @@
 package com.spyromedia.android.kamvia;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.os.Bundle;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,19 +32,34 @@ public class ApprovalListAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_approval_list_admin);
-
-         approval_recyclerView = findViewById(R.id.recyclerviewMemberApproval);
-        approval_recyclerView.setHasFixedSize(true);
-
-        approval_recyclerView.setLayoutManager(new LinearLayoutManager( this));
-
-        approvallist = new ArrayList<>();
-
-
-        requestQueue = Volley.newRequestQueue(this);
+        recyclerintialisation();
         parseJSON();
 
     }
+
+    private void recyclerintialisation() {
+        approval_recyclerView = findViewById(R.id.recyclerviewMemberApproval);
+        approval_recyclerView.setHasFixedSize(true);
+
+        approval_recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        approvallist = new ArrayList<>();
+        approvallist.clear();
+
+        requestQueue = Volley.newRequestQueue(this);
+
+    }
+
+
+    @Override
+    protected void onRestart() {
+        recyclerintialisation();
+        parseJSON();
+        super.onRestart();
+        Log.d("Approval", "onRestart: ");
+
+    }
+
 
     private void parseJSON() {
         String url = "http://18.220.53.162/kamvia/api/approvallist.php";
@@ -66,6 +83,7 @@ public class ApprovalListAdminActivity extends AppCompatActivity {
                     }
                     adapter = new ApprovalListAdapter(approvallist,ApprovalListAdminActivity.this);
                     approval_recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

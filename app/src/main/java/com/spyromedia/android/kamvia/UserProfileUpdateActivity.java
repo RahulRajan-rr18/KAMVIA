@@ -75,7 +75,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
