@@ -135,6 +135,7 @@ public class AddNewPostActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(AddNewPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
 
