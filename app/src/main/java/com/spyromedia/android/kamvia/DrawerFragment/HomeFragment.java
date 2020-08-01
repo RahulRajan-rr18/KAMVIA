@@ -5,46 +5,33 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyAdapter;
 import com.spyromedia.android.kamvia.R;
+import com.spyromedia.android.kamvia.VerticalSpaceItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HomeFragment extends Fragment {
     @Nullable
@@ -52,6 +39,7 @@ public class HomeFragment extends Fragment {
     List<HomeTimelineListItem> timelinelist;RequestQueue requestQueuegetTimeline;
     RecyclerView home_recyclerview;
     ProgressDialog progressDialog;
+    private static final int VERTICAL_ITEM_SPACE = 30;
     SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,8 +48,7 @@ public class HomeFragment extends Fragment {
         home_recyclerview = view.findViewById(R.id.home_recyclerview);
         home_recyclerview.setHasFixedSize(true);
         home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        home_recyclerview.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
+        home_recyclerview.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         timelinelist = new ArrayList<>();
 
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());

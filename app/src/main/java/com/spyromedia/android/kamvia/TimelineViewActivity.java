@@ -1,6 +1,7 @@
 package com.spyromedia.android.kamvia;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class TimelineViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                Log.d("TimelineActivity", "onClick: ");
             }
         });
     }
