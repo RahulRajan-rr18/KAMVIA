@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.spyromedia.android.kamvia.AddNewPostActivity;
+import com.spyromedia.android.kamvia.AddStationsActivity;
 import com.spyromedia.android.kamvia.AdminSearchMembersActivity;
 import com.spyromedia.android.kamvia.ApprovalListAdminActivity;
 import com.spyromedia.android.kamvia.R;
@@ -50,6 +51,15 @@ public class AdminCornerFragment extends Fragment {
               startActivity(findmem);
           }
       });
+      Button btnAddNewStation = view.findViewById(R.id.btnddnewstation);
+      btnAddNewStation.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent newstation = new Intent(getContext(), AddStationsActivity.class);
+              startActivity(newstation);
+          }
+      });
+
         return  view;
     }
 }

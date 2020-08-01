@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddStationsActivities"></activity>
+        <activity android:name=".AddStationsActivity"></activity>
         <activity
             android:name=".PasswordResetActivity"
             android:exported="true"
@@ -47,8 +47,6 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:noHistory="true" />
-        <activity android:name=".SearchByNameResultActivity" />
-        <activity android:name=".SearchByLocationResultActivity" />
         <activity
             android:name=".ForgotPasswordActivity"
             android:theme="@style/AppTheme.NoActionBar" />

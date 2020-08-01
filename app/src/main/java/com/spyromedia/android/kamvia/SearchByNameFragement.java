@@ -72,7 +72,8 @@ public class SearchByNameFragement extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String userverified = Globals.currentUser.VERIFICATION;
-                if (userverified.equals("verified")) {
+
+                 if (userverified.equals("verified")) {
 //                    Intent results = new Intent(getActivity(), SearchByNameResultActivity.class);
 //                    results.putExtra("name", SearchByname.getText().toString());
 //                    startActivity(results);
@@ -143,6 +144,7 @@ public class SearchByNameFragement extends Fragment {
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 try {
+                    resultList.clear();
 
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {

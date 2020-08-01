@@ -89,6 +89,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/mainwindowviews"
                     android:ems="10"
+                    android:maxLength="8"
                     android:hint="Permanent Employee Number"
                     android:inputType="text"
                     android:textAllCaps="true" />
@@ -202,7 +203,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/mainwindowviews"
                     android:hint="Home station code ( eg : KL51)"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:maxLength="4"
                     android:textAllCaps="true" />
 
@@ -283,7 +284,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/mainwindowviews"
                     android:hint="present station code ( eg : KL51)"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:maxLength="4"
                     android:textAllCaps="true" />
 

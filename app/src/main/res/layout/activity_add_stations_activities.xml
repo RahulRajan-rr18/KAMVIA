@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddStationsActivities">
+    tools:context=".AddStationsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
+            android:layout_marginLeft="5dp"
             android:text="Add Stations "
             android:textColor="@color/white"
             android:textSize="@dimen/headingtextsize"
@@ -86,7 +87,7 @@
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Station Code (Eg : KL51)"
-            android:inputType="textPersonName"
+            android:inputType="textCapCharacters"
             android:maxLength="4"
             android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,6 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:ems="10"
+            android:maxLength="11"
             android:inputType="phone"
             android:hint="Phone Number"
             app:layout_constraintEnd_toEndOf="parent"
