@@ -22,22 +22,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread" />
 
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/kamvialogo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="158dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/logo_transparent"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logintextvew" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="24dp"
         android:layout_marginRight="40dp"
@@ -56,7 +56,7 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="40dp"
@@ -102,13 +102,14 @@
 
     <Button
         android:id="@+id/Login"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/mainwindowbutton"
         android:text="Login"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerlayout" />
 

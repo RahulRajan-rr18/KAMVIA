@@ -59,14 +59,9 @@ public class AddNewPostActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private String upload_URL = "http://18.220.53.162/kamvia/api/pdfUpload.php";
     private RequestQueue rQueue;
-
-
     private ArrayList<HashMap<String, String>> arraylist;
-
-
     //Pdf request code
     private final int PICK_PDF_REQUEST = 1;
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -74,12 +69,14 @@ public class AddNewPostActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
-
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
     //Uri to store the image uri
     private Uri filePath;
     String url = "https://www.google.com";
+    Uri uri;
+    String displayName = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +94,14 @@ public class AddNewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Boolean verify = verifyPost();
-
                 if (verify == true) {
                     // AddNewPost();
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    intent.setType("application/pdf");
-                    startActivityForResult(intent, 1);
+//                    Intent intent = new Intent();
+//                    intent.setAction(Intent.ACTION_GET_CONTENT);
+//                    intent.setType("application/pdf");
+//                    startActivityForResult(intent, 1);
+                    uploadPDF(displayName, uri);
+
 
                 }
             }
@@ -227,12 +225,10 @@ public class AddNewPostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             // Get the Uri of the selected file
-            Uri uri = data.getData();
+             uri = data.getData();
             String uriString = uri.toString();
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
-            String displayName = null;
-
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
                 try {
@@ -240,8 +236,6 @@ public class AddNewPostActivity extends AppCompatActivity {
                     if (cursor != null && cursor.moveToFirst()) {
                         displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         Log.d("nameeeee>>>>  ", displayName);
-
-                        uploadPDF(displayName, uri);
                     }
                 } finally {
                     cursor.close();
@@ -255,7 +249,6 @@ public class AddNewPostActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
-
 
     //This method will be called when the user will tap on allow or deny
     @Override
@@ -288,7 +281,9 @@ public class AddNewPostActivity extends AppCompatActivity {
                     new Response.Listener<NetworkResponse>() {
                         @Override
                         public void onResponse(NetworkResponse response) {
-                            Log.d("ressssssoo", new String(response.data));
+                            progressDialog.dismiss();
+
+                            Log.d("Uploading ....", new String(response.data));
                             rQueue.getCache().clear();
                             try {
                                 JSONObject jsonObject = new JSONObject(new String(response.data));
@@ -301,7 +296,7 @@ public class AddNewPostActivity extends AppCompatActivity {
 //                                    Log.d("come::: >>>  ","yessssss");
 //                                    arraylist = new ArrayList<HashMap<String, String>>();
 //                                    JSONArray dataArray = jsonObject.getJSONArray("data");
-                                    Toast.makeText(AddNewPostActivity.this, jsonObject.getString("status"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddNewPostActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                     finish();
 
                                 }
@@ -313,6 +308,7 @@ public class AddNewPostActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }) {
@@ -351,6 +347,11 @@ public class AddNewPostActivity extends AppCompatActivity {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             rQueue = Volley.newRequestQueue(AddNewPostActivity.this);
             rQueue.add(volleyMultipartRequest);
+
+            progressDialog = new ProgressDialog(AddNewPostActivity.this);
+            progressDialog.setMessage("Uploading......");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
 
 
         } catch (FileNotFoundException e) {

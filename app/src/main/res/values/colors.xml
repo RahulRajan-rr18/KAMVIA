@@ -5,7 +5,8 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorNavigationbar">#FFCA28</color>
     <color name="RegWindowColour">#a1544f4f</color>
-    <color name="loginWindowColour">#a1585353</color>
+    <color name="loginWindowColour">#A18F8C8C</color>
     <color name="white">#fafafa</color>
     <color name="creamwhite">#ECEBE4</color>
+
 </resources>
