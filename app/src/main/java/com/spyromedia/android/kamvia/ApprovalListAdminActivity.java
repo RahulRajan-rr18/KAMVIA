@@ -2,6 +2,7 @@ package com.spyromedia.android.kamvia;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -68,15 +69,21 @@ public class ApprovalListAdminActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
+                if (response.equals("00") || response.equals("0")){
+                    Toast.makeText(ApprovalListAdminActivity.this, "No Approval Requests found", Toast.LENGTH_SHORT).show();
+                }
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
-
+                    if (jsonArray.length() < 0){
+                        Toast.makeText(ApprovalListAdminActivity.this, "No Requests Found", Toast.LENGTH_SHORT).show();
+                    }
                     for (int i=0; i<jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                         String uname = jsonObject.getString("name");
                         String home_location_code = jsonObject.getString("home_station_code");
-                        String home_station = jsonObject.getString("home_station");
+                        String home_station = jsonObject.getString("home_location");
                         String member_id = jsonObject.getString("user_id");
 
                         approvallist.add(new ApprovalMemberListItem(uname,home_station,home_location_code,member_id));

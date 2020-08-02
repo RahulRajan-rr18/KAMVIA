@@ -150,7 +150,7 @@ public class SearchByNameFragement extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String name = jsonObject.getString("name");
-                        String location = jsonObject.getString("home_station");
+                        String location = jsonObject.getString("home_location");
                         String stationcode = jsonObject.getString("home_station_code");
                         String user_id = jsonObject.getString("user_id");
 

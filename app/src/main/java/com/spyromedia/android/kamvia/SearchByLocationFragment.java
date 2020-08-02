@@ -77,9 +77,7 @@ public class SearchByLocationFragment extends Fragment {
                 String userverified = Globals.currentUser.VERIFICATION;
                 SearchBylocation.clearListSelection();
                 if (userverified.equals("verified")) {
-//                    Intent results = new Intent(getActivity(), SearchByNameResultActivity.class);
-//                    results.putExtra("name", SearchByname.getText().toString());
-//                    startActivity(results);
+
                     getsearchlocation = SearchBylocation.getText().toString();
                     FetchDetails();
                 } else {
@@ -103,7 +101,7 @@ public class SearchByLocationFragment extends Fragment {
 
                     String name;
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        name = jsonArray.getJSONObject(i).getString("home_station");
+                        name = jsonArray.getJSONObject(i).getString("home_district");
                         itemlistvalues.add(name);
                     }
                     Set<String> set = new HashSet<>(itemlistvalues);
@@ -147,14 +145,18 @@ public class SearchByLocationFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 progressDialog.dismiss();
+                if(response.equals("00")){
+                    Toast.makeText(getActivity(), "No Members Found", Toast.LENGTH_SHORT).show();
+                }
                 try {
                     resultList.clear();
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String name = jsonObject.getString("name");
-                        String location = jsonObject.getString("home_station");
+                        String location = jsonObject.getString("home_location");
                         String stationcode = jsonObject.getString("home_station_code");
                         String user_id = jsonObject.getString("user_id");
 
@@ -165,6 +167,7 @@ public class SearchByLocationFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                  //  Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -1,6 +1,8 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +40,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
         HomeTimelineListItem homeTimelineList = timelineList.get(position);
         //routeListItems: list variable
-       // holder.user_id.setText(homeTimelineList.getUserid());
+        // holder.user_id.setText(homeTimelineList.getUserid());
         holder.heading.setText(homeTimelineList.getHeading());
         holder.condent.setText(homeTimelineList.getCondent());
 
@@ -56,7 +58,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         public TextView heading;
         public TextView condent;
 
-             List<HomeTimelineListItem> listItems = new ArrayList<HomeTimelineListItem>();
+        List<HomeTimelineListItem> listItems = new ArrayList<HomeTimelineListItem>();
         Context context;
 
 
@@ -75,19 +77,55 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
         @Override
         public void onClick(View v) {
+            String verified = Globals.currentUser.VERIFICATION;
+            if (verified.equals("verified")) {
 
-             int position = getAdapterPosition();
-            HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
-            Intent intent = new Intent(this.context, TimelineViewActivity.class);
+                int position = getAdapterPosition();
+                HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
+                Intent intent = new Intent(this.context, TimelineViewActivity.class);
 
-            String pdfurl = homeTimelineListItem.getUserid();
-            intent.putExtra("pdfurl",pdfurl);
-            intent.putExtra("heading",homeTimelineListItem.getHeading());
-            intent.putExtra("condent",homeTimelineListItem.getCondent());
+                String pdfurl = homeTimelineListItem.getUserid();
+                intent.putExtra("pdfurl", pdfurl);
+                intent.putExtra("heading", homeTimelineListItem.getHeading());
+                intent.putExtra("condent", homeTimelineListItem.getCondent());
 
-            this.context.startActivity(intent);
+                this.context.startActivity(intent);
+
+            } else {
+
+
+                int position = getAdapterPosition();
+                HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
+                Intent intent = new Intent(this.context, TimelineViewActivity.class);
+
+                String pdfurl = homeTimelineListItem.getUserid();
+                intent.putExtra("pdfurl", pdfurl);
+                intent.putExtra("heading", homeTimelineListItem.getHeading());
+                intent.putExtra("condent", homeTimelineListItem.getCondent());
+
+                this.context.startActivity(intent);
+
+
+              //  alertDialog();
+            }
+
+
 
 
         }
+    }
+    private void alertDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setMessage("You are not a Registered member. Please request for membership first.");
+        dialog.setTitle("Alert");
+        dialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
     }
 }

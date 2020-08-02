@@ -111,6 +111,9 @@ public class AdminSearchMembersActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                if(response.equals("00")){
+                    Toast.makeText(AdminSearchMembersActivity.this, "No Members Found", Toast.LENGTH_SHORT).show();
+                }
                 progressDialog.dismiss();
                 try {
 
@@ -119,7 +122,7 @@ public class AdminSearchMembersActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String name = jsonObject.getString("name");
-                        String location = jsonObject.getString("home_station");
+                        String location = jsonObject.getString("home_location");
                         String stationcode = jsonObject.getString("home_station_code");
                         String  user_id = jsonObject.getString("user_id");
 

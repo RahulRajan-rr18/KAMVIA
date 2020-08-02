@@ -6,23 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".AdminSearchMembersActivity">
 
-    <AutoCompleteTextView
-        android:id="@+id/searchMembers"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchMembersinput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/mainwindowviews"
-        android:hint="Enter Name"
-        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:endIconMode="none"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/searchMembers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:hint="Enter the location"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchMembers" />
+        app:layout_constraintTop_toBottomOf="@+id/searchMembersinput" />
 </androidx.constraintlayout.widget.ConstraintLayout>

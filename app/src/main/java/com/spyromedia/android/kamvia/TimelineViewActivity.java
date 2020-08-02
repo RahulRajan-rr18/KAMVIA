@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class TimelineViewActivity extends AppCompatActivity {
 
     ImageView backarrow;
-    TextView tv_heading, tv_condent, tv_link;
+    TextView tv_heading, tv_condent;
     String pdfurl;
     WebView pdfView;
 
