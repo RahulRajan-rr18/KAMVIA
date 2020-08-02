@@ -3,7 +3,9 @@ package com.spyromedia.android.kamvia;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
+import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +36,7 @@ import java.util.Map;
 
 public class AddStationsActivity extends AppCompatActivity {
     Button btnAddStation;
-    EditText stationName , stationLocation , stationNumber , stationCode;
+    EditText stationName, stationLocation, stationNumber, stationCode;
     Spinner stationDistrict;
     ProgressDialog progressDialog;
 
@@ -54,7 +57,7 @@ public class AddStationsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Boolean verify = verifydata();
-                if(verify){
+                if (verify) {
                     addStation();
                 }
             }
@@ -72,13 +75,17 @@ public class AddStationsActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 progressDialog.dismiss();
-
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+                    Boolean res = jsonObject.getBoolean("error");
                     if (!jsonObject.getBoolean("error")) {
-                        Toast.makeText(AddStationsActivity.this, "Station Added Successfully", Toast.LENGTH_SHORT).show();
                         finish();
+                        Toast.makeText(AddStationsActivity.this, "Added", Toast.LENGTH_LONG).show();
+
+
                     } else {
+
+                        Toast.makeText(AddStationsActivity.this, "Failed", Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
@@ -89,7 +96,6 @@ public class AddStationsActivity extends AppCompatActivity {
 
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
@@ -117,8 +123,8 @@ public class AddStationsActivity extends AppCompatActivity {
                 params.put("stationname", stationName.getText().toString().trim());
                 params.put("location", stationLocation.getText().toString().trim());
                 params.put("code", stationCode.getText().toString().trim());
-                params.put("district",stationDistrict.getSelectedItem() .toString().trim());
-                params.put("number",stationNumber.getText() .toString().trim());
+                params.put("district", stationDistrict.getSelectedItem().toString().trim());
+                params.put("number", stationNumber.getText().toString().trim());
 
                 return params;
             }
@@ -131,40 +137,40 @@ public class AddStationsActivity extends AppCompatActivity {
 
 
     private Boolean verifydata() {
-        if(stationName.getText().toString().equals("")){
+        if (stationName.getText().toString().equals("")) {
             Snackbar snackbar = Snackbar
                     .make(stationName, "Please enter station name", Snackbar.LENGTH_LONG);
             snackbar.show();
-            return  false;
+            return false;
         }
-        if(stationLocation.getText().toString().equals("")){
+        if (stationLocation.getText().toString().equals("")) {
             Snackbar snackbar = Snackbar
                     .make(stationLocation, "Enter Location", Snackbar.LENGTH_LONG);
             snackbar.show();
-            return  false;
+            return false;
         }
-        if(stationCode.getText().toString().equals("")){
+        if (stationCode.getText().toString().equals("")) {
 
             Snackbar snackbar = Snackbar
                     .make(stationCode, "Enter Station Code", Snackbar.LENGTH_LONG);
             snackbar.show();
-            return  false;
+            return false;
         }
-        if(stationDistrict.getSelectedItem().equals("Select District")){
+        if (stationDistrict.getSelectedItem().equals("Select District")) {
 
             Snackbar snackbar = Snackbar
                     .make(stationDistrict, "Choose District", Snackbar.LENGTH_LONG);
             snackbar.show();
-            return  false;
+            return false;
         }
 
-        if(stationNumber.getText().toString().equals("")){
+        if (stationNumber.getText().toString().equals("")) {
             Snackbar snackbar = Snackbar
                     .make(stationNumber, "Enter Phone number", Snackbar.LENGTH_LONG);
             snackbar.show();
-            return  true;
+            return true;
         }
 
-      return true;
+        return true;
     }
 }

@@ -6,6 +6,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -275,12 +280,12 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             return false;
         }
 
-//        if (!ImageUploaded) {
-//            Snackbar snackbar = Snackbar
-//                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
-//            snackbar.show();
-//            return false;
-     //   }
+        if (!ImageUploaded) {
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            return false;
+        }
         return true;
 
     }
@@ -303,14 +308,13 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
     public void Update_Profile() {
 
-        String url = "http://18.220.53.162/kamvia/api/UserProleUpdate.php";
+        String url = "http://18.220.53.162/kamvia/api/UserProfileUpdate.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-
+                progressDialog.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
@@ -319,20 +323,17 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
                     if (!jsonObject.getBoolean("error")) {
 
-                        try{
+                        try {
 
                             Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
                             Intent home = new Intent(UserProfileUpdateActivity.this, MainActivity.class);
                             startActivity(home);
 
-                        }catch (Exception ex){
+                        } catch (Exception ex) {
                             ex.getMessage();
 
                         }
 
-
-
-//
 
                     } else {
 
@@ -364,18 +365,21 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 params.put("email", email.getText().toString().trim());
                 params.put("mobile_number", Globals.currentUser.MOBILE_NUMBER);
                 params.put("date_of_birth", dateofbirth.getText().toString().trim());
-                params.put("address", add_line1.getText().toString().trim() + add_line2.getText().toString().trim());
+                params.put("address", add_line1.getText().toString().trim() );
+                params.put("home_location",add_line2.getText().toString().trim());
                 params.put("home_station_code", home_station_code.getText().toString().trim());
                 params.put("home_station", home_station_code.getText().toString().trim());
                 params.put("date_of_joining", dateOfJoiningasamvi.getText().toString().trim());
-                params.put("present_station_code", present_station_code.getText().toString().trim() + add_line2.getText().toString().trim());
-                params.put("present_station", present_station_code.getText().toString().trim());
+                params.put("present_station",present_station_code.getText().toString().trim());
                 params.put("state", "Kerala");
                 params.put("home_pincode", pincode.getText().toString().trim());
                 params.put("home_district", home_district.getSelectedItem().toString().trim());
                 params.put("fee_paid", radioButton.getText().toString().trim());
                 params.put("member_type", membership_type.getSelectedItem().toString().trim());
                 params.put("present_rto_district", present_rto_district.getSelectedItem().toString().trim());
+                params.put("present_station_code", present_station_code.getText().toString().trim());
+
+
                 return params;
             }
         };
@@ -406,7 +410,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 //getting bitmap object from uri
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 //displaying selected image to imageview
-                profile_image.setImageBitmap(bitmap);
+                Bitmap croped = getCircularBitmap(bitmap);
+
+                profile_image.setImageBitmap(croped);
                 //calling the method uploadBitmap to upload image
                 uploadBitmap(bitmap);
 
@@ -419,7 +425,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     private void uploadBitmap(final Bitmap bitmap) {
 
         //getting the tag from the edittext
-       // final String tags = "2222222";
+        // final String tags = "2222222";
 
         //our custom volley request
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
@@ -441,6 +447,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d(TAG, "onResponse: Profile Image Uploading Failed");
+                            Toast.makeText(UserProfileUpdateActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -472,7 +479,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 Map<String, DataPart> params = new HashMap<>();
                 //long imagename = System.currentTimeMillis();
                 String imagename = Globals.currentUser.USER_ID;
-                params.put("pic", new DataPart(imagename + ".jpg", getFileDataFromDrawable(bitmap)));
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
                 return params;
             }
         };
@@ -490,6 +497,37 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         return byteArrayOutputStream.toByteArray();
     }
 
+    public static Bitmap getCircularBitmap(Bitmap bitmap) {
+        Bitmap output;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        } else {
+            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        float r = 0;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            r = bitmap.getHeight() / 2;
+        } else {
+            r = bitmap.getWidth() / 2;
+        }
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(r, r, r, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
 
 
 }

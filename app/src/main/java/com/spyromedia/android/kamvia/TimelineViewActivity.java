@@ -12,6 +12,7 @@ public class TimelineViewActivity extends AppCompatActivity {
 
     ImageView backarrow;
     TextView tv_heading, tv_condent, tv_link;
+    String pdfurl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,10 @@ public class TimelineViewActivity extends AppCompatActivity {
 
         tv_heading = findViewById(R.id.tv_heading);
         tv_condent = findViewById(R.id.tv_condent);
+        pdfurl = getIntent().getStringExtra("pdfurl");
 
         tv_heading.setText(""+getIntent().getStringExtra("heading"));
         tv_condent.setText(""+getIntent().getStringExtra("condent"));
-
 
         backarrow = findViewById(R.id.iv_backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {

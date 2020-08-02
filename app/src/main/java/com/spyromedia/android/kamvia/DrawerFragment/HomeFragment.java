@@ -74,10 +74,11 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String user_id = jsonObject.getString("user_id");
+                        //geting pdf url from server
+                        String pdfurl = jsonObject.getString("pdfurl");
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
-                        timelinelist.add(new HomeTimelineListItem("", heading, condent));
+                        timelinelist.add(new HomeTimelineListItem(pdfurl, heading, condent));
 
                     }
 

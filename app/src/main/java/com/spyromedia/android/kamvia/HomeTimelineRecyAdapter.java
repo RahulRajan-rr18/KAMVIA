@@ -38,7 +38,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
         HomeTimelineListItem homeTimelineList = timelineList.get(position);
         //routeListItems: list variable
-        holder.user_id.setText(homeTimelineList.getUserid());
+       // holder.user_id.setText(homeTimelineList.getUserid());
         holder.heading.setText(homeTimelineList.getHeading());
         holder.condent.setText(homeTimelineList.getCondent());
 
@@ -80,7 +80,8 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
             HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
             Intent intent = new Intent(this.context, TimelineViewActivity.class);
 
-            intent.putExtra("post_id",homeTimelineListItem.getUserid());
+            String pdfurl = homeTimelineListItem.getUserid();
+            intent.putExtra("pdfurl",pdfurl);
             intent.putExtra("heading",homeTimelineListItem.getHeading());
             intent.putExtra("condent",homeTimelineListItem.getCondent());
 
