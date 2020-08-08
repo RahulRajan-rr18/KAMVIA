@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.HomeTimelineRecyView;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.spyromedia.android.kamvia.Globals;
+import com.spyromedia.android.kamvia.R;
 
 import java.util.ArrayList;
 import java.util.List;

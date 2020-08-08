@@ -11,10 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.spyromedia.android.kamvia.AddNewPostActivity;
-import com.spyromedia.android.kamvia.AddStationsActivity;
-import com.spyromedia.android.kamvia.AdminSearchMembersActivity;
-import com.spyromedia.android.kamvia.ApprovalListAdminActivity;
+import com.spyromedia.android.kamvia.AdminFunctions.AddStationsActivity;
+import com.spyromedia.android.kamvia.AdminFunctions.AllTypeSearchWindowActivity;
+import com.spyromedia.android.kamvia.AdminFunctions.MembershipTabActivity;
+import com.spyromedia.android.kamvia.AdminFunctions.PostsActivity;
 import com.spyromedia.android.kamvia.R;
 
 public class AdminCornerFragment extends Fragment {
@@ -29,17 +29,17 @@ public class AdminCornerFragment extends Fragment {
       btnNewPost.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Intent addpost = new Intent(getContext(),AddNewPostActivity.class);
+              Intent addpost = new Intent(getContext(), PostsActivity.class);
               startActivity(addpost);
           }
       });
 
-      Button btnApprovalList = view.findViewById(R.id.btn_approvalRequests);
+      Button btnApprovalList = view.findViewById(R.id.btn_membership);
       btnApprovalList.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Intent approvelist = new Intent(getContext(), ApprovalListAdminActivity.class);
-              startActivity(approvelist);
+              Intent membership = new Intent(getContext(), MembershipTabActivity.class);
+              startActivity(membership);
           }
       });
 
@@ -47,7 +47,7 @@ public class AdminCornerFragment extends Fragment {
       btn_findmembers.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Intent findmem = new Intent(getContext(), AdminSearchMembersActivity.class);
+              Intent findmem = new Intent(getContext(), AllTypeSearchWindowActivity.class);
               startActivity(findmem);
           }
       });

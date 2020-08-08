@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.HomeTimelineRecyView;
 
 	public class HomeTimelineListItem {
 

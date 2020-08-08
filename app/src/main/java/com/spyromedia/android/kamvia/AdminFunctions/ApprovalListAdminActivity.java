@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.AdminFunctions;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.spyromedia.android.kamvia.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

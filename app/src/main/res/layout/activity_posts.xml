@@ -7,28 +7,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:orientation="horizontal"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_createpost"
-            android:text="post"
-            android:textColor="@color/white"
+            android:id="@+id/btnNewPost"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
             android:background="@android:color/holo_green_dark"
-            android:layout_width="0dip"
-            android:layout_margin="10dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:text="Create New Post"
+            android:textColor="@color/white" />
 
         <Button
-            android:id="@+id/btn_membership"
+            android:id="@+id/btnModify"
             android:layout_width="0dip"
-            android:textColor="@color/white"
-            android:layout_margin="10dp"
             android:layout_height="match_parent"
-            android:text="Membership"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
             android:background="@android:color/holo_purple"
-            android:layout_weight="1"/>
+            android:text="Modify /Delete "
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,20 +38,18 @@
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/btn_findmembers"
+            android:id="@+id/btnOldPosts"
             android:layout_width="0dip"
             android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:text="Search Members"
             android:background="@android:color/holo_blue_dark"
             android:layout_height="match_parent"
+            android:text="Old posts"
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/btnddnewstation"
             android:layout_width="0dip"
             android:layout_margin="10dp"
-            android:text="Add New Station"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -62,16 +60,6 @@
         android:orientation="horizontal"
         android:layout_weight="1" >
 
-        <Button
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1" />
 
-        <Button
-            android:layout_width="0dip"
-            android:layout_margin="10dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
     </LinearLayout>
 </LinearLayout>

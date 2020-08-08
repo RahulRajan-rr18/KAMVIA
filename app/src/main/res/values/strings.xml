@@ -22,6 +22,31 @@
         <item>Wayanad</item>
 
     </string-array>
+    <string-array name="sort">
+        <item>Most Recent</item>
+    </string-array>
+
+    <string-array name="searchtype">
+        <item>Choose</item>
+        <item>Search By Name</item>
+        <item>Search By Location</item>
+        <item>Search Blood Group</item>
+        <item>Search Blood Office Name</item>
+
+    </string-array>
+    <string-array name="bloodgroup">
+
+        <item>Choose</item>
+        <item>O positive</item>
+        <item>O negative</item>
+        <item>A positive</item>
+        <item>A negative</item>
+        <item>B positive</item>
+        <item>B negative</item>
+        <item>AB positive</item>
+        <item>AB negative</item>
+    </string-array>
+
 
     <string-array name="doc_type">
 

@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.HomeTimelineRecyView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.spyromedia.android.kamvia.R;
 
 public class TimelineViewActivity extends AppCompatActivity {
 

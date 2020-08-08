@@ -1,9 +1,7 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.AdminFunctions;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.spyromedia.android.kamvia.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,98 +34,68 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
-
-    Button btn_promoteAdmin;
-    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,
-            tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
+public class ApprovalMemberDetailsActivity extends AppCompatActivity {
+    Button btn_approve, btn_reject;
     String user_id;
     ProgressDialog progressDialog;
-    Button btn_removeMember;
-    ImageView profilePhoto;
-    String getUser_id;
+
+    ImageView user_photo;
+    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,
+            tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_member_search_result_view);
+        setContentView(R.layout.activity_member_approval);
         getSupportActionBar().hide();
+
+        tv_name = findViewById(R.id.textview_name);
+        tv_employeenumber = findViewById(R.id.employeenumber);
+        tv_mobilenumber = findViewById(R.id.mobilenumber);
+        tv_email = findViewById(R.id.email);
+        tv_date_of_birth = findViewById(R.id.dateofbirth);
+        tv_housename = findViewById(R.id.housename);
+        tv_home_location = findViewById(R.id.homelocation);
+        tv_district = findViewById(R.id.district);
+        tv_pincode = findViewById(R.id.pincode);
+        tv_home_rto_code = findViewById(R.id.homestationcode);
+        tv_date_of_joining = findViewById(R.id.joiningdate);
+        tv_current_station_dis_wtcode = findViewById(R.id.presentrtodist);
+        user_photo = findViewById(R.id.imageview_userimage);
 
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
-        btn_removeMember = findViewById(R.id.btn_remove_member);
+        btn_approve = findViewById(R.id.btn_approve);
+        btn_reject = findViewById(R.id.btn_reject);
 
-        tv_name = findViewById(R.id.tv_name);
-        tv_employeenumber = findViewById(R.id.tv_employeenumber);
-        tv_mobilenumber = findViewById(R.id.tv_mobilenumber);
-        tv_email = findViewById(R.id.tv_email);
-        tv_date_of_birth = findViewById(R.id.tv_dateofbirth);
-        tv_housename = findViewById(R.id.tv_housename);
-        tv_home_location = findViewById(R.id.tv_homelocation);
-        tv_district = findViewById(R.id.tv_district);
-        tv_pincode = findViewById(R.id.tv_pincode);
-        tv_home_rto_code = findViewById(R.id.tv_homestationcode);
-        tv_date_of_joining = findViewById(R.id.tv_joiningdate);
-        tv_current_station_dis_wtcode = findViewById(R.id.tv_presentrtodist);
-        profilePhoto = findViewById(R.id.imageview_userimage);
-
-
-        FetchDetails();
         FetchImage(this);
+        FetchDetails();
 
-        btn_removeMember.setOnClickListener(new View.OnClickListener() {
+        btn_approve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AdminMemberSearchResultViewActivity.this);
-                builder.setTitle(R.string.app_name);
-                builder.setMessage("Are you sure to forward ?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-
-                        DeleteMember(user_id);
-
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
+                ApproveMember();
             }
         });
 
-
-        btn_promoteAdmin = findViewById(R.id.btn_promoteasadmin);
-        btn_promoteAdmin.setOnClickListener(new View.OnClickListener() {
+        btn_reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(AdminMemberSearchResultViewActivity.this);
-                builder.setTitle(R.string.app_name);
-                builder.setMessage("Are you sure to forward ?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-
-                        promoteAdmin(user_id);
-
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
+                RejectMember();
             }
         });
 
+    }
 
+    private void FetchImage(Activity activity) {
+
+        String url = "http://18.220.53.162/kamvia/api/uploads/" + user_id + ".png";
+        Glide.with(activity)
+                .load(url)
+                .circleCrop()
+                .into(user_photo);
     }
 
     public void FetchDetails() {
@@ -147,32 +116,34 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                         String email = jsonObject1.optString("email");
                         String emp_no = jsonObject1.optString("employee_number");
                         String mob_no = jsonObject1.optString("whatsapp_number");
-                        String dob = jsonObject1.optString("date_of_birth");
                         String housename = jsonObject1.optString("address");
                         String location = jsonObject1.optString("home_location");
                         String district = jsonObject1.optString("home_district");
                         String pincode = jsonObject1.optString("home_pincode");
                         String h_rto_code = jsonObject1.optString("home_station_code");
-                        String home_station = jsonObject1.optString("home_station");
                         String current_station = jsonObject1.optString("present_rto_district");
                         String cu_rto_code = jsonObject1.optString("present_station_code");
-                        String date_of_joining = jsonObject1.optString("date_of_joining");
+
+                        String date_of_birth = jsonObject1.optString("date_of_birth");
+                        String date_ofjoining = jsonObject1.optString("date_of_joining");
+
 
                         tv_name.setText(name);
+                        tv_email.setText(email);
                         tv_mobilenumber.setText(mob_no);
                         tv_employeenumber.setText(emp_no);
-                        tv_email.setText(email);
-                        tv_date_of_birth.setText(dob);
+
                         tv_housename.setText(housename);
                         tv_home_location.setText(location);
                         tv_district.setText(district);
                         tv_pincode.setText(pincode);
                         tv_home_rto_code.setText(h_rto_code);
-                        tv_date_of_joining.setText(date_of_joining);
-                        tv_current_station_dis_wtcode.setText(current_station + "  " + cu_rto_code);
+                        tv_date_of_birth.setText(date_of_birth);
+                        tv_date_of_joining.setText(date_ofjoining);
+                        tv_current_station_dis_wtcode.setText(current_station + "(" + cu_rto_code + ")");
+
 
                     }
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -186,13 +157,13 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
                 } else if (error instanceof NoConnectionError) {
                 } else if (error instanceof TimeoutError) {
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this,
+                    Toast.makeText(ApprovalMemberDetailsActivity.this,
                             "Oops. Timeout error!",
                             Toast.LENGTH_LONG).show();
                 }
@@ -210,13 +181,15 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
-        progressDialog = new ProgressDialog(AdminMemberSearchResultViewActivity.this);
+        progressDialog = new ProgressDialog(ApprovalMemberDetailsActivity.this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
     }
 
-    public void promoteAdmin(final String user_id) {
-        String url = "http://18.220.53.162/kamvia/api/PromoteAsAdmin.php";
+
+    public void ApproveMember() {
+
+        String url = "http://18.220.53.162/kamvia/api/approve_member.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -226,13 +199,16 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String message = jsonObject.getString("message");
+                    if (!jsonObject.getBoolean("error")) {
 
-                    if (jsonObject.getString("message").equals("Promoted as admin")) {
+                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Member Approved", Toast.LENGTH_LONG).show();
                         finish();
-                    }
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this, message, Toast.LENGTH_LONG).show();
 
+                    } else {
+
+                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Approval failed", Toast.LENGTH_LONG).show();
+
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
 
@@ -246,13 +222,13 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
                 } else if (error instanceof NoConnectionError) {
                 } else if (error instanceof TimeoutError) {
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this,
+                    Toast.makeText(ApprovalMemberDetailsActivity.this,
                             "Oops. Timeout error!",
                             Toast.LENGTH_LONG).show();
                 }
@@ -263,16 +239,16 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", user_id.trim());
+                params.put("user_id", user_id);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
-
     }
 
-    public void DeleteMember(final String user_id) {
-        String url = "http://18.220.53.162/kamvia/api/DeleteMember.php";
+    public void RejectMember() {
+
+        String url = "http://18.220.53.162/kamvia/api/reject_member.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -282,10 +258,16 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String message = jsonObject.getString("message");
+                    if (!jsonObject.getBoolean("error")) {
 
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this, message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Rejected", Toast.LENGTH_LONG).show();
+                        finish();
 
+                    } else {
+
+                        Toast.makeText(ApprovalMemberDetailsActivity.this, "Rejection failed", Toast.LENGTH_LONG).show();
+
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
 
@@ -299,13 +281,13 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ApprovalMemberDetailsActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
                 } else if (error instanceof NoConnectionError) {
                 } else if (error instanceof TimeoutError) {
-                    Toast.makeText(AdminMemberSearchResultViewActivity.this,
+                    Toast.makeText(ApprovalMemberDetailsActivity.this,
                             "Oops. Timeout error!",
                             Toast.LENGTH_LONG).show();
                 }
@@ -316,24 +298,12 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", user_id.trim());
+                params.put("user_id", "id");
                 return params;
             }
         };
         requestQueue.add(stringRequest);
-
     }
 
-
-    private void FetchImage(Activity activity) {
-        String url = "http://18.220.53.162/kamvia/api/uploads/" + user_id + ".png";
-        Glide.with(activity)
-                .load(url)
-                .circleCrop()
-                .into(profilePhoto);
-    }
 
 }
-
-
-

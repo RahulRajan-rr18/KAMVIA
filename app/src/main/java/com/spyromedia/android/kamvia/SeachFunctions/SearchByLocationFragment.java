@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.SeachFunctions;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -31,6 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.spyromedia.android.kamvia.Globals;
+import com.spyromedia.android.kamvia.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,6 +93,7 @@ public class SearchByLocationFragment extends Fragment {
     private void ListNames() {
 
         String url = "http://18.220.53.162/kamvia/api/users.php";
+        //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

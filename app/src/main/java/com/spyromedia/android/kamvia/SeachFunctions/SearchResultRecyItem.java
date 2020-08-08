@@ -1,6 +1,6 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.SeachFunctions;
 
-public class AdminSeachResultItem {
+public class SearchResultRecyItem {
 
     private String memberName;
     private String memberLocation;
@@ -24,7 +24,7 @@ public class AdminSeachResultItem {
         return memberStationCode;
     }
 
-    public AdminSeachResultItem(String user_id, String memberName, String memberLocation, String memberLocationCode) {
+    public SearchResultRecyItem(String user_id,String memberName, String memberLocation, String memberLocationCode) {
         this.memberName = memberName;
         this.memberLocation = memberLocation;
         this.memberStationCode = memberLocationCode;

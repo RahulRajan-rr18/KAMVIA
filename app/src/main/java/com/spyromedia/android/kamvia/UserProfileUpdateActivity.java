@@ -18,12 +18,14 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,42 +39,51 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class UserProfileUpdateActivity extends AppCompatActivity implements View.OnClickListener {
     final Calendar myCalendar = Calendar.getInstance();
     final Calendar myCalendar2 = Calendar.getInstance();
-    Spinner home_district, present_rto_district, membership_type;
+    Spinner home_district, present_rto_district, membership_type, PresentStationCode, HomeStationCode , bloodGroup;
     ProgressDialog progressDialog, ImageUploadProgressBar;
-    TextView errorDist, errorRtoDist;
+    TextView errorDist, errorRtoDist, imageError;
     RadioGroup member_fee_paid;
     RadioButton radioButton;
-    Button pickImageButton, upload_detailsButton, uploadImageButton;
+    ScrollView sv;
+    Button upload_detailsButton, uploadImageButton;
     EditText dateofbirth, dateOfJoiningasamvi;
-    EditText name, email, employee_number, add_line1, add_line2, pincode, state, home_station_code, present_station_code;
+    EditText name, email, employee_number, add_line1, add_line2, pincode, state;
     Boolean ImageUploaded = false;
     public static final String UPLOAD_URL = "http://18.220.53.162/kamvia/api/api.php";
     public static final String UPLOAD_KEY = "image";
     public static final String TAG = "MY MESSAGE";
     private final int PICK_IMAGE_REQUEST = 1;
-    private Bitmap bitmap;
-    private Uri filePath;
+    // private Bitmap bitmap;
+    //private Uri filePath;
+    ArrayList<String> stationlist = new ArrayList<String>();
+
 
     ImageView profile_image;
+    RequestQueue requestQueue;
 
 
     boolean check = true;
@@ -128,9 +139,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         home_district = findViewById(R.id.listDistrict);
         pincode = findViewById(R.id.pincode);
         state = findViewById(R.id.state);
-        home_station_code = findViewById(R.id.home_station_code);
+        HomeStationCode = findViewById(R.id.homeStationCode);
         present_rto_district = findViewById(R.id.id_present_district);
-        present_station_code = findViewById(R.id.present_station_code);
+        PresentStationCode = findViewById(R.id.idPreStationCode);
         member_fee_paid = findViewById(R.id.rd_group_feepaid);
         //pickImageButton = findViewById(R.id.btn_pickImage);
         uploadImageButton = findViewById(R.id.btn_upload_image);
@@ -138,6 +149,13 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         errorDist = findViewById(R.id.error_dist);
         errorRtoDist = findViewById(R.id.error_rto_dist);
         membership_type = findViewById(R.id.id_memtype);
+        imageError = findViewById(R.id.imageerror);
+        sv = findViewById(R.id.scrollView);
+        bloodGroup =findViewById(R.id.bloodGroup);
+
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        getStationDetails();
+
 
         profile_image = findViewById(R.id.imagepicked);
         //checking storage permission
@@ -201,12 +219,14 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(name, "Please enter your name", Snackbar.LENGTH_LONG);
             snackbar.show();
+            name.requestFocus();
             return false;
         }
         if (email.getText().toString().trim().isEmpty()) {
             email.setError("Email required");
             Snackbar snackbar = Snackbar
                     .make(email, "Please enter your email", Snackbar.LENGTH_LONG);
+            email.requestFocus();
             snackbar.show();
             return false;
         }
@@ -215,6 +235,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(employee_number, "Please enter your employee number", Snackbar.LENGTH_LONG);
             snackbar.show();
+            employee_number.requestFocus();
             return false;
         }
         if (add_line1.getText().toString().trim().isEmpty()) {
@@ -222,6 +243,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(add_line1, "Please enter address", Snackbar.LENGTH_LONG);
             snackbar.show();
+            add_line1.requestFocus();
             return false;
         }
         if (add_line2.getText().toString().trim().isEmpty()) {
@@ -229,6 +251,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(add_line2, "Please enter your address", Snackbar.LENGTH_LONG);
             snackbar.show();
+            add_line2.requestFocus();
             return false;
         }
 
@@ -237,20 +260,25 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(pincode, "Please enter your pincode", Snackbar.LENGTH_LONG);
             snackbar.show();
+            pincode.requestFocus();
+
             return false;
         }
-        if (home_station_code.getText().toString().trim().isEmpty()) {
-            home_station_code.setError("Home station code required");
+        if (HomeStationCode.getSelectedItem().equals("staion code")) {
+           // home_station_code.setError("Home station code required");
             Snackbar snackbar = Snackbar
-                    .make(home_station_code, "Please enter your home station code", Snackbar.LENGTH_LONG);
+                    .make(HomeStationCode, "Select you Home Station Code", Snackbar.LENGTH_LONG);
             snackbar.show();
+            HomeStationCode.requestFocus();
+
             return false;
         }
-        if (present_station_code.getText().toString().trim().isEmpty()) {
-            present_station_code.setError("Present station code required");
+        if (PresentStationCode.getSelectedItem().equals("staion code")) {
+           // present_station_code.setError("Present station code required");
             Snackbar snackbar = Snackbar
-                    .make(present_station_code, "Please enter your present station code", Snackbar.LENGTH_LONG);
+                    .make(PresentStationCode, "Present Station Code", Snackbar.LENGTH_LONG);
             snackbar.show();
+            PresentStationCode.requestFocus();
             return false;
         }
         if (dateofbirth.getText().toString().isEmpty()) {
@@ -264,6 +292,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(home_district, "Please choose your district", Snackbar.LENGTH_LONG);
             snackbar.show();
+            home_district.requestFocus();
             return false;
         }
 
@@ -271,12 +300,14 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(present_rto_district, "Please select your present RTO", Snackbar.LENGTH_LONG);
             snackbar.show();
+            present_rto_district.requestFocus();
             return false;
         }
         if (dateOfJoiningasamvi.getText().toString().isEmpty()) {
             Snackbar snackbar = Snackbar
-                    .make(dateOfJoiningasamvi, "Please select your present Station Code", Snackbar.LENGTH_LONG);
+                    .make(dateOfJoiningasamvi, "Date of Joining as AMVI", Snackbar.LENGTH_LONG);
             snackbar.show();
+            dateOfJoiningasamvi.requestFocus();
             return false;
         }
 
@@ -284,7 +315,19 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             Snackbar snackbar = Snackbar
                     .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
             snackbar.show();
+            imageError.setError("Please Upload your Image");
+            // imageError.requestFocus();
+            sv.scrollTo(5, 10);
+            // uploadImageButton.requestFocus();
+
             return false;
+        }
+
+        if (bloodGroup.getSelectedItem().toString().equals("Choose")){
+            Snackbar snackbar = Snackbar
+                    .make(bloodGroup, "Please Choose your blood group", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            return  false;
         }
         return true;
 
@@ -365,19 +408,20 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 params.put("email", email.getText().toString().trim());
                 params.put("mobile_number", Globals.currentUser.MOBILE_NUMBER);
                 params.put("date_of_birth", dateofbirth.getText().toString().trim());
-                params.put("address", add_line1.getText().toString().trim() );
-                params.put("home_location",add_line2.getText().toString().trim());
-                params.put("home_station_code", home_station_code.getText().toString().trim());
-                params.put("home_station", home_station_code.getText().toString().trim());
+                params.put("address", add_line1.getText().toString().trim());
+                params.put("home_location", add_line2.getText().toString().trim());
+                params.put("home_station_code", HomeStationCode.getSelectedItem().toString().trim());
+                params.put("home_station",HomeStationCode.getSelectedItem().toString());
                 params.put("date_of_joining", dateOfJoiningasamvi.getText().toString().trim());
-                params.put("present_station",present_station_code.getText().toString().trim());
+                params.put("present_station", PresentStationCode.getSelectedItem().toString().trim());
                 params.put("state", "Kerala");
                 params.put("home_pincode", pincode.getText().toString().trim());
                 params.put("home_district", home_district.getSelectedItem().toString().trim());
                 params.put("fee_paid", radioButton.getText().toString().trim());
                 params.put("member_type", membership_type.getSelectedItem().toString().trim());
                 params.put("present_rto_district", present_rto_district.getSelectedItem().toString().trim());
-                params.put("present_station_code", present_station_code.getText().toString().trim());
+                params.put("present_station_code", PresentStationCode.getSelectedItem().toString().trim());
+                params.put("bloodgroup",bloodGroup.getSelectedItem().toString().trim());
 
 
                 return params;
@@ -475,7 +519,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
              * Here we are passing image by renaming it with a unique name
              * */
             @Override
-            protected Map<String, DataPart> getByteData() {
+            protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
                 //long imagename = System.currentTimeMillis();
                 String imagename = Globals.currentUser.USER_ID;
@@ -529,5 +573,38 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         return output;
     }
 
+    private void getStationDetails() {
+
+        String url = "http://18.220.53.162/kamvia/api/getstationdetails.php";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    stationlist.add("staion code");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                        String stationcode = jsonObject1.optString("code");
+
+
+                        stationlist.add(stationcode);
+                    }
+                    ArrayAdapter<String> spinnerMenu = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, stationlist);
+                    PresentStationCode.setAdapter(spinnerMenu);
+                    HomeStationCode.setAdapter(spinnerMenu);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
 
 }

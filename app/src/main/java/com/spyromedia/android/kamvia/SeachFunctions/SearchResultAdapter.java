@@ -1,6 +1,7 @@
-package com.spyromedia.android.kamvia;
+package com.spyromedia.android.kamvia.SeachFunctions;
 
 import android.content.Context;
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.spyromedia.android.kamvia.MemberDetailsActivity;
+import com.spyromedia.android.kamvia.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminSearchRecyAdapter extends RecyclerView.Adapter<AdminSearchRecyAdapter.ViewHolder >{
-    private  List<AdminSeachResultItem> resultList;
+public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder >{
+    private  List<SearchResultRecyItem> resultList;
     private Context context;
 
-    public AdminSearchRecyAdapter(List<AdminSeachResultItem> resultList, Context context) {
+    public SearchResultAdapter(List<SearchResultRecyItem> resultList, Context context) {
         this.resultList = resultList;
         this.context = context;
     }
@@ -25,18 +29,18 @@ public class AdminSearchRecyAdapter extends RecyclerView.Adapter<AdminSearchRecy
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder( @NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_search_result_item,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.searchresultitem,parent,false);
           //routelist_item: layout name of menu
         return  new ViewHolder(v,context,resultList);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        AdminSeachResultItem adminSeachResultItem = resultList.get(position);
+        SearchResultRecyItem searchresultitem = resultList.get(position);
         //routeListItems: list variable
-        holder.membername.setText(adminSeachResultItem.getMemberName());
-        holder.memberlocation.setText(adminSeachResultItem.getMemberLocation());
-        holder.memberstationCode.setText(adminSeachResultItem.getMemberStationCode());
+        holder.membername.setText(searchresultitem.getMemberName());
+        holder.memberlocation.setText(searchresultitem.getMemberLocation());
+        holder.memberstationCode.setText(searchresultitem.getMemberStationCode());
     }
     @Override
     public int getItemCount() {
@@ -48,9 +52,9 @@ public class AdminSearchRecyAdapter extends RecyclerView.Adapter<AdminSearchRecy
         public TextView memberlocation;
         public TextView memberstationCode;
 
-        List<AdminSeachResultItem> listItems = new ArrayList<AdminSeachResultItem>();
+        List<SearchResultRecyItem> listItems = new ArrayList<SearchResultRecyItem>();
         Context context;
-        public ViewHolder(View itemView, Context context, List<AdminSeachResultItem> resultList) {
+        public ViewHolder(View itemView, Context context, List<SearchResultRecyItem> resultList) {
             super(itemView);
 
             this.listItems = resultList;
@@ -68,8 +72,8 @@ public class AdminSearchRecyAdapter extends RecyclerView.Adapter<AdminSearchRecy
         public void onClick(View v) {
 
             int position = getAdapterPosition();
-            AdminSeachResultItem listItem = this.listItems.get(position);
-            Intent intent = new Intent(this.context,AdminMemberSearchResultViewActivity.class);
+            SearchResultRecyItem listItem = this.listItems.get(position);
+            Intent intent = new Intent(this.context, MemberDetailsActivity.class);
             String user_id = listItem.getUser_id();
             intent.putExtra("user_id",user_id);
 

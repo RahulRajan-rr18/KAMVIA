@@ -143,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                         Globals.currentUser.USER_ID=uid;
                         Globals.currentUser.USER_NAME=uname;
                         Globals.currentUser.MOBILE_NUMBER=mobno;
+                        editor.apply();
 
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();

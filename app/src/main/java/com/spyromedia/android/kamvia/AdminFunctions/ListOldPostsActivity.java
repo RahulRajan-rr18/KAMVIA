@@ -1,19 +1,11 @@
-package com.spyromedia.android.kamvia.DrawerFragment;
+package com.spyromedia.android.kamvia.AdminFunctions;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,40 +25,38 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
-    @Nullable
+public class ListOldPostsActivity extends AppCompatActivity {
+
     HomeTimelineRecyAdapter adapter;
-    List<HomeTimelineListItem> timelinelist;RequestQueue requestQueuegetTimeline;
+    List<HomeTimelineListItem> timelinelist;
+    RequestQueue requestQueuegetTimeline;
     RecyclerView home_recyclerview;
     ProgressDialog progressDialog;
     private static final int VERTICAL_ITEM_SPACE = 30;
-    SharedPreferences sharedPreferences;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_old_posts);
 
-        home_recyclerview = view.findViewById(R.id.home_recyclerview);
+        home_recyclerview = findViewById(R.id.oldpostRecyview);
         home_recyclerview.setHasFixedSize(true);
-        home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        home_recyclerview.setLayoutManager(new LinearLayoutManager(this));
         home_recyclerview.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         timelinelist = new ArrayList<>();
 
-        requestQueuegetTimeline = Volley.newRequestQueue(getContext());
-        parseJSON();
-
-
-
-        return view;
+        requestQueuegetTimeline = Volley.newRequestQueue(this);
+        FetchPosts();
     }
 
-    private void parseJSON() {
+    private void FetchPosts() {
 
         String url = "http://18.220.53.162/kamvia/api/timeline.php";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
-                progressDialog.dismiss();
+             //   progressDialog.dismiss();
 
                 try {
 
@@ -74,7 +64,7 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        //geting pdf url from server
+
                         String pdfurl = jsonObject.getString("pdfurl");
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
@@ -82,7 +72,7 @@ public class HomeFragment extends Fragment {
 
                     }
 
-                    adapter = new HomeTimelineRecyAdapter(timelinelist, getContext());
+                    adapter = new HomeTimelineRecyAdapter(timelinelist, getApplicationContext());
                     home_recyclerview.setAdapter(adapter);
 
                 } catch (JSONException e) {
@@ -97,27 +87,10 @@ public class HomeFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-        requestQueuegetTimeline.add(jsonObjectRequest);
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading......");
-        progressDialog.show();
-    }
-
-
-
-    private void alertDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setMessage("You are not a Registered member. Please request for membership in New Member");
-        dialog.setTitle("Alert");
-        dialog.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                    }
-                });
-
-        AlertDialog alertDialog = dialog.create();
-        alertDialog.show();
+       requestQueuegetTimeline.add(jsonObjectRequest);
+//        progressDialog = new ProgressDialog(getApplicationContext());
+//        progressDialog.setMessage("Loading......");
+//        progressDialog.show();
     }
 
 }

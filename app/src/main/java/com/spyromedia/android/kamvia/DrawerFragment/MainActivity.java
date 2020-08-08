@@ -36,8 +36,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.R;
-import com.spyromedia.android.kamvia.SearchByLocationFragment;
-import com.spyromedia.android.kamvia.SearchByNameFragement;
+import com.spyromedia.android.kamvia.SeachFunctions.SearchByLocationFragment;
+import com.spyromedia.android.kamvia.SeachFunctions.SearchByNameFragement;
 import com.spyromedia.android.kamvia.UserProfileUpdateActivity;
 
 import org.json.JSONArray;
@@ -272,9 +272,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                             editor.putString("VERIFICATION", ver_status);
                             editor.putString("USER_NAME", Username);
-                            editor.apply();
+                            //editor.apply();
+                            editor.commit();
                             Globals.currentUser.VERIFICATION = ver_status;
                             Globals.currentUser.USER_NAME = Username;
+                            headerText.setText(Username);
 
 
                         }
