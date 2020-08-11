@@ -74,6 +74,7 @@ public class TimelineViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 Log.d("TimelineActivity", "onClick: ");
+
             }
         });
     }
