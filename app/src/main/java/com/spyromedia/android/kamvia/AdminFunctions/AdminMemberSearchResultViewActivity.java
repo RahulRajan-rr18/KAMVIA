@@ -39,7 +39,7 @@ import java.util.Map;
 public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
 
     Button btn_promoteAdmin;
-    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,
+    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,bloodGroup,
             tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
     String user_id;
     ProgressDialog progressDialog;
@@ -71,6 +71,7 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
         tv_date_of_joining = findViewById(R.id.tv_joiningdate);
         tv_current_station_dis_wtcode = findViewById(R.id.tv_presentrtodist);
         profilePhoto = findViewById(R.id.imageview_userimage);
+        bloodGroup = findViewById(R.id.tv_bloodGroup);
 
 
         FetchDetails();
@@ -147,16 +148,17 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                         String name = jsonObject1.optString("name");
                         String email = jsonObject1.optString("email");
                         String emp_no = jsonObject1.optString("employee_number");
-                        String mob_no = jsonObject1.optString("whatsapp_number");
+                        String mob_no = jsonObject1.optString("mobile_number");
                         String dob = jsonObject1.optString("date_of_birth");
                         String housename = jsonObject1.optString("address");
                         String location = jsonObject1.optString("home_location");
                         String district = jsonObject1.optString("home_district");
                         String pincode = jsonObject1.optString("home_pincode");
                         String h_rto_code = jsonObject1.optString("home_station_code");
-                        String home_station = jsonObject1.optString("home_station");
-                        String current_station = jsonObject1.optString("present_rto_district");
-                        String cu_rto_code = jsonObject1.optString("present_station_code");
+
+                     //   String home_station = jsonObject1.optString("home_station");
+                        String current_station = jsonObject1.optString("present_station");
+                       // String cu_rto_code = jsonObject1.optString("present_station_code");
                         String date_of_joining = jsonObject1.optString("date_of_joining");
 
                         tv_name.setText(name);
@@ -170,7 +172,8 @@ public class AdminMemberSearchResultViewActivity extends AppCompatActivity {
                         tv_pincode.setText(pincode);
                         tv_home_rto_code.setText(h_rto_code);
                         tv_date_of_joining.setText(date_of_joining);
-                        tv_current_station_dis_wtcode.setText(current_station + "  " + cu_rto_code);
+                        tv_current_station_dis_wtcode.setText(current_station);
+                        bloodGroup.setText(jsonObject1.optString("blood_group"));
 
                     }
 

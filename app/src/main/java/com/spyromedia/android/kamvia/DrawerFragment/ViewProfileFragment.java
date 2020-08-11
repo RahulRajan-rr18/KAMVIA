@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
+import com.spyromedia.android.kamvia.EditProfileActivity;
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.LoginActivity;
 import com.spyromedia.android.kamvia.R;
@@ -51,6 +53,7 @@ public class ViewProfileFragment extends Fragment {
     String TAG = "ViewProfie";
     String user_id;
     MaterialButton logoutbtn;
+    Button editprofile;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +65,15 @@ public class ViewProfileFragment extends Fragment {
         profileimage = view.findViewById(R.id.profileimage);
         logoutbtn = view.findViewById(R.id.logout_btn);
         user_id = Globals.currentUser.USER_ID;
+
+        editprofile = view.findViewById(R.id.EditProfile);
+        editprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editprofile = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(editprofile);
+            }
+        });
         Log.d(TAG, "Current User" + user_id);
         FetchDetails();
         fetchimage();

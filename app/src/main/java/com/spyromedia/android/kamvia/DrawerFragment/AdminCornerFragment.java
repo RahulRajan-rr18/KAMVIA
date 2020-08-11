@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.spyromedia.android.kamvia.AdminFunctions.AddStationsActivity;
 import com.spyromedia.android.kamvia.AdminFunctions.AllTypeSearchWindowActivity;
 import com.spyromedia.android.kamvia.AdminFunctions.MembershipTabActivity;
 import com.spyromedia.android.kamvia.AdminFunctions.PostsActivity;
+import com.spyromedia.android.kamvia.BasicSettingsActivity;
 import com.spyromedia.android.kamvia.R;
 
 public class AdminCornerFragment extends Fragment {
@@ -24,6 +26,16 @@ public class AdminCornerFragment extends Fragment {
 
       View view = inflater.inflate(R.layout.fragment_admin_corner,container,false);
 
+
+        ImageView exitButton = view.findViewById(R.id.exitbutton);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent(getActivity(),MainActivity.class);
+                startActivity(home);
+
+            }
+        });
 
       Button btnNewPost = view.findViewById(R.id.btn_createpost);
       btnNewPost.setOnClickListener(new View.OnClickListener() {
@@ -51,11 +63,11 @@ public class AdminCornerFragment extends Fragment {
               startActivity(findmem);
           }
       });
-      Button btnAddNewStation = view.findViewById(R.id.btnddnewstation);
+      Button btnAddNewStation = view.findViewById(R.id.basicSettings);
       btnAddNewStation.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Intent newstation = new Intent(getContext(), AddStationsActivity.class);
+              Intent newstation = new Intent(getContext(), BasicSettingsActivity.class);
               startActivity(newstation);
           }
       });

@@ -307,13 +307,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
-                    android:text="Present Station:"
+                    android:text="Blood Group:"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_presentdistrict"
+                    android:id="@+id/tv_bloodGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"

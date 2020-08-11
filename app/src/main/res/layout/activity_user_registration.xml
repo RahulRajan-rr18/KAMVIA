@@ -56,6 +56,22 @@
                 android:maxLength="10"
                 android:background="@drawable/mainwindowviews" />
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Permanent Employee Number"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/pen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:inputType="textCapCharacters"
+                android:singleLine="true"
+                android:maxLength="10"
+                android:background="@drawable/mainwindowviews" />
+            <TextView
                 android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

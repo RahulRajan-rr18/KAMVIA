@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
-    EditText  password, confirm_password, mob_no;
+    EditText  password, confirm_password, mob_no,pen;
     Button register_btn;
     ProgressDialog progressDialog;
     private static char[] hextable = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -50,6 +50,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         confirm_password = findViewById(R.id.confirm_password);
         mob_no = findViewById(R.id.mob_no);
+        pen = findViewById(R.id.pen);
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +71,15 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
             private Boolean verify() {
 
-                if (mob_no.length() < 10) {
+                if (mob_no.length() < 10 || mob_no.length() > 10 ) {
                     mob_no.setError("Enter a valid mobile number");
                 }
                 if (mob_no.getText().toString().isEmpty() == true) {
-
                     mob_no.setError("Please enter a valid mobile number");
+                    return false;
+                }
+                if (pen.getText().toString().isEmpty() == true) {
+                    mob_no.setError("Permanent Employee Number");
                     return false;
                 }
                 if (password.getText().toString().isEmpty() == true) {
@@ -126,7 +130,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
                         else {
 
-                            Toast.makeText(UserRegistrationActivity.this, "Registration  Failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserRegistrationActivity.this, "Registration  Failed. Try Again", Toast.LENGTH_LONG).show();
 
                         }
                     } catch (JSONException e) {
@@ -164,6 +168,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
                     params.put("password", hashedPassword);
                     params.put("mobile_number", mob_no.getText().toString().trim());
+                    params.put("empno",pen.getText().toString().trim());
 
                     return params;
                 }

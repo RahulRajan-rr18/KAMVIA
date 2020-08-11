@@ -36,7 +36,8 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     @Nullable
     HomeTimelineRecyAdapter adapter;
-    List<HomeTimelineListItem> timelinelist;RequestQueue requestQueuegetTimeline;
+    List<HomeTimelineListItem> timelinelist;
+    RequestQueue requestQueuegetTimeline;
     RecyclerView home_recyclerview;
     ProgressDialog progressDialog;
     private static final int VERTICAL_ITEM_SPACE = 30;
@@ -53,9 +54,6 @@ public class HomeFragment extends Fragment {
 
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());
         parseJSON();
-
-
-
         return view;
     }
 
@@ -78,7 +76,8 @@ public class HomeFragment extends Fragment {
                         String pdfurl = jsonObject.getString("pdfurl");
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
-                        timelinelist.add(new HomeTimelineListItem(pdfurl, heading, condent));
+                        String image = jsonObject.getString("post_image");
+                        timelinelist.add(new HomeTimelineListItem(pdfurl, heading, condent,image));
 
                     }
 

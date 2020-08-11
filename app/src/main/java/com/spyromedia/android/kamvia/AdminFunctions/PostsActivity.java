@@ -16,6 +16,8 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posts);
+        getSupportActionBar().hide();
+
 
         btnNewPost = findViewById(R.id.btnNewPost);
         btnModify = findViewById(R.id.btnModify);
@@ -37,7 +39,7 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btnModify:
-                Intent modifypost = new Intent(PostsActivity.this, ApprovalListAdminActivity.class);
+                Intent modifypost = new Intent(PostsActivity.this, ListOldPostsActivity.class);
                 startActivity(modifypost);
                 break;
             case R.id.btnOldPosts:

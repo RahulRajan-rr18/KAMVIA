@@ -1,5 +1,6 @@
 package com.spyromedia.android.kamvia;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,6 +33,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +81,10 @@ public class MemberDetailsActivity extends AppCompatActivity {
         user_id = intent.getStringExtra("user_id");
         Log.d(TAG, "onCreate: " + user_id);
         FetchDetails();
+
+        fetchImageGlide(this);
+
+
 
 
 
@@ -143,14 +149,15 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         String name = jsonObject1.optString("name");
                         String email = jsonObject1.optString("email");
                         String emp_no = jsonObject1.optString("employee_number");
-                        String mob_no = jsonObject1.optString("whatsapp_number");
+                        String mob_no = jsonObject1.optString("mobile_number");
                         String housename = jsonObject1.optString("address");
                         String location = jsonObject1.optString("home_location");
                         String district = jsonObject1.optString("home_district");
                         String pincode = jsonObject1.optString("home_pincode");
                         String h_rto_code = jsonObject1.optString("home_station_code");
-                        String current_station = jsonObject1.optString("present_rto_district");
-                        String cu_rto_code = jsonObject1.optString("present_station_code");
+                        String current_station = jsonObject1.optString("present_station");
+                        String joiningDate = jsonObject1.optString("date_of_joining");
+                        //String cu_rto_code = jsonObject1.optString("present_station_code");
 
                         tv_name.setText(name);
                         tv_email.setText(email);
@@ -161,9 +168,10 @@ public class MemberDetailsActivity extends AppCompatActivity {
                         tv_home_district.setText(district);
                         tv_pincode.setText(pincode);
                         tv_homeStationCode.setText(h_rto_code);
-                        tv_present_rto_dist_and_code.setText(current_station + "(" + cu_rto_code +")");
+                        tv_present_rto_dist_and_code.setText(current_station);
+                        tv_dateOfJoing.setText(joiningDate);
 
-                        FetchImage();
+                       // FetchImage();
                     }
 
                 } catch (JSONException e) {
@@ -240,6 +248,13 @@ public class MemberDetailsActivity extends AppCompatActivity {
         return output;
     }
 
+    private void fetchImageGlide(Activity activity) {
+        String url = "http://18.220.53.162/kamvia/api/uploads/" + user_id + ".png";
+        Glide.with(activity)
+                .load(url)
+                .circleCrop()
+                .into(UserImage);
 
+    }
 
 }

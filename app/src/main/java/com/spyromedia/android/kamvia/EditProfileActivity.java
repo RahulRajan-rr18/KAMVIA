@@ -23,8 +23,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,10 +32,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -55,19 +58,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
-public class UserProfileUpdateActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
     final Calendar myCalendar = Calendar.getInstance();
     final Calendar myCalendar2 = Calendar.getInstance();
-    Spinner home_district, present_rto_district, membership_type, PresentStationCode, HomeStationCode , bloodGroup;
+    Spinner home_district, present_rto_district, presentStationWithCode, HomeStationWithCode, bloodGroup;
     ProgressDialog progressDialog, ImageUploadProgressBar;
     TextView errorDist, errorRtoDist, imageError;
-    RadioGroup member_fee_paid;
-    RadioButton radioButton;
+    //  RadioGroup member_fee_paid;
+    //RadioButton radioButton;
     ScrollView sv;
     Button upload_detailsButton, uploadImageButton;
     EditText dateofbirth, dateOfJoiningasamvi;
@@ -81,9 +82,11 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     //private Uri filePath;
     ArrayList<String> stationlist = new ArrayList<String>();
 
-
     ImageView profile_image;
     RequestQueue requestQueue;
+
+    String feepaid, membership_type , Bloodgroup , home_District , homeStation ,presentDistrict
+            ,presentStation,hstationCode,cStationCode;
 
 
     boolean check = true;
@@ -126,35 +129,39 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile_update);
+        setContentView(R.layout.activity_edit_profile);
         getSupportActionBar().hide();
 
         dateofbirth = findViewById(R.id.id_dob);
         dateOfJoiningasamvi = findViewById(R.id.id_dateofjoining);
         name = findViewById(R.id.name);
+        name.setEnabled(false);
         email = findViewById(R.id.email);
+        email.setEnabled(false);
         employee_number = findViewById(R.id.employee_number);
+        employee_number.setEnabled(false);
         add_line1 = findViewById(R.id.add_line1);
         add_line2 = findViewById(R.id.add_line2);
         home_district = findViewById(R.id.listDistrict);
         pincode = findViewById(R.id.pincode);
         state = findViewById(R.id.state);
-        HomeStationCode = findViewById(R.id.homeStationCode);
+        HomeStationWithCode = findViewById(R.id.homeStationCode);
         present_rto_district = findViewById(R.id.id_present_district);
-        PresentStationCode = findViewById(R.id.idPreStationCode);
-        member_fee_paid = findViewById(R.id.rd_group_feepaid);
+        presentStationWithCode = findViewById(R.id.idPreStationCode);
+        //  member_fee_paid = findViewById(R.id.rd_group_feepaid);
         //pickImageButton = findViewById(R.id.btn_pickImage);
         uploadImageButton = findViewById(R.id.btn_upload_image);
         upload_detailsButton = findViewById(R.id.btn_upload);
         errorDist = findViewById(R.id.error_dist);
         errorRtoDist = findViewById(R.id.error_rto_dist);
-        membership_type = findViewById(R.id.id_memtype);
         imageError = findViewById(R.id.imageerror);
         sv = findViewById(R.id.scrollView);
-        bloodGroup =findViewById(R.id.bloodGroup);
+        bloodGroup = findViewById(R.id.bloodGroup);
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         getStationDetails();
+
+        getCurrentUserData();
 
 
         profile_image = findViewById(R.id.imagepicked);
@@ -173,15 +180,15 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         uploadImageButton.setOnClickListener(this);
 
 
-        int selectedId = member_fee_paid.getCheckedRadioButtonId();
-        radioButton = findViewById(selectedId);
+//        int selectedId = member_fee_paid.getCheckedRadioButtonId();
+//        radioButton = findViewById(selectedId);
 
 
         dateofbirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(UserProfileUpdateActivity.this, date, myCalendar
+                new DatePickerDialog(EditProfileActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -191,7 +198,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(UserProfileUpdateActivity.this, dt, myCalendar
+                new DatePickerDialog(EditProfileActivity.this, dt, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -206,12 +213,9 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 if (verify) {
                     Update_Profile();
                 }
-
             }
         });
-
     }
-
 
     private Boolean vefifyDetails() {
         if (name.getText().toString().trim().isEmpty()) {
@@ -257,30 +261,30 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
         if (pincode.getText().toString().trim().isEmpty()) {
             pincode.setError("Please enter the pincode");
-            Snackbar snackbar = Snackbar
-                    .make(pincode, "Please enter your pincode", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar  .make(pincode, "Please enter your pincode", Snackbar.LENGTH_LONG);
             snackbar.show();
             pincode.requestFocus();
+            return false;
+        }
 
-            return false;
-        }
-        if (HomeStationCode.getSelectedItem().equals("staion code")) {
-           // home_station_code.setError("Home station code required");
-            Snackbar snackbar = Snackbar
-                    .make(HomeStationCode, "Select you Home Station Code", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            HomeStationCode.requestFocus();
+//        if (HomeStationCode.getSelectedItem().equals("staion code")) {
+//            // home_station_code.setError("Home station code required");
+//            Snackbar snackbar = Snackbar
+//                    .make(HomeStationCode, "Select you Home Station Code", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//            HomeStationCode.requestFocus();
+//            return false;
+//        }
 
-            return false;
-        }
-        if (PresentStationCode.getSelectedItem().equals("staion code")) {
-           // present_station_code.setError("Present station code required");
-            Snackbar snackbar = Snackbar
-                    .make(PresentStationCode, "Present Station Code", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            PresentStationCode.requestFocus();
-            return false;
-        }
+//        if (PresentStationCode.getSelectedItem().equals("staion code")) {
+////            // present_station_code.setError("Present station code required");
+////            Snackbar snackbar = Snackbar
+////                    .make(PresentStationCode, "Present Station Code", Snackbar.LENGTH_LONG);
+////            snackbar.show();
+////            PresentStationCode.requestFocus();
+////            return false;
+////        }
+
         if (dateofbirth.getText().toString().isEmpty()) {
             Snackbar snackbar = Snackbar
                     .make(dateofbirth, "Please enter your DOB", Snackbar.LENGTH_LONG);
@@ -288,21 +292,22 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
             return false;
         }
-        if (home_district.getSelectedItem().toString().equals("Choose")) {
-            Snackbar snackbar = Snackbar
-                    .make(home_district, "Please choose your district", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            home_district.requestFocus();
-            return false;
-        }
 
-        if (present_rto_district.getSelectedItem().toString().equals("Choose")) {
-            Snackbar snackbar = Snackbar
-                    .make(present_rto_district, "Please select your present RTO", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            present_rto_district.requestFocus();
-            return false;
-        }
+//        if (home_district.getSelectedItem().toString().equals("Choose")) {
+//            Snackbar snackbar = Snackbar
+//                    .make(home_district, "Please choose your district", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//            home_district.requestFocus();
+//            return false;
+//        }
+
+//        if (present_rto_district.getSelectedItem().toString().equals("Choose")) {
+//            Snackbar snackbar = Snackbar
+//                    .make(present_rto_district, "Please select your present RTO", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//            present_rto_district.requestFocus();
+//            return false;
+//        }
         if (dateOfJoiningasamvi.getText().toString().isEmpty()) {
             Snackbar snackbar = Snackbar
                     .make(dateOfJoiningasamvi, "Date of Joining as AMVI", Snackbar.LENGTH_LONG);
@@ -311,24 +316,25 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             return false;
         }
 
-        if (!ImageUploaded) {
-            Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            imageError.setError("Please Upload your Image");
-            // imageError.requestFocus();
-            sv.scrollTo(5, 10);
-            // uploadImageButton.requestFocus();
+//        if (!ImageUploaded) {
+//            Snackbar snackbar = Snackbar
+//                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//            imageError.setError("Please Upload your Image");
+//            // imageError.requestFocus();
+//            sv.scrollTo(5, 10);
+//            // uploadImageButton.requestFocus();
+//
+//            return false;
+//        }
 
-            return false;
-        }
+//        if (bloodGroup.getSelectedItem().toString().equals("Choose")) {
+//            Snackbar snackbar = Snackbar
+//                    .make(bloodGroup, "Please Choose your blood group", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//            return false;
+//        }
 
-        if (bloodGroup.getSelectedItem().toString().equals("Choose")){
-            Snackbar snackbar = Snackbar
-                    .make(bloodGroup, "Please Choose your blood group", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            return  false;
-        }
         return true;
 
     }
@@ -362,14 +368,14 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                     JSONObject jsonObject = new JSONObject(response);
 
                     String message = jsonObject.getString("message");
-                    Toast.makeText(UserProfileUpdateActivity.this, message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_LONG).show();
 
                     if (!jsonObject.getBoolean("error")) {
 
                         try {
 
-                            Toast.makeText(UserProfileUpdateActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
-                            Intent home = new Intent(UserProfileUpdateActivity.this, MainActivity.class);
+                            Toast.makeText(EditProfileActivity.this, "Profile Updated", Toast.LENGTH_LONG).show();
+                            Intent home = new Intent(EditProfileActivity.this, MainActivity.class);
                             startActivity(home);
                             finish();
 
@@ -382,7 +388,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                     } else {
 
                         progressDialog.dismiss();
-                        Toast.makeText(UserProfileUpdateActivity.this, "Profile Updation Failed.Try Again", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditProfileActivity.this, "Profile Updation Failed.Try Again", Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
@@ -413,26 +419,139 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 params.put("date_of_birth", dateofbirth.getText().toString().trim());
                 params.put("address", add_line1.getText().toString().trim());
                 params.put("home_location", add_line2.getText().toString().trim());
-                params.put("home_station_code", HomeStationCode.getSelectedItem().toString().substring(0,4).trim());
-                params.put("home_station",HomeStationCode.getSelectedItem().toString());
                 params.put("date_of_joining", dateOfJoiningasamvi.getText().toString().trim());
-                params.put("present_station", PresentStationCode.getSelectedItem().toString().trim());
+
+                String station = HomeStationWithCode.getSelectedItem().toString();
+                if(HomeStationWithCode.getSelectedItem().toString().equals("Station")){
+                    params.put("home_station_code",hstationCode );
+                    params.put("home_station", homeStation);
+                } else{
+                    params.put("home_station_code", HomeStationWithCode.getSelectedItem().toString().substring(0,4).trim());
+                    params.put("home_station", HomeStationWithCode.getSelectedItem().toString());
+                }
+                String Present = presentStationWithCode.getSelectedItem().toString();
+                if(presentStationWithCode.getSelectedItem().toString().equals("Station")){
+                    params.put("present_station",presentStation);
+                    params.put("present_station_code",cStationCode);
+                }else{
+                    params.put("present_station", presentStationWithCode.getSelectedItem().toString().trim());
+                    params.put("present_station_code", presentStationWithCode.getSelectedItem().toString().substring(0, 4).trim());
+                }
                 params.put("state", "Kerala");
                 params.put("home_pincode", pincode.getText().toString().trim());
-                params.put("home_district", home_district.getSelectedItem().toString().trim());
-                params.put("fee_paid", radioButton.getText().toString().trim());
-                params.put("member_type", membership_type.getSelectedItem().toString().trim());
-                params.put("present_rto_district", present_rto_district.getSelectedItem().toString().trim());
-                params.put("present_station_code", PresentStationCode.getSelectedItem().toString().substring(0,4).trim());
-                params.put("bloodgroup",bloodGroup.getSelectedItem().toString().trim());
+
+               if (home_district.getSelectedItem().toString().equals("Select District")){
+                   params.put("home_district",home_District);
+               }else{
+                   params.put("home_district", home_district.getSelectedItem().toString().trim());
+               }
+
+               if(present_rto_district.getSelectedItem().toString().equals("Select District")){
+                   params.put("present_rto_district",presentDistrict);
+               }else {
+                   params.put("present_rto_district", present_rto_district.getSelectedItem().toString().trim());
+
+               }
+
+                params.put("fee_paid", feepaid);
+                params.put("member_type", membership_type);
+
+                if(bloodGroup.getSelectedItem().toString().equals("Choose")){
+                    params.put("bloodgroup",Bloodgroup);
+                }else{
+                    params.put("bloodgroup", bloodGroup.getSelectedItem().toString().trim());
+                }
+
 
                 return params;
             }
         };
         requestQueue.add(stringRequest);
-        progressDialog = new ProgressDialog(UserProfileUpdateActivity.this);
+        progressDialog = new ProgressDialog(EditProfileActivity.this);
         progressDialog.setMessage("Loading......");
         progressDialog.show();
+    }
+
+    public void getCurrentUserData() {
+
+        String url = "http://18.220.53.162/kamvia/api/LoadDetails.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // progressDialog.dismiss();
+                try {
+                    Log.d(TAG, "onResponse: " + response);
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                        membership_type = jsonObject1.optString("member_type");
+                        feepaid = jsonObject1.optString("fee_paid");
+                        Bloodgroup =  jsonObject1.optString("blood_group");
+                        home_District = jsonObject1.optString("home_district");
+                        homeStation = jsonObject1.optString("home_station");
+                        presentDistrict = jsonObject1.optString("present_rto_district");
+                        presentStation = jsonObject1.optString("present_station");
+
+                        hstationCode = jsonObject1.optString("home_station_code");
+                        cStationCode = jsonObject1.optString("present_station_code");
+
+
+
+                        name.setText(jsonObject1.optString("name"));
+                        email.setText(jsonObject1.optString("email"));
+                        employee_number.setText(jsonObject1.optString("employee_number"));
+                        add_line1.setText(jsonObject1.optString("address"));
+                        add_line2.setText(jsonObject1.optString("home_location"));
+                        pincode.setText(jsonObject1.optString("home_pincode"));
+                        state.setText(jsonObject1.optString("state"));
+                        dateofbirth.setText(jsonObject1.optString("date_of_birth"));
+                        dateOfJoiningasamvi.setText(jsonObject1.optString("date_of_joining"));
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+
+                    Toast.makeText(getApplicationContext(), "Server Error" + error, Toast.LENGTH_SHORT).show();
+
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(getApplicationContext(),
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", Globals.currentUser.USER_ID.trim());
+
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+//        progressDialog = new ProgressDialog(getApplicationContext());
+//        progressDialog.setMessage("Loading....");
+//        progressDialog.show();
     }
 
 
@@ -493,7 +612,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d(TAG, "onResponse: Profile Image Uploading Failed");
-                            Toast.makeText(UserProfileUpdateActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -532,7 +651,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
         //adding the request to volley
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
-        progressDialog = new ProgressDialog(UserProfileUpdateActivity.this);
+        progressDialog = new ProgressDialog(EditProfileActivity.this);
         progressDialog.setMessage("Loading......");
         progressDialog.show();
     }
@@ -584,7 +703,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
-                    stationlist.add("staion code");
+                    stationlist.add("Station ");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String stationcode = jsonObject1.optString("stationname");
@@ -592,8 +711,8 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                         stationlist.add(stationcode);
                     }
                     ArrayAdapter<String> spinnerMenu = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, stationlist);
-                    PresentStationCode.setAdapter(spinnerMenu);
-                    HomeStationCode.setAdapter(spinnerMenu);
+                    presentStationWithCode.setAdapter(spinnerMenu);
+                    HomeStationWithCode.setAdapter(spinnerMenu);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

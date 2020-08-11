@@ -40,7 +40,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     ImageView user_photo;
-    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename,
+    TextView tv_name, tv_employeenumber, tv_mobilenumber, tv_email, tv_date_of_birth, tv_housename, tv_state,
             tv_home_location, tv_district, tv_pincode, tv_home_rto_code, tv_date_of_joining, tv_current_station_dis_wtcode;
 
 
@@ -62,6 +62,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
         tv_home_rto_code = findViewById(R.id.homestationcode);
         tv_date_of_joining = findViewById(R.id.joiningdate);
         tv_current_station_dis_wtcode = findViewById(R.id.presentrtodist);
+        tv_state = findViewById(R.id.tv_state);
         user_photo = findViewById(R.id.imageview_userimage);
 
 
@@ -115,19 +116,19 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                         String name = jsonObject1.optString("name");
                         String email = jsonObject1.optString("email");
                         String emp_no = jsonObject1.optString("employee_number");
-                        String mob_no = jsonObject1.optString("whatsapp_number");
+                        String mob_no = jsonObject1.optString("mobile_number");
                         String housename = jsonObject1.optString("address");
                         String location = jsonObject1.optString("home_location");
                         String district = jsonObject1.optString("home_district");
                         String pincode = jsonObject1.optString("home_pincode");
                         String h_rto_code = jsonObject1.optString("home_station_code");
-                        String current_station = jsonObject1.optString("present_rto_district");
+                        String current_station = jsonObject1.optString("present_station");
                         String cu_rto_code = jsonObject1.optString("present_station_code");
 
                         String date_of_birth = jsonObject1.optString("date_of_birth");
                         String date_ofjoining = jsonObject1.optString("date_of_joining");
 
-
+                        tv_state.setText(jsonObject1.optString("state" + ","));
                         tv_name.setText(name);
                         tv_email.setText(email);
                         tv_mobilenumber.setText(mob_no);
@@ -140,7 +141,7 @@ public class ApprovalMemberDetailsActivity extends AppCompatActivity {
                         tv_home_rto_code.setText(h_rto_code);
                         tv_date_of_birth.setText(date_of_birth);
                         tv_date_of_joining.setText(date_ofjoining);
-                        tv_current_station_dis_wtcode.setText(current_station + "(" + cu_rto_code + ")");
+                        tv_current_station_dis_wtcode.setText(current_station );
 
 
                     }

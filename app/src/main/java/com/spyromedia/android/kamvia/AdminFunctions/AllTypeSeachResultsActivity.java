@@ -68,7 +68,7 @@ public class AllTypeSeachResultsActivity extends AppCompatActivity {
     }
     public void FetchDetails() {
 
-        String url = "http://18.220.53.162/kamvia/api/LocationLike.php";
+        String url = "http://18.220.53.162/kamvia/api/universalsearch.php";
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -81,6 +81,7 @@ public class AllTypeSeachResultsActivity extends AppCompatActivity {
                 }
                 try {
                     resultList.clear();
+
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -91,7 +92,8 @@ public class AllTypeSeachResultsActivity extends AppCompatActivity {
 
                         resultList.add(new SearchResultRecyItem(user_id, name, location, stationcode));
                     }
-                    adapter = new SearchResultAdapter(resultList,getApplicationContext());
+
+                    adapter = new SearchResultAdapter(resultList, getApplicationContext());
                     recyView.setAdapter(adapter);
 
                 } catch (JSONException e) {
@@ -125,7 +127,7 @@ public class AllTypeSeachResultsActivity extends AppCompatActivity {
 
                 Map<String, String> params = new HashMap<>();
                // params.put("searchdata", searchdata);
-                params.put("location", "Palakkad");
+                params.put("searchdata",searchdata);
                 return params;
             }
         };

@@ -10,15 +10,17 @@ import android.widget.Button;
 import com.spyromedia.android.kamvia.R;
 
 public class MembershipTabActivity extends AppCompatActivity implements View.OnClickListener {
-    Button approvalRequests , searchMembers;
+    Button approvalRequests, searchMembers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_membership_tab);
+        getSupportActionBar().hide();
 
         searchMembers = findViewById(R.id.btnSearchMembers);
         approvalRequests = findViewById(R.id.btn_membership);
+
         searchMembers.setOnClickListener(this);
         approvalRequests.setOnClickListener(this);
     }

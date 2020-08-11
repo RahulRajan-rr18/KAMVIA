@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                         String uid = jsonObject.getString("user_id");
 
                         editor.putString("USER_ID", uid);
-                        editor.putString("USER_NAME", uname);
+                      //  editor.putString("USER_NAME", uname);
                         editor.putString("MOBILE_NUMBER", mobno);
                         //editor.apply();
                         editor.commit();

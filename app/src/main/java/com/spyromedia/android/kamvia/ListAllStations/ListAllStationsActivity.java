@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia.AdminFunctions;
+package com.spyromedia.android.kamvia.ListAllStations;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +16,6 @@ import com.android.volley.toolbox.Volley;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapter;
 import com.spyromedia.android.kamvia.R;
-import com.spyromedia.android.kamvia.VerticalSpaceItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,38 +24,38 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListOldPostsActivity extends AppCompatActivity {
-
-    HomeTimelineRecyAdapter adapter;
-    List<HomeTimelineListItem> timelinelist;
-    RequestQueue requestQueuegetTimeline;
-    RecyclerView home_recyclerview;
+public class ListAllStationsActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    List<ListStationsItem> listStationsItems;
     ProgressDialog progressDialog;
-    private static final int VERTICAL_ITEM_SPACE = 30;
+    RequestQueue requestQueue;
+    ListAllStationsRecyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_old_posts);
+        setContentView(R.layout.activity_list_all_stations);
+        getSupportActionBar().hide();
 
-        home_recyclerview = findViewById(R.id.oldpostRecyview);
-        home_recyclerview.setHasFixedSize(true);
-        home_recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        home_recyclerview.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
-        timelinelist = new ArrayList<>();
+        recyclerView = findViewById(R.id.stationsRecyView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        requestQueuegetTimeline = Volley.newRequestQueue(this);
-        FetchPosts();
+        listStationsItems = new ArrayList<>();
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        parseJSON();
+        return;
+
     }
 
-    private void FetchPosts() {
+    private void parseJSON() {
 
         String url = "http://18.220.53.162/kamvia/api/timeline.php";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
-             //   progressDialog.dismiss();
+                //progressDialog.dismiss();
 
                 try {
 
@@ -64,17 +63,16 @@ public class ListOldPostsActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        //geting pdf url from server
+                        String stationName = jsonObject.getString("pdfurl");
+                        String stationId = jsonObject.getString("pdfurl");
 
-                        String pdfurl = jsonObject.getString("pdfurl");
-                        String heading = jsonObject.getString("heading");
-                        String condent = jsonObject.getString("condent");
-                        String image = jsonObject.getString("post_image");
-                        timelinelist.add(new HomeTimelineListItem(pdfurl, heading, condent,image));
+                        listStationsItems.add(new ListStationsItem(stationName, stationId));
 
                     }
 
-                    adapter = new HomeTimelineRecyAdapter(timelinelist, getApplicationContext());
-                    home_recyclerview.setAdapter(adapter);
+                    adapter = new ListAllStationsRecyAdapter(listStationsItems, getApplicationContext());
+                    recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -84,14 +82,14 @@ public class ListOldPostsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
+             //   progressDialog.dismiss();
                 error.printStackTrace();
             }
         });
-       requestQueuegetTimeline.add(jsonObjectRequest);
+        requestQueue.add(jsonObjectRequest);
 //        progressDialog = new ProgressDialog(getApplicationContext());
-//        progressDialog.setMessage("Loading......");
-//        progressDialog.show();
+////        progressDialog.setMessage("Loading......");
+////        progressDialog.show();
     }
 
 }

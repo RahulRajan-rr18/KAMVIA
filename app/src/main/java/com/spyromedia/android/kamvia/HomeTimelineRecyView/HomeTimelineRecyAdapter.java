@@ -4,10 +4,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,9 +51,37 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         // holder.user_id.setText(homeTimelineList.getUserid());
         holder.heading.setText(homeTimelineList.getHeading());
         holder.condent.setText(homeTimelineList.getCondent());
+        String stringImage = homeTimelineList.getPostImage();
+
+
+        try{
+            if(stringImage.equals(null)){
+                Toast.makeText(context, "Null Image", Toast.LENGTH_SHORT).show();
+            }else{
+                Bitmap image = StringToBitMap(stringImage);
+                int value = 0;
+                if (image.getHeight() <= image.getWidth()) {
+                    value = image.getHeight();
+                } else {
+                    value = image.getWidth();
+                }
+
+                Bitmap finalBitmap = null;
+                finalBitmap = Bitmap.createBitmap(image, 0, 0, value, value);
+                holder.postImage.setImageBitmap(finalBitmap);
+            }
+        }catch (Exception ex){
+            ex.getMessage();
+        }
+
+
+
+
 
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -60,6 +93,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         public TextView user_id;
         public TextView heading;
         public TextView condent;
+        public ImageView postImage;
 
         List<HomeTimelineListItem> listItems = new ArrayList<HomeTimelineListItem>();
         Context context;
@@ -75,6 +109,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
             user_id = (TextView) itemView.findViewById(R.id.textview_membername);
             heading = (TextView) itemView.findViewById(R.id.textview_heading);
             condent = (TextView) itemView.findViewById(R.id.tv_condent);
+            postImage = (ImageView) itemView.findViewById(R.id.postImage);
         }
 
 
@@ -91,6 +126,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
                 intent.putExtra("pdfurl", pdfurl);
                 intent.putExtra("heading", homeTimelineListItem.getHeading());
                 intent.putExtra("condent", homeTimelineListItem.getCondent());
+                intent.putExtra("image",homeTimelineListItem.getPostImage());
 
                 this.context.startActivity(intent);
 
@@ -109,14 +145,13 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
                 this.context.startActivity(intent);
 
 
-              //  alertDialog();
+                //  alertDialog();
             }
-
-
 
 
         }
     }
+
     private void alertDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setMessage("You are not a Registered member. Please request for membership first.");
@@ -131,4 +166,16 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
 }

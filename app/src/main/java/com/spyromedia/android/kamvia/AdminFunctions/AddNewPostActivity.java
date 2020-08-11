@@ -5,13 +5,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +40,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.R;
+import com.spyromedia.android.kamvia.RequestHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,11 +60,13 @@ public class AddNewPostActivity extends AppCompatActivity {
     EditText postHead;
     EditText postContent;
     ProgressDialog progressDialog;
+    ImageView postImage;
     private String upload_URL = "http://18.220.53.162/kamvia/api/pdfUpload.php";
     private RequestQueue rQueue;
     private ArrayList<HashMap<String, String>> arraylist;
     //Pdf request code
     private final int PICK_PDF_REQUEST = 1;
+    private int PICK_IMAGE_REQUEST =2;
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -73,19 +81,27 @@ public class AddNewPostActivity extends AppCompatActivity {
     String url = "https://www.google.com";
     Uri uri;
     String displayName = null;
+    private Bitmap bitmap;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
-        Button chooseFile, uploadPost;
-        chooseFile = findViewById(R.id.choose_file);
+        Button pdfChoose, uploadPost,btnChooseImage;
+        pdfChoose = findViewById(R.id.choose_file);
+        btnChooseImage = findViewById(R.id.btnPickImage);
         postHead = findViewById(R.id.postheading);
         postContent = findViewById(R.id.postcontent);
         getSupportActionBar().hide();
         requestStoragePermission();
 
+        postImage = findViewById(R.id.postImage);
+        btnChooseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImageChooser();            }
+        });
         uploadPost = findViewById(R.id.buttonuploadpost);
         uploadPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,12 +120,14 @@ public class AddNewPostActivity extends AppCompatActivity {
             }
         });
 
-        chooseFile.setOnClickListener(new View.OnClickListener() {
+        pdfChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFileChooser();
             }
         });
+
+
 
     }
 
@@ -243,6 +261,17 @@ public class AddNewPostActivity extends AppCompatActivity {
             }
         }
 
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                postImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
 
     }
@@ -323,6 +352,9 @@ public class AddNewPostActivity extends AppCompatActivity {
                     params.put("user_id", Globals.currentUser.USER_ID);
                     params.put("heading", postHead.getText().toString());
                     params.put("content", postContent.getText().toString());
+                    String uploadImage = getStringImage(bitmap);
+                    params.put("image", uploadImage);
+
                     return params;
                 }
 
@@ -371,4 +403,57 @@ public class AddNewPostActivity extends AppCompatActivity {
         }
         return byteBuffer.toByteArray();
     }
+
+    private void showImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private void uploadImage(){
+        class UploadImage extends AsyncTask<Bitmap,Void,String> {
+
+            ProgressDialog loading;
+            RequestHandler rh = new RequestHandler();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(AddNewPostActivity.this, "Uploading Image", "Please wait...",true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                Bitmap bitmap = params[0];
+                String uploadImage = getStringImage(bitmap);
+
+                HashMap<String,String> data = new HashMap<>();
+                data.put("image", uploadImage);
+
+                String result = rh.sendPostRequest(upload_URL,data);
+
+                return result;
+            }
+        }
+
+        UploadImage ui = new UploadImage();
+        ui.execute(bitmap);
+    }
+
 }

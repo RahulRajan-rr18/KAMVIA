@@ -16,17 +16,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminFunctions.AllTypeSeachResultsActivity"></activity>
+        <activity android:name=".ListAllStations.ListAllStationsActivity"></activity>
+        <activity android:name=".BasicSettingsActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".AdminFunctions.AllTypeSeachResultsActivity" />
         <activity android:name=".AdminFunctions.AllTypeSearchWindowActivity" />
         <activity android:name=".AdminFunctions.ListOldPostsActivity" />
         <activity android:name=".AdminFunctions.PostsActivity" />
-        <activity android:name=".AdminFunctions.MembershipTabActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".AdminFunctions.MembershipTabActivity" />
         <activity android:name=".AdminFunctions.AddStationsActivity" />
         <activity
             android:name=".PasswordResetActivity"
@@ -52,13 +49,7 @@
         <activity android:name=".AdminFunctions.ApprovalListAdminActivity" />
         <activity android:name=".MemberDetailsActivity" />
         <activity android:name=".AdminFunctions.AddNewPostActivity" />
-        <activity android:name=".UserProfileUpdateActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>>
+        <activity android:name=".UserProfileUpdateActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity
             android:name=".LoginActivity"
