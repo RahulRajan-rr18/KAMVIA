@@ -24,16 +24,28 @@
         <activity android:name=".AdminFunctions.ListOldPostsActivity" />
         <activity android:name=".AdminFunctions.PostsActivity" />
         <activity android:name=".AdminFunctions.MembershipTabActivity" />
-        <activity android:name=".AdminFunctions.AddStationsActivity" />
-        <activity
-            android:name=".PasswordResetActivity"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".OtpVerificationActivity"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AdminFunctions.AdminMemberSearchResultViewActivity" />
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".DrawerFragment.Main2Activity"
+        android:exported="true"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+    <activity android:name=".AdminFunctions.AddStationsActivity" />
+    <activity
+        android:name=".PasswordResetActivity"
+        android:exported="true"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".OtpVerificationActivity"
+        android:exported="true"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity android:name=".AdminFunctions.AdminMemberSearchResultViewActivity" />
         <activity android:name=".AdminFunctions.AdminSearchMembersActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
