@@ -41,7 +41,7 @@ public class ListAllOrdersActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        ordersRecyView  = findViewById(R.id.ordersrecyclerview);
+        ordersRecyView  = findViewById(R.id.recyorders);
         ordersRecyView.setHasFixedSize(true);
         ordersRecyView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         listAllOrdersListItems = new ArrayList<>();
@@ -96,4 +96,5 @@ public class ListAllOrdersActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading List");
         progressDialog.show();
     }
+
 }

@@ -3,6 +3,7 @@ package com.spyromedia.android.kamvia.DrawerFragment;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapter;
+import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersActivity;
 import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersListItem;
 import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersRecyAdapter;
 import com.spyromedia.android.kamvia.R;
@@ -37,33 +40,47 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     @Nullable
     HomeTimelineRecyAdapter homeTimelineRecyAdapter;
-    ListAllOrdersRecyAdapter listAllOrdersRecyAdapter;
     List<HomeTimelineListItem> timelinelist;
-    List<ListAllOrdersListItem> orderlist;
-    RequestQueue requestQueuegetTimeline, requestQueuegetQueue;
-    RecyclerView news_recyclerView;
-    RecyclerView orders_recyclerView;
+    RequestQueue requestQueuegetTimeline ,orderRequestQueue;
+    RecyclerView news_recyclerView , ordersRecyView;
+    List<ListAllOrdersListItem> listAllOrdersListItems;
+    ListAllOrdersRecyAdapter adapter;
+
+
     ProgressDialog progressDialog;
 
-    SharedPreferences sharedPreferences;
+
+
+    AppCompatImageView orderArchive;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_frame, container, false);
 
+
+        orderArchive = view.findViewById(R.id.appCompatImageView);
+        orderArchive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent allorder = new Intent(getActivity() , ListAllOrdersActivity.class);
+                startActivity(allorder);
+            }
+        });
         news_recyclerView = view.findViewById(R.id.newsrecyclerview);
         news_recyclerView.setHasFixedSize(true);
         news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        orders_recyclerView = view.findViewById(R.id.ordersrecyclerview);
-        orders_recyclerView.setHasFixedSize(true);
         news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderlist = new ArrayList<>();
         timelinelist = new ArrayList<>();
-
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());
-        requestQueuegetQueue = Volley.newRequestQueue(getContext());
-        parseJSONOrders();
         parseJSON();
+
+        ordersRecyView = view.findViewById(R.id.ordersrecyclerview);
+        ordersRecyView.setHasFixedSize(true);
+        ordersRecyView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listAllOrdersListItems = new ArrayList<>();
+        orderRequestQueue = Volley.newRequestQueue(getContext());
+
+        getOrdersList();
+
 
         return view;
     }
@@ -109,11 +126,11 @@ public class HomeFragment extends Fragment {
         });
         requestQueuegetTimeline.add(jsonObjectRequest);
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading......");
+        progressDialog.setMessage("Loading latest news");
         progressDialog.show();
     }
 
-    private void parseJSONOrders() {
+    private void getOrdersList() {
 
         String url = "http://18.220.53.162/kamvia/api/getAllOrders.php";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -131,12 +148,12 @@ public class HomeFragment extends Fragment {
                         String orderId = jsonObject.getString("id");
                         String orderDetails = jsonObject.getString("url");
 
-                        orderlist.add(new ListAllOrdersListItem(orderId, orderDetails));
+                        listAllOrdersListItems.add(new ListAllOrdersListItem(orderId, orderDetails));
 
                     }
 
-                    listAllOrdersRecyAdapter = new ListAllOrdersRecyAdapter(orderlist, getContext());
-                    orders_recyclerView.setAdapter(listAllOrdersRecyAdapter);
+                    adapter = new ListAllOrdersRecyAdapter(listAllOrdersListItems, getActivity());
+                    ordersRecyView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -151,14 +168,12 @@ public class HomeFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-        requestQueuegetQueue.add(jsonObjectRequest);
+        orderRequestQueue.add(jsonObjectRequest);
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading List");
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(ListAllOrdersActivity.this);
+//        progressDialog.setMessage("Loading List");
+//        progressDialog.show();
     }
-
-
     private void alertDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         dialog.setMessage("You are not a Registered member. Please request for membership in New Member");

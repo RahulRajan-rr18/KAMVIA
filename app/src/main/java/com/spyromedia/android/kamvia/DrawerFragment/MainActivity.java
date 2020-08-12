@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     NavHostFragment navHostFragment;
     AppBarConfiguration appBarConfiguration;
     private DrawerLayout drawer;
-
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkUserverificationStatus();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+         navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         headerText = headerView.findViewById(R.id.drawer_name);
         headerImage = headerView.findViewById(R.id.drawer_icon);
@@ -232,6 +232,12 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
                         String ver_status = jsonObject1.optString("verification_status");
+                        if((ver_status.equals("verified") || ver_status.equals("notverified")) ){
+                            // Toast.makeText(MainActivity.this, "Not Requested for Membership", Toast.LENGTH_SHORT).show();
+                            Menu menuNav = navigationView.getMenu();
+                            MenuItem nav_item2 = menuNav.findItem(R.id.userProfileUpdateActivity);
+                            nav_item2.setEnabled(false);
+                        }
 
                         editor.putString("VERIFICATION", ver_status);
                         editor.putString("USER_NAME", Username);
@@ -239,6 +245,8 @@ public class MainActivity extends AppCompatActivity {
                         editor.commit();
                         Globals.currentUser.VERIFICATION = ver_status;
                         Globals.currentUser.USER_NAME = Username;
+                        editor.commit();
+                        editor.apply();
                         headerText.setText(Username);
 
 

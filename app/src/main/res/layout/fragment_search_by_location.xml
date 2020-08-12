@@ -24,6 +24,7 @@
             android:layout_margin="10dp"
             android:hint="Enter the location"
             android:singleLine="true"
+            android:background="@drawable/border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
