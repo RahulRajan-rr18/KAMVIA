@@ -160,7 +160,10 @@ public class MainActivity extends AppCompatActivity {
 
                         String user_role = jsonObject1.optString("user_role");
                         if (user_role.equals("Admin")) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
+                            //Transaction for admin corner
+                            navController.navigate(R.id.action_admin_fragment);
+                            drawer.close();
+
                         } else {
 
                             Toast.makeText(MainActivity.this, "This is Restricted to Admins Only", Toast.LENGTH_SHORT).show();

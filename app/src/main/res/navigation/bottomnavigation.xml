@@ -27,4 +27,11 @@
         android:id="@+id/adminCornerFragment"
         android:name="com.spyromedia.android.kamvia.DrawerFragment.AdminCornerFragment"
         android:label="AdminCornerFragment" />
+
+    <action
+        android:id="@+id/action_admin_fragment"
+        app:destination="@id/adminCornerFragment"
+        app:launchSingleTop="false"
+        app:popUpTo="@+id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>
