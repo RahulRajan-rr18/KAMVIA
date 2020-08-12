@@ -26,7 +26,6 @@ import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapte
 import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersListItem;
 import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersRecyAdapter;
 import com.spyromedia.android.kamvia.R;
-import com.spyromedia.android.kamvia.VerticalSpaceItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +44,7 @@ public class HomeFragment extends Fragment {
     RecyclerView news_recyclerView;
     RecyclerView orders_recyclerView;
     ProgressDialog progressDialog;
-    private static final int VERTICAL_ITEM_SPACE = 30;
+
     SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,7 +53,6 @@ public class HomeFragment extends Fragment {
         news_recyclerView = view.findViewById(R.id.newsrecyclerview);
         news_recyclerView.setHasFixedSize(true);
         news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        news_recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
 
         orders_recyclerView = view.findViewById(R.id.ordersrecyclerview);
         orders_recyclerView.setHasFixedSize(true);
@@ -64,8 +62,9 @@ public class HomeFragment extends Fragment {
 
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());
         requestQueuegetQueue = Volley.newRequestQueue(getContext());
-        parseJSON();
         parseJSONOrders();
+        parseJSON();
+
         return view;
     }
 
@@ -137,7 +136,7 @@ public class HomeFragment extends Fragment {
                     }
 
                     listAllOrdersRecyAdapter = new ListAllOrdersRecyAdapter(orderlist, getContext());
-                    orders_recyclerView.setAdapter(homeTimelineRecyAdapter);
+                    orders_recyclerView.setAdapter(listAllOrdersRecyAdapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
