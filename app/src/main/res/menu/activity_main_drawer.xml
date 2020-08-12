@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/id_home"
+            android:id="@+id/homeFragment"
             android:icon="@drawable/ic_home"
             android:title="Home" />
         <!--        <item android:id="@+id/id_viewprofile"-->
         <!--            android:icon="@drawable/ic_profile"-->
         <!--            android:title="View Profile" />-->
         <item
-            android:id="@+id/id_addprofile"
+            android:id="@+id/userProfileUpdateActivity"
             android:icon="@drawable/ic_profile_add"
             android:title="New Member Registration" />
         <!--        <item-->
@@ -17,7 +17,7 @@
         <!--            android:icon="@drawable/ic_change_pwd"-->
         <!--            android:title="Change Password" />-->
         <item
-            android:id="@+id/id_admincorner"
+            android:id="@+id/adminCornerFragment"
             android:icon="@drawable/admin_panel_settings_24px"
             android:title="Admins Corner" />
     </group>

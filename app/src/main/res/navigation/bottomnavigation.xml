@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomnavigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.spyromedia.android.kamvia.DrawerFragment.HomeFragment"
+        android:label="Home" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.spyromedia.android.kamvia.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/viewProfileFragment"
+        android:name="com.spyromedia.android.kamvia.DrawerFragment.ViewProfileFragment"
+        android:label="Profile" />
+    <activity
+        android:id="@+id/userProfileUpdateActivity"
+        android:name="com.spyromedia.android.kamvia.UserProfileUpdateActivity"
+        android:label="activity_user_profile_update"
+        tools:layout="@layout/activity_user_profile_update" />
+    <fragment
+        android:id="@+id/adminCornerFragment"
+        android:name="com.spyromedia.android.kamvia.DrawerFragment.AdminCornerFragment"
+        android:label="AdminCornerFragment" />
+</navigation>
