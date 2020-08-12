@@ -1,12 +1,7 @@
 package com.spyromedia.android.kamvia.ListAllStations;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.spyromedia.android.kamvia.Globals;
 
 import com.spyromedia.android.kamvia.R;
 
@@ -73,7 +66,7 @@ public class ListAllStationsRecyAdapter extends RecyclerView.Adapter<ListAllStat
             this.context = context;
 
             itemView.setOnClickListener(this);
-            stationName = (TextView) itemView.findViewById(R.id.textviewStationName);
+            stationName = (TextView) itemView.findViewById(R.id.textViewStations);
 
         }
 

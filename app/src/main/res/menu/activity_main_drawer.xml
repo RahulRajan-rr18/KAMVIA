@@ -34,4 +34,20 @@
                 android:title="Search by Location" />
         </menu>
     </item>
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/dwdForms"
+                android:icon="@drawable/ic_forms"
+                android:title="Download Forms " />
+            <item
+                android:id="@+id/helpAndFeedback"
+                android:icon="@drawable/ic_feedback"
+                android:title="Help and Feedback" />
+            <item
+                android:id="@+id/FAQ"
+                android:icon="@drawable/ic_faq"
+                android:title="FAQ" />
+        </menu>
+    </item>
 </menu>

@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia.ListAllStations;
+package com.spyromedia.android.kamvia.OrdersandCircularViews;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,8 +13,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
-import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapter;
+import com.spyromedia.android.kamvia.ListAllStations.ListAllStationsActivity;
+import com.spyromedia.android.kamvia.ListAllStations.ListAllStationsRecyAdapter;
+import com.spyromedia.android.kamvia.ListAllStations.ListStationsItem;
 import com.spyromedia.android.kamvia.R;
 
 import org.json.JSONArray;
@@ -24,26 +25,27 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAllStationsActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    List<ListStationsItem> listStationsItems;
+public class ListAllOrdersActivity extends AppCompatActivity {
+
+
+    RecyclerView ordersRecyView;
+    List<ListAllOrdersListItem> listAllOrdersListItems;
     ProgressDialog progressDialog;
     RequestQueue requestQueue;
-    ListAllStationsRecyAdapter adapter;
+    ListAllOrdersRecyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_all_stations);
+        setContentView(R.layout.activity_list_all_orders);
         getSupportActionBar().hide();
 
-       // progressDialog = new ProgressDialog(getApplicationContext());
 
-        recyclerView = findViewById(R.id.stationsRecyView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        ordersRecyView  = findViewById(R.id.ordersrecyclerview);
+        ordersRecyView.setHasFixedSize(true);
+        ordersRecyView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        listAllOrdersListItems = new ArrayList<>();
 
-        listStationsItems = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         parseJSON();
         return;
@@ -52,7 +54,7 @@ public class ListAllStationsActivity extends AppCompatActivity {
 
     private void parseJSON() {
 
-        String url = "http://18.220.53.162/kamvia/api/getAllStations.php";
+        String url = "http://18.220.53.162/kamvia/api/getAllOrders.php";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -65,15 +67,15 @@ public class ListAllStationsActivity extends AppCompatActivity {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         //geting pdf url from server
-                        String stationName = jsonObject.getString("station_id");
-                        String stationId = jsonObject.getString("stationname");
+                        String orderId = jsonObject.getString("id");
+                        String orderDetails = jsonObject.getString("url");
 
-                        listStationsItems.add(new ListStationsItem(stationName, stationId));
+                        listAllOrdersListItems.add(new ListAllOrdersListItem(orderId, orderDetails));
 
                     }
 
-                    adapter = new ListAllStationsRecyAdapter(listStationsItems, getApplicationContext());
-                    recyclerView.setAdapter(adapter);
+                    adapter = new ListAllOrdersRecyAdapter(listAllOrdersListItems, getApplicationContext());
+                    ordersRecyView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -90,9 +92,8 @@ public class ListAllStationsActivity extends AppCompatActivity {
         });
         requestQueue.add(jsonObjectRequest);
 
-        progressDialog = new ProgressDialog(ListAllStationsActivity.this);
+        progressDialog = new ProgressDialog(ListAllOrdersActivity.this);
         progressDialog.setMessage("Loading List");
         progressDialog.show();
     }
-
 }

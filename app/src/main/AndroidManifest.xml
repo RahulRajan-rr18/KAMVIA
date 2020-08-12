@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListAllStations.ListAllStationsActivity"></activity>
+        <activity android:name=".OrdersandCircularViews.ListAllOrdersActivity"></activity>
+        <activity android:name=".ListAllStations.ListAllStationsActivity" />
         <activity android:name=".BasicSettingsActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".AdminFunctions.AllTypeSeachResultsActivity" />
@@ -24,21 +25,20 @@
         <activity android:name=".AdminFunctions.ListOldPostsActivity" />
         <activity android:name=".AdminFunctions.PostsActivity" />
         <activity android:name=".AdminFunctions.MembershipTabActivity" />
-
-    <activity
-        android:name=".DrawerFragment.Main2Activity"
-        android:exported="true"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-    <activity android:name=".AdminFunctions.AddStationsActivity" />
-    <activity
-        android:name=".PasswordResetActivity"
-        android:exported="true"
-        android:theme="@style/AppTheme.NoActionBar" />
-    <activity
-        android:name=".OtpVerificationActivity"
-        android:exported="true"
-        android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".AdminFunctions.AdminMemberSearchResultViewActivity" />
+        <activity
+            android:name=".DrawerFragment.Main2Activity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity android:name=".AdminFunctions.AddStationsActivity" />
+        <activity
+            android:name=".PasswordResetActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OtpVerificationActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AdminFunctions.AdminMemberSearchResultViewActivity" />
         <activity android:name=".AdminFunctions.AdminSearchMembersActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
