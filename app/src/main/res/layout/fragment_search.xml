@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorRed"
     tools:context=".SearchFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -14,19 +15,18 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         app:cardCornerRadius="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/searhbyplace"
+        app:layout_constraintBottom_toTopOf="@+id/searchbyplace"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/searhbyplace"
+        app:layout_constraintEnd_toStartOf="@+id/searchbyplace"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/searhbyplace"
+        app:layout_constraintStart_toEndOf="@+id/searchbyplace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/serachcardviewgradient"
-
+            android:background="#F5F4FF"
             >
 
             <TextView
@@ -44,7 +44,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/searhbyplace"
+        android:id="@+id/searchbyplace"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
@@ -62,7 +62,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/serachcardviewgradient">
+            android:background="#F5F4FF"
+
+            >
 
             <TextView
                 android:layout_width="match_parent"

@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/adminCornerFragment"
         android:name="com.spyromedia.android.kamvia.DrawerFragment.AdminCornerFragment"
-        android:label="AdminCornerFragment" />
+        android:label="AdminCorner" />
 
     <action
         android:id="@+id/action_admin_fragment"
@@ -34,4 +34,12 @@
         app:launchSingleTop="false"
         app:popUpTo="@+id/nav_graph"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/searchByNameFragement"
+        android:name="com.spyromedia.android.kamvia.SeachFunctions.SearchByNameFragement"
+        android:label="SearchByName" />
+    <fragment
+        android:id="@+id/searchByLocationFragment"
+        android:name="com.spyromedia.android.kamvia.SeachFunctions.SearchByLocationFragment"
+        android:label="SearchByPlace" />
 </navigation>

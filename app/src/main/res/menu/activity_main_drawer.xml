@@ -25,11 +25,11 @@
     <item android:title="Search">
         <menu>
             <item
-                android:id="@+id/search_name"
+                android:id="@+id/searchByNameFragement"
                 android:icon="@drawable/perm_identity_24px"
                 android:title="Search By Name " />
             <item
-                android:id="@+id/search_location"
+                android:id="@+id/searchByLocationFragment"
                 android:icon="@drawable/location_on_24px"
                 android:title="Search by Location" />
         </menu>
