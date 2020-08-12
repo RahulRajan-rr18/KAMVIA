@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.spyromedia.android.kamvia.DrawerFragment.HomeFragment;
 import com.spyromedia.android.kamvia.DrawerFragment.MainActivity;
 import com.spyromedia.android.kamvia.R;
 
@@ -18,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListAllOrdersRecyAdapter extends RecyclerView.Adapter<ListAllOrdersRecyAdapter.ViewHolder> {
-    private List<ListAllOrdersListItem> listOrders;
-    private Context context;
+    private final List<ListAllOrdersListItem> listOrders;
+    private final Context context;
 
     public ListAllOrdersRecyAdapter(List<ListAllOrdersListItem> stationsItems, Context context) {
         this.listOrders = stationsItems;

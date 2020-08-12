@@ -26,7 +26,7 @@
         <activity android:name=".AdminFunctions.PostsActivity" />
         <activity android:name=".AdminFunctions.MembershipTabActivity" />
         <activity
-            android:name=".DrawerFragment.Main2Activity"
+            android:name=".DrawerFragment.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".AdminFunctions.AddStationsActivity" />
@@ -62,9 +62,6 @@
             android:noHistory="true" />
         <activity
             android:name=".ForgotPasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DrawerFragment.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data

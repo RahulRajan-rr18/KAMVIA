@@ -101,7 +101,7 @@
             android:layout_gravity="bottom"
             app:backgroundTint="@color/colorPrimary"
             app:fabAlignmentMode="center"
-            app:menu="@menu/activity_main_drawer_new"
+            app:menu="@menu/activity_main_drawer"
             app:navigationIcon="@drawable/menu_black_18dp" />
 
 

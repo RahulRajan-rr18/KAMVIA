@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.spyromedia.android.kamvia.AdminFunctions.AddStationsActivity;
 import com.spyromedia.android.kamvia.AdminFunctions.AllTypeSearchWindowActivity;
 import com.spyromedia.android.kamvia.AdminFunctions.MembershipTabActivity;
 import com.spyromedia.android.kamvia.AdminFunctions.PostsActivity;
@@ -31,7 +30,7 @@ public class AdminCornerFragment extends Fragment {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home = new Intent(getActivity(),MainActivity.class);
+                Intent home = new Intent(getActivity(), MainActivity.class);
                 startActivity(home);
 
             }
