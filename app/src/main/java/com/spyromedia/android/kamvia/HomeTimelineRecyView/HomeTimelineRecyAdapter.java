@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRecyAdapter.ViewHolder> {
-    private List<HomeTimelineListItem> timelineList;
-    private Context context;
+    private final List<HomeTimelineListItem> timelineList;
+    private final Context context;
 
     public HomeTimelineRecyAdapter(List<HomeTimelineListItem> timelineList, Context context) {
         this.timelineList = timelineList;
@@ -57,18 +57,39 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         try{
             if(stringImage.equals(null)){
                 Toast.makeText(context, "Null Image", Toast.LENGTH_SHORT).show();
-            }else{
+            }else {
                 Bitmap image = StringToBitMap(stringImage);
+                int width = image.getWidth();
+                int height = image.getHeight();
+                int maxWidth = 550;
+                int maxHeight = 550;
                 int value = 0;
-                if (image.getHeight() <= image.getWidth()) {
-                    value = image.getHeight();
+//                if (image.getHeight() <= image.getWidth()) {
+//                    value = image.getHeight();
+//                } else {
+//                    value = image.getWidth();
+//                }
+                if (image.getWidth() > image.getHeight()) {
+                    // landscape
+                    float ratio = (float) width / maxWidth;
+                    width = maxWidth;
+                    height = (int) (height / ratio);
+                } else if (height > width) {
+                    // portrait
+                    float ratio = (float) height / maxHeight;
+                    height = maxHeight;
+                    width = (int) (width / ratio);
                 } else {
-                    value = image.getWidth();
+                    // square
+                    height = maxHeight;
+                    width = maxWidth;
                 }
 
                 Bitmap finalBitmap = null;
-                finalBitmap = Bitmap.createBitmap(image, 0, 0, value, value);
+                finalBitmap = Bitmap.createScaledBitmap(image, width, height, true);
                 holder.postImage.setImageBitmap(finalBitmap);
+
+
             }
         }catch (Exception ex){
             ex.getMessage();

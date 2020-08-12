@@ -21,51 +21,67 @@
             android:id="@+id/textview_membername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="9dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="50dp"
             android:textSize="@dimen/membertextsize"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
+            app:layout_constraintStart_toEndOf="@id/barrier"
             app:layout_constraintTop_toBottomOf="@id/tv_condent" />
 
         <TextView
             android:id="@+id/textview_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/adamina"
-            android:text="Heading"
             android:paddingLeft="5dp"
+            android:text="This is a heading. We are calling "
+            app:layout_constrainedWidth="true"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/postImage"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            app:layout_constraintBottom_toTopOf="@+id/tv_condent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/tv_condent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/adamina"
-            android:text="Condent"
             android:paddingLeft="5dp"
+
+            android:text="This is a sample content. You need to post the original content here.Hello "
             android:textSize="15sp"
-            app:layout_constraintStart_toEndOf="@+id/postImage"
-            app:layout_constraintTop_toBottomOf="@id/textview_heading" />
+            app:layout_constrainedWidth="true"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/barrier"
+            app:layout_constraintTop_toBottomOf="@+id/textview_heading" />
 
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/border" />
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            tools:src="@tools:sample/avatars"
+            tools:srcCompat="@tools:sample/avatars[11]" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="postImage"
+
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

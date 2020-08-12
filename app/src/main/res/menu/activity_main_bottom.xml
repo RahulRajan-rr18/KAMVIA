@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/homeFragment"
         android:icon="@drawable/home_black_18dp"
         android:title="Home" />
     <item
+        android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
         android:title="Search" />
     <item
-        android:icon="@drawable/public_24px"
-        android:title="Web" />
-    <item
-        android:icon="@drawable/share_black_48dp"
-        android:title="Share" />
+        android:id="@+id/viewProfileFragment"
+        android:icon="@drawable/person_black_36dp"
+        android:title="Profile" />
 
 </menu>
