@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,56 +53,62 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         holder.heading.setText(homeTimelineList.getHeading());
         holder.condent.setText(homeTimelineList.getCondent());
         String stringImage = homeTimelineList.getPostImage();
+        if (stringImage.equals(null)) {
 
-
-        try{
-            if(stringImage.equals(null)){
-                Toast.makeText(context, "Null Image", Toast.LENGTH_SHORT).show();
-            }else {
-                Bitmap image = StringToBitMap(stringImage);
-                int width = image.getWidth();
-                int height = image.getHeight();
-                int maxWidth = 550;
-                int maxHeight = 550;
-                int value = 0;
-//                if (image.getHeight() <= image.getWidth()) {
-//                    value = image.getHeight();
-//                } else {
-//                    value = image.getWidth();
-//                }
-                if (image.getWidth() > image.getHeight()) {
-                    // landscape
-                    float ratio = (float) width / maxWidth;
-                    width = maxWidth;
-                    height = (int) (height / ratio);
-                } else if (height > width) {
-                    // portrait
-                    float ratio = (float) height / maxHeight;
-                    height = maxHeight;
-                    width = (int) (width / ratio);
-                } else {
-                    // square
-                    height = maxHeight;
-                    width = maxWidth;
-                }
-
-                Bitmap finalBitmap = null;
-                finalBitmap = Bitmap.createScaledBitmap(image, width, height, true);
+        } else {
+            try {
+                Bitmap finalBitmap = cropCenter(StringToBitMap(stringImage));
                 holder.postImage.setImageBitmap(finalBitmap);
-
-
+            } catch (Exception ex) {
+                ex.getMessage();
             }
-        }catch (Exception ex){
-            ex.getMessage();
         }
 
 
-
-
+//
+//        try{
+//            if(stringImage.equals(null)){
+//                Toast.makeText(context, "Null Image", Toast.LENGTH_SHORT).show();
+//            }else {
+//                Bitmap image = StringToBitMap(stringImage);
+//                int width = image.getWidth();
+//                int height = image.getHeight();
+//                int maxWidth = 550;
+//                int maxHeight = 550;
+//                int value = 0;
+////                if (image.getHeight() <= image.getWidth()) {
+////                    value = image.getHeight();
+////                } else {
+////                    value = image.getWidth();
+////                }
+//                if (image.getWidth() > image.getHeight()) {
+//                    // landscape
+//                    float ratio = (float) width / maxWidth;
+//                    width = maxWidth;
+//                    height = (int) (height / ratio);
+//                } else if (height > width) {
+//                    // portrait
+//                    float ratio = (float) height / maxHeight;
+//                    height = maxHeight;
+//                    width = (int) (width / ratio);
+//                } else {
+//                    // square
+//                    height = maxHeight;
+//                    width = maxWidth;
+//                }
+//
+//                Bitmap finalBitmap = null;
+//                finalBitmap = Bitmap.createScaledBitmap(image, width, height, true);
+//                holder.postImage.setImageBitmap(finalBitmap);
+//
+//
+//            }
+//        }catch (Exception ex){
+//            ex.getMessage();
+//        }
 
 
     }
-
 
 
     @Override
@@ -147,7 +154,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
                 intent.putExtra("pdfurl", pdfurl);
                 intent.putExtra("heading", homeTimelineListItem.getHeading());
                 intent.putExtra("condent", homeTimelineListItem.getCondent());
-                intent.putExtra("image",homeTimelineListItem.getPostImage());
+                intent.putExtra("image", homeTimelineListItem.getPostImage());
 
                 this.context.startActivity(intent);
 
@@ -197,6 +204,25 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
             e.getMessage();
             return null;
         }
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+        int narrowSize = Math.min(width, height);
+        int differ = (int)Math.abs((bm.getHeight() - bm.getWidth())/2.0f);
+        width  = (width  == narrowSize) ? 0 : differ;
+        height = (width == 0) ? differ : 0;
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, width, height, narrowSize, narrowSize);
+        bm.recycle();
+        return resizedBitmap;
+    }
+
+    public static Bitmap cropCenter(Bitmap bmp) {
+        int dimension = Math.min(bmp.getWidth(), bmp.getHeight());
+        return ThumbnailUtils.extractThumbnail(bmp, dimension, dimension);
     }
 
 }
