@@ -14,7 +14,7 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:background="@color/creamwhite"
+        android:background="@color/colorPrimary"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,9 +27,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="25dp"
-            android:text="Sign Up"
+            android:text="Create Account"
+            android:textStyle="bold"
             android:textSize="32dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/white"
             />
 
         <LinearLayout
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Mobile No"
+                android:textColor="@color/white"
                 android:textSize="20dp" />
 
             <EditText
@@ -60,7 +62,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Permanent Employee Number"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                />
 
             <EditText
                 android:id="@+id/pen"
@@ -76,6 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Password"
+                android:textColor="@color/white"
                 android:textSize="20dp"
                 />
 
@@ -92,6 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Confirm Password"
+                android:textColor="@color/white"
                 android:textSize="20dp"
                 />
 
@@ -104,13 +110,14 @@
                 android:inputType="textPassword"
                 android:background="@drawable/mainwindowviews" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/mainwindowbutton"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
+                android:background="@drawable/gradient"
                 android:text="Register" />
 
         </LinearLayout>

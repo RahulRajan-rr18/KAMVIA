@@ -131,18 +131,22 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = preferences.edit();
 
 
-                        String uname = jsonObject.getString("user_name");
+                        //String uname = jsonObject.getString("user_name");
                         String mobno = jsonObject.getString("mobile_number");
                         String uid = jsonObject.getString("user_id");
+                        String emp_number = jsonObject.getString("emp_number");
 
                         editor.putString("USER_ID", uid);
+                        editor.putString("EMP_NUMBER",emp_number);
                       //  editor.putString("USER_NAME", uname);
                         editor.putString("MOBILE_NUMBER", mobno);
                         //editor.apply();
                         editor.commit();
+                        editor.apply();
                         Globals.currentUser.USER_ID=uid;
-                        Globals.currentUser.USER_NAME=uname;
+                      //  Globals.currentUser.USER_NAME=uname;
                         Globals.currentUser.MOBILE_NUMBER=mobno;
+                        editor.commit();
                         editor.apply();
 
 

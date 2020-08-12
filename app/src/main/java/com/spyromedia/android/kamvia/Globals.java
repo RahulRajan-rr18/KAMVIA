@@ -20,6 +20,7 @@ public class Globals {
         public String MOBILE_NUMBER = "";
         public  String USER_ROLE = "";
         public  String VERIFICATION ="";
+        public  String EMP_NUMBER = "";
     }
     public static CurrentUser currentUser;
 
@@ -32,6 +33,7 @@ public class Globals {
             cu.MOBILE_NUMBER=sharedPreferences.getString("MOBILE_NUMBER","");
             cu.USER_ROLE= sharedPreferences.getString("USER_ROLE","");
             cu.VERIFICATION= sharedPreferences.getString("VERIFICATION","");
+            cu.EMP_NUMBER = sharedPreferences.getString("EMP_NUMBER","");
 
 
 

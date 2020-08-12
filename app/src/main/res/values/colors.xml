@@ -2,11 +2,12 @@
 <resources>
     <color name="colorPrimary">#CB1F27</color>
     <color name="colorPrimaryDark">#BD1E26</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#215693</color>
     <color name="colorNavigationbar">#FFCA28</color>
     <color name="RegWindowColour">#a1544f4f</color>
     <color name="loginWindowColour">#A18F8C8C</color>
     <color name="white">#fafafa</color>
     <color name="creamwhite">#ECEBE4</color>
+    <color name="buttonBlue"></color>
 
 </resources>

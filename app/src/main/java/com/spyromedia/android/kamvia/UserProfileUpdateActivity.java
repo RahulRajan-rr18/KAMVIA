@@ -153,6 +153,11 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
         sv = findViewById(R.id.scrollView);
         bloodGroup =findViewById(R.id.bloodGroup);
 
+        String emp_number = Globals.currentUser.EMP_NUMBER;
+        employee_number.setText(emp_number);
+        //employee_number.setEnabled(false);
+
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         getStationDetails();
 
@@ -313,7 +318,7 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
         if (!ImageUploaded) {
             Snackbar snackbar = Snackbar
-                    .make(getCurrentFocus(), "Please select your Image", Snackbar.LENGTH_LONG);
+                    .make(getCurrentFocus(), "Please pick a image", Snackbar.LENGTH_LONG);
             snackbar.show();
             imageError.setError("Please Upload your Image");
             // imageError.requestFocus();

@@ -101,8 +101,9 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/mainwindowviews"
                     android:ems="10"
+                    android:editable="false"
                     android:hint="Permanent Employee Number"
-                    android:inputType="text"
+                    android:inputType="none"
                     android:maxLength="8"
                     android:textAllCaps="true" />
 

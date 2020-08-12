@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView headerImage;
     SharedPreferences sharedPreferences;
 
-
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,23 +66,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        CheckUserVerificationStatus();
         user_id = Globals.currentUser.USER_ID;
         Log.d("MainActivity", "Userid" + user_id);
         //fetching current verification status for restricting operations
-        CheckUserVerificationStatus();
+
         //Check Runtime Permissions
 
 
         // sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+         navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         headerText = headerView.findViewById(R.id.drawer_name);
         headerImage = headerView.findViewById(R.id.drawer_icon);
         //Apply the data to the drawer header.
         Log.d("MainActivity", "This is userid" + user_id);
         String name = Globals.currentUser.USER_NAME;
-        if (name.equals("")) {
+        if (name.equals("null")) {
             headerText.setText("");
         }
         Log.d("MainActivity", "shared" + name);
@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.id_home);
         }
 
@@ -201,10 +202,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                             String user_role = jsonObject1.optString("user_role");
                             if (user_role.equals("Admin")) {
-                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminCornerFragment()).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                        new AdminCornerFragment()).commit();
                             } else {
 
-                                Toast.makeText(MainActivity.this, "This is Restricted to Admins Only", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "This is Restricted to Admins Only",
+                                        Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -264,12 +267,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             String Username = jsonObject1.optString("name");
+
                             Log.d("MainActivity", Username);
                             sharedPreferences = getBaseContext().getSharedPreferences("settings", 0);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-
                              String ver_status = jsonObject1.optString("verification_status");
 
+                             if(ver_status.equals("notverified" ) || ver_status.equals("verified")){
+                                 Menu menuNav=navigationView.getMenu();
+                                 MenuItem nav_item2 = menuNav.findItem(R.id.id_addprofile);
+                                 nav_item2.setEnabled(false);
+                             }
                             editor.putString("VERIFICATION", ver_status);
                             editor.putString("USER_NAME", Username);
                             //editor.apply();

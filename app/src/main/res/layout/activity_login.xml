@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/loginWindowColour">
+    android:background="@color/colorPrimary">
 
 
     <TextView
         android:id="@+id/logintextvew"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginTop="60dp"
         android:fontFamily="sans-serif"
         android:text="Login To Your Account"
@@ -28,7 +28,7 @@
         android:layout_width="158dp"
         android:layout_height="175dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/logo_transparent"
+        android:src="@drawable/logofinal"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,15 +100,16 @@
             android:textSize="19dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/Login"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/mainwindowbutton"
-        android:text="Login"
-        android:layout_marginLeft="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="40dp"
+        android:text="Login"
+        style="@style/AppTheme.RoundedCornerMaterialButton"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerlayout" />
