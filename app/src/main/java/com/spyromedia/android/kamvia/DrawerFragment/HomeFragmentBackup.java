@@ -23,8 +23,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapter;
-import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersListItem;
-import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersRecyAdapter;
 import com.spyromedia.android.kamvia.R;
 import com.spyromedia.android.kamvia.VerticalSpaceItemDecoration;
 
@@ -35,37 +33,27 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
-    @Nullable
-    HomeTimelineRecyAdapter homeTimelineRecyAdapter;
-    ListAllOrdersRecyAdapter listAllOrdersRecyAdapter;
-    List<HomeTimelineListItem> timelinelist;
-    List<ListAllOrdersListItem> orderlist;
-    RequestQueue requestQueuegetTimeline, requestQueuegetQueue;
-    RecyclerView news_recyclerView;
-    RecyclerView orders_recyclerView;
-    ProgressDialog progressDialog;
+public class HomeFragmentBackup extends Fragment {
     private static final int VERTICAL_ITEM_SPACE = 30;
+    @Nullable
+    HomeTimelineRecyAdapter adapter;
+    List<HomeTimelineListItem> timelinelist;
+    RequestQueue requestQueuegetTimeline;
+    RecyclerView home_recyclerview;
+    ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main_frame, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        news_recyclerView = view.findViewById(R.id.newsrecyclerview);
-        news_recyclerView.setHasFixedSize(true);
-        news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        news_recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
-
-        orders_recyclerView = view.findViewById(R.id.ordersrecyclerview);
-        orders_recyclerView.setHasFixedSize(true);
-        news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderlist = new ArrayList<>();
+        home_recyclerview = view.findViewById(R.id.home_recyclerview);
+        home_recyclerview.setHasFixedSize(true);
+        home_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        home_recyclerview.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         timelinelist = new ArrayList<>();
 
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());
-        requestQueuegetQueue = Volley.newRequestQueue(getContext());
         parseJSON();
-        parseJSONOrders();
         return view;
     }
 
@@ -93,8 +81,8 @@ public class HomeFragment extends Fragment {
 
                     }
 
-                    homeTimelineRecyAdapter = new HomeTimelineRecyAdapter(timelinelist, getContext());
-                    news_recyclerView.setAdapter(homeTimelineRecyAdapter);
+                    adapter = new HomeTimelineRecyAdapter(timelinelist, getContext());
+                    home_recyclerview.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -111,51 +99,6 @@ public class HomeFragment extends Fragment {
         requestQueuegetTimeline.add(jsonObjectRequest);
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading......");
-        progressDialog.show();
-    }
-
-    private void parseJSONOrders() {
-
-        String url = "http://18.220.53.162/kamvia/api/getAllOrders.php";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                progressDialog.dismiss();
-                try {
-
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        //geting pdf url from server
-                        String orderId = jsonObject.getString("id");
-                        String orderDetails = jsonObject.getString("url");
-
-                        orderlist.add(new ListAllOrdersListItem(orderId, orderDetails));
-
-                    }
-
-                    listAllOrdersRecyAdapter = new ListAllOrdersRecyAdapter(orderlist, getContext());
-                    orders_recyclerView.setAdapter(homeTimelineRecyAdapter);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    progressDialog.dismiss();
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        requestQueuegetQueue.add(jsonObjectRequest);
-
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading List");
         progressDialog.show();
     }
 
