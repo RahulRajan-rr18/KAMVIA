@@ -66,7 +66,6 @@ public class ListAllOrdersRecyAdapter extends RecyclerView.Adapter<ListAllOrders
 
             this.listItems = listAllOrdersListItems;
             this.context = context;
-
             itemView.setOnClickListener(this);
             orderDetails = (TextView) itemView.findViewById(R.id.tvOrders);
 

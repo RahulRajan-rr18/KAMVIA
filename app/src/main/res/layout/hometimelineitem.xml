@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:padding="5dp"
+    android:layout_height="140dp"
     android:layout_margin="3dp"
+    android:background="@drawable/border"
+    android:padding="5dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="3dp">
 
@@ -13,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/border"
         android:padding="@dimen/layoutpadding">
         <!--        android:background="@drawable/gradient"-->
 
@@ -29,18 +31,21 @@
         <TextView
             android:id="@+id/textview_heading"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="8dp"
+            android:fitsSystemWindows="true"
             android:fontFamily="@font/adamina"
+            android:gravity="left"
+            android:maxLines="2"
             android:paddingLeft="5dp"
             android:text="This is a heading. We are calling "
-            app:layout_constrainedWidth="true"
+            android:textAlignment="gravity"
             android:textSize="17sp"
             android:textStyle="bold"
-
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@+id/tv_condent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/barrier"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
@@ -48,15 +53,16 @@
         <TextView
             android:id="@+id/tv_condent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_marginStart="4dp"
+            android:fitsSystemWindows="true"
             android:fontFamily="@font/adamina"
+            android:gravity="left"
             android:paddingLeft="5dp"
-
             android:text="This is a sample content. You need to post the original content here.Hello "
+            android:textAlignment="gravity"
             android:textSize="15sp"
             app:layout_constrainedWidth="true"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/barrier"
@@ -66,11 +72,11 @@
             android:id="@+id/postImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
             tools:src="@tools:sample/avatars"
             tools:srcCompat="@tools:sample/avatars[11]" />
 
@@ -83,16 +89,17 @@
 
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Read more.."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/imageView"-->
-    <!--        android:layout_width="130dp"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:src="@drawable/ic_person"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </com.google.android.material.card.MaterialCardView>

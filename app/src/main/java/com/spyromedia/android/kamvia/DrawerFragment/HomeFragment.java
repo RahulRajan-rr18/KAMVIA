@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.spyromedia.android.kamvia.CustomLinearLayoutManager;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapter;
 import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersActivity;
@@ -46,7 +50,6 @@ public class HomeFragment extends Fragment {
     List<ListAllOrdersListItem> listAllOrdersListItems;
     ListAllOrdersRecyAdapter adapter;
 
-
     ProgressDialog progressDialog;
 
 
@@ -56,7 +59,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_frame, container, false);
 
-
+        SnapHelper snapHelper = new PagerSnapHelper();
         orderArchive = view.findViewById(R.id.appCompatImageView);
         orderArchive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +70,12 @@ public class HomeFragment extends Fragment {
         });
         news_recyclerView = view.findViewById(R.id.newsrecyclerview);
         news_recyclerView.setHasFixedSize(true);
-        news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        news_recyclerView.setLayoutManager(new CustomLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         timelinelist = new ArrayList<>();
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());
+
+
         parseJSON();
 
         ordersRecyView = view.findViewById(R.id.ordersrecyclerview);
@@ -78,6 +83,7 @@ public class HomeFragment extends Fragment {
         ordersRecyView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listAllOrdersListItems = new ArrayList<>();
         orderRequestQueue = Volley.newRequestQueue(getContext());
+
 
         getOrdersList();
 
@@ -111,6 +117,36 @@ public class HomeFragment extends Fragment {
 
                     homeTimelineRecyAdapter = new HomeTimelineRecyAdapter(timelinelist, getContext());
                     news_recyclerView.setAdapter(homeTimelineRecyAdapter);
+
+                    final int speedScroll = 2000;
+                    final Handler handler = new Handler();
+                    final Runnable runnable = new Runnable() {
+                        int count = 0;
+                        boolean flag = true;
+                        @Override
+                        public void run() {
+                            //try{
+                                if(count < homeTimelineRecyAdapter.getItemCount()){
+                                    if(count==homeTimelineRecyAdapter.getItemCount()-1){
+                                        flag = false;
+                                    }else if(count == 0){
+                                        flag = true;
+                                    }
+                                    if(flag) count++;
+                                    else count--;
+
+                                    news_recyclerView.smoothScrollToPosition(count);
+                                    handler.postDelayed(this,speedScroll);
+                                }
+                           // }catch (Exception ex){
+
+                           // }
+
+                        }
+                    };
+
+                    handler.postDelayed(runnable,speedScroll);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -154,6 +190,7 @@ public class HomeFragment extends Fragment {
 
                     adapter = new ListAllOrdersRecyAdapter(listAllOrdersListItems, getActivity());
                     ordersRecyView.setAdapter(adapter);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

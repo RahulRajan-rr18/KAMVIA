@@ -46,6 +46,7 @@ public class ListAllOrdersActivity extends AppCompatActivity {
         ordersRecyView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         listAllOrdersListItems = new ArrayList<>();
 
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         parseJSON();
         return;
@@ -67,8 +68,8 @@ public class ListAllOrdersActivity extends AppCompatActivity {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         //geting pdf url from server
-                        String orderId = jsonObject.getString("id");
-                        String orderDetails = jsonObject.getString("url");
+                        String orderId = jsonObject.getString("url");
+                        String orderDetails = jsonObject.getString("name");
 
                         listAllOrdersListItems.add(new ListAllOrdersListItem(orderId, orderDetails));
 
@@ -76,6 +77,8 @@ public class ListAllOrdersActivity extends AppCompatActivity {
 
                     adapter = new ListAllOrdersRecyAdapter(listAllOrdersListItems, getApplicationContext());
                     ordersRecyView.setAdapter(adapter);
+                    ordersRecyView.smoothScrollToPosition(adapter.getItemCount());
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
