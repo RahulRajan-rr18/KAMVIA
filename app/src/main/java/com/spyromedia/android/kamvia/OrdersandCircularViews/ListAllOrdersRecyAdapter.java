@@ -2,6 +2,7 @@ package com.spyromedia.android.kamvia.OrdersandCircularViews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,13 +77,12 @@ public class ListAllOrdersRecyAdapter extends RecyclerView.Adapter<ListAllOrders
         public void onClick(View v) {
                 int position = getAdapterPosition();
                 ListAllOrdersListItem listStationsItem = this.listItems.get(position);
-                Intent intent = new Intent(this.context, MainActivity.class);
 
-                String pdfurl = listStationsItem.getOrderId();
-             //   intent.putExtra("StationId", homeTimelineListItem.getHeading());
-                intent.putExtra("StationId", listStationsItem.getOrderId());
-
-                this.context.startActivity(intent);
+                String PdfUrl  = listStationsItem.getOrderId();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://docs.google.com/gview?embedded=true&url="+PdfUrl));
+                browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(browserIntent);
 
 
         }

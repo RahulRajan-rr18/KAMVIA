@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Membership"
+            android:text="Posts and Circulars"
             android:textColor="@color/white"
             android:textSize="@dimen/headingtextsize"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -61,16 +61,16 @@
             android:id="@+id/btnOldPosts"
             android:layout_width="0dip"
             android:layout_margin="10dp"
-            android:textColor="@color/white"
-            android:background="@android:color/holo_blue_dark"
             android:layout_height="match_parent"
             android:text="Old posts"
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/btnAddCircular"
             android:layout_width="0dip"
             android:layout_margin="10dp"
             android:layout_height="match_parent"
+            android:text="Add Circular"
             android:layout_weight="1"/>
     </LinearLayout>
 

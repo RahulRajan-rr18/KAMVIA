@@ -181,8 +181,8 @@ public class HomeFragment extends Fragment {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         //geting pdf url from server
-                        String orderId = jsonObject.getString("id");
-                        String orderDetails = jsonObject.getString("url");
+                        String orderId = jsonObject.getString("url");
+                        String orderDetails = jsonObject.getString("name");
 
                         listAllOrdersListItems.add(new ListAllOrdersListItem(orderId, orderDetails));
 

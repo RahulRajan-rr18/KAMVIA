@@ -78,7 +78,7 @@ public class AddNewPostActivity extends AppCompatActivity {
     private static final int STORAGE_PERMISSION_CODE = 123;
     //Uri to store the image uri
     private Uri filePath;
-    String url = "https://www.google.com";
+  //  String url = "https://www.google.com";
     Uri uri;
     String displayName = null;
     private Bitmap bitmap;

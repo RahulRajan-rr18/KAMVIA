@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.spyromedia.android.kamvia.AddOrdersOrCirculars;
 import com.spyromedia.android.kamvia.R;
 
 public class PostsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnNewPost, btnModify , btnOldPost;
+    Button btnNewPost, btnModify, btnOldPost, btnAddCircular;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,11 +23,13 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
 
         btnNewPost = findViewById(R.id.btnNewPost);
         btnModify = findViewById(R.id.btnModify);
-        btnOldPost  =findViewById(R.id.btnOldPosts);
+        btnOldPost = findViewById(R.id.btnOldPosts);
+        btnAddCircular = findViewById(R.id.btnAddCircular);
 
-        btnNewPost.setOnClickListener( this);
-        btnModify.setOnClickListener( this);
+        btnNewPost.setOnClickListener(this);
+        btnModify.setOnClickListener(this);
         btnOldPost.setOnClickListener(this);
+        btnAddCircular.setOnClickListener(this);
 
     }
 
@@ -45,6 +49,11 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnOldPosts:
                 Intent oldpost = new Intent(PostsActivity.this, ListOldPostsActivity.class);
                 startActivity(oldpost);
+                break;
+
+            case R.id.btnAddCircular:
+                Intent addCircular = new Intent(PostsActivity.this, AddOrdersOrCirculars.class);
+                startActivity(addCircular);
                 break;
 
 

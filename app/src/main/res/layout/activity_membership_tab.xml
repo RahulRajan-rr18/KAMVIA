@@ -60,8 +60,6 @@
         <Button
             android:layout_width="0dip"
             android:layout_margin="10dp"
-            android:textColor="@color/white"
-            android:background="@android:color/holo_blue_dark"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
