@@ -94,13 +94,41 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //Custom Drawer Function
-        MenuItem menuItem;
-        menuItem = navigationView.getMenu().findItem(R.id.adminCornerFragment);
-        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        MenuItem adminItem;
+        MenuItem formsItem, helpItem, faqItem;
+        formsItem = navigationView.getMenu().findItem(R.id.dwdForms);
+        helpItem = navigationView.getMenu().findItem(R.id.helpAndFeedback);
+        faqItem = navigationView.getMenu().findItem(R.id.FAQ);
+        adminItem = navigationView.getMenu().findItem(R.id.adminCornerFragment);
+        adminItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 CheckCredentials();
                 return true;
+            }
+        });
+
+        formsItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this, "This feature is under development", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        helpItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this, "This feature is under development", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        faqItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this, "This feature is under development", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 

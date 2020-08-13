@@ -7,6 +7,7 @@
     <item
         android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
+        android:iconTint="@color/colorNavigationbar"
         android:title="Search" />
     <item
         android:id="@+id/viewProfileFragment"

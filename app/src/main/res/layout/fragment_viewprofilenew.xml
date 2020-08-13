@@ -124,7 +124,7 @@
         android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="64dp"
         android:text="LogOut"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +134,7 @@
         android:id="@+id/profileimage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/ic_person"
         android:elevation="5dp"
         android:scaleType="centerCrop"
@@ -144,15 +144,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/EditProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/border"
+        android:layout_marginTop="20dp"
         android:text="Edit   Profile"
         app:layout_constraintEnd_toStartOf="@+id/logout_btn"
-        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profilecardlayout" />
 
