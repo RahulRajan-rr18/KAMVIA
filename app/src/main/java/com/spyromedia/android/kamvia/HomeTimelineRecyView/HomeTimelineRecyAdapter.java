@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.TransitionManager;
 
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.R;
@@ -45,7 +46,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         HomeTimelineListItem homeTimelineList = timelineList.get(position);
         //routeListItems: list variable
@@ -53,8 +54,8 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         holder.heading.setText(homeTimelineList.getHeading());
         holder.condent.setText(homeTimelineList.getCondent());
         String stringImage = homeTimelineList.getPostImage();
-        if (stringImage.equals(null)) {
-
+        if (stringImage.equals("")) {
+            holder.postImage.setImageBitmap(null);
         } else {
             try {
                 Bitmap finalBitmap = cropCenter(StringToBitMap(stringImage));
@@ -63,6 +64,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
                 ex.getMessage();
             }
         }
+
 
 
 //
@@ -211,8 +213,8 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
         int height = bm.getHeight();
 
         int narrowSize = Math.min(width, height);
-        int differ = (int)Math.abs((bm.getHeight() - bm.getWidth())/2.0f);
-        width  = (width  == narrowSize) ? 0 : differ;
+        int differ = (int) Math.abs((bm.getHeight() - bm.getWidth()) / 2.0f);
+        width = (width == narrowSize) ? 0 : differ;
         height = (width == 0) ? differ : 0;
 
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, width, height, narrowSize, narrowSize);

@@ -3,6 +3,7 @@ package com.spyromedia.android.kamvia.HomeTimelineRecyView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
@@ -30,6 +31,7 @@ public class TimelineViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_view);
         getSupportActionBar().hide();
+
 
         postImage = findViewById(R.id.postImage);
         tv_heading = findViewById(R.id.tv_heading);

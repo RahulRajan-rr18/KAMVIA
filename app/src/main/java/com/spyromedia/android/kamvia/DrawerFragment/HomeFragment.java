@@ -99,9 +99,8 @@ public class HomeFragment extends Fragment {
             public void onResponse(JSONObject response) {
 
                 progressDialog.dismiss();
-
+                timelinelist.clear();
                 try {
-
                     JSONArray jsonArray = response.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -110,7 +109,8 @@ public class HomeFragment extends Fragment {
                         String pdfurl = jsonObject.getString("pdfurl");
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
-                        String image = jsonObject.getString("post_image");
+                        String image = null;
+                         image = jsonObject.getString("post_image");
                         timelinelist.add(new HomeTimelineListItem(pdfurl, heading, condent, image));
 
                     }

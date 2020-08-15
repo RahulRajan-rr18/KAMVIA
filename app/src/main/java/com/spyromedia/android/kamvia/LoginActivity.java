@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                String hashedPassword = md5(password.getText().toString().trim());
+                String hashedPassword = Globals.md5(password.getText().toString().trim());
                 params.put("username", mobile_number.getText().toString().trim());
                 params.put("password",hashedPassword);
 
@@ -208,30 +208,7 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private static String md5(String s)
-    {
-        MessageDigest digest;
-        try
-        {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes(), 0, s.length());
-            byte[] bytes = digest.digest();
 
-            String hash = "";
-            for (int i = 0; i < bytes.length; ++i)
-            {
-                int di = (bytes[i] + 256) & 0xFF;
-                hash = hash + hextable[(di >> 4) & 0xF] + hextable[di & 0xF];
-            }
-
-            return hash;
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-        }
-
-        return "";
-    }
 
 
 
