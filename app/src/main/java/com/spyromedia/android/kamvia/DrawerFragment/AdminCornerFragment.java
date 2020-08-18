@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,27 +22,27 @@ public class AdminCornerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-      View view = inflater.inflate(R.layout.fragment_admin_corner,container,false);
+        View view = inflater.inflate(R.layout.fragment_admin_corner_new, container, false);
 
 
-        ImageView exitButton = view.findViewById(R.id.exitbutton);
-        exitButton.setOnClickListener(new View.OnClickListener() {
+//        ImageView exitButton = view.findViewById(R.id.exitbutton);
+//        exitButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent home = new Intent(getActivity(), MainActivity.class);
+//                startActivity(home);
+//
+//            }
+//        });
+
+        Button btnNewPost = view.findViewById(R.id.btnPost);
+        btnNewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home = new Intent(getActivity(), MainActivity.class);
-                startActivity(home);
-
+                Intent addpost = new Intent(getContext(), PostsActivity.class);
+                startActivity(addpost);
             }
         });
-
-      Button btnNewPost = view.findViewById(R.id.btnPost);
-      btnNewPost.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent addpost = new Intent(getContext(), PostsActivity.class);
-              startActivity(addpost);
-          }
-      });
 
       Button btnMembership = view.findViewById(R.id.btn_membership);
       btnMembership.setOnClickListener(new View.OnClickListener() {

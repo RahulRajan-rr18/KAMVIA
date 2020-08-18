@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "380336560670",
+    "firebase_url": "https://kamvia-5a65d.firebaseio.com",
+    "project_id": "kamvia-5a65d",
+    "storage_bucket": "kamvia-5a65d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380336560670:android:ec154a504b810c1bff6c0f",
+        "android_client_info": {
+          "package_name": "com.spyromedia.android.kamvia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380336560670-i349q0ttqusqjsc622ec638t25god18t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWWq2i12_lwv_Mkz6c7XPL8LDnyPvyEGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380336560670-i349q0ttqusqjsc622ec638t25god18t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

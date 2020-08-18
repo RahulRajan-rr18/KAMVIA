@@ -97,6 +97,7 @@ public class SearchByNameFragement extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    progressDialog.dismiss();
                     JSONArray jsonArray = response.getJSONArray("data");
                     itemlistvalues = new ArrayList<String>();
 
@@ -119,6 +120,9 @@ public class SearchByNameFragement extends Fragment {
             }
         });
         requestQueue.add(jsonObjectRequest);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
     }
 
     private void alertDialog() {

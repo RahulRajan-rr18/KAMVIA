@@ -10,8 +10,13 @@
         android:iconTint="@color/colorNavigationbar"
         android:title="Search" />
     <item
+        android:id="@+id/feedbackFragment"
+        android:icon="@drawable/feedback_black_36dp"
+        android:title="Feedback" />
+    <item
         android:id="@+id/viewProfileFragment"
         android:icon="@drawable/person_black_36dp"
         android:title="Profile" />
+
 
 </menu>

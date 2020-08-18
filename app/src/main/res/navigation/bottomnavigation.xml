@@ -42,4 +42,9 @@
         android:id="@+id/searchByLocationFragment"
         android:name="com.spyromedia.android.kamvia.SeachFunctions.SearchByLocationFragment"
         android:label="SearchByPlace" />
+    <fragment
+        android:id="@+id/feedbackFragment"
+        android:name="com.spyromedia.android.kamvia.FeedbackFragment"
+        android:label="Feedback"
+        tools:layout="@layout/fragment_feedback" />
 </navigation>
