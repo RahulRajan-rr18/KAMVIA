@@ -51,8 +51,6 @@
     <string-array name="doc_type">
 
         <item>pdf</item>
-        <item>Image</item>
-
     </string-array>
     <string-array name="membertype">
         <item>New</item>

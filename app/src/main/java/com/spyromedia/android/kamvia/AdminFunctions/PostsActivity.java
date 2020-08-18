@@ -43,7 +43,7 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btnModify:
-                Intent modifypost = new Intent(PostsActivity.this, ListOldPostsActivity.class);
+                Intent modifypost = new Intent(PostsActivity.this, ModifyPostListActivity.class);
                 startActivity(modifypost);
                 break;
             case R.id.btnOldPosts:

@@ -473,9 +473,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
 
     private void uploadBitmap(final Bitmap bitmap) {
 
-        //getting the tag from the edittext
-        // final String tags = "2222222";
-
         //our custom volley request
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
                 new Response.Listener<NetworkResponse>() {
@@ -507,12 +504,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                     }
                 }) {
 
-            /*
-             * If you want to add more parameters with the image
-             * you can do it here
-             * here we have only one parameter with the image
-             * which is tags
-             * */
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -520,9 +511,6 @@ public class UserProfileUpdateActivity extends AppCompatActivity implements View
                 return params;
             }
 
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
             @Override
             protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();

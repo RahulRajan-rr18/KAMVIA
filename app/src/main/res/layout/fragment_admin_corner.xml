@@ -55,7 +55,7 @@
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/btn_createpost"
+            android:id="@+id/btnPost"
             android:text="post"
             android:textColor="@color/white"
             android:background="@android:color/holo_green_dark"

@@ -25,28 +25,33 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListOldPostsActivity extends AppCompatActivity {
-
-    HomeTimelineRecyAdapter adapter;
+public class ModifyPostListActivity extends AppCompatActivity {
+    RecyclerView recyView;
+    ModifyPostRecyAdapter adapter;
     List<HomeTimelineListItem> timelinelist;
     RequestQueue requestQueuegetTimeline;
-    RecyclerView home_recyclerview;
     ProgressDialog progressDialog;
-    private static final int VERTICAL_ITEM_SPACE = 30;
+    private static final int VERTICAL_ITEM_SPACE = 20;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_old_posts);
+        setContentView(R.layout.activity_modify_list);
+        getSupportActionBar().hide();
 
-        home_recyclerview = findViewById(R.id.oldpostRecyview);
-        home_recyclerview.setHasFixedSize(true);
-        home_recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        home_recyclerview.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
+        recyView = findViewById(R.id.recyclerView);
+
+        recyView.setHasFixedSize(true);
+        recyView.setLayoutManager(new LinearLayoutManager(this));
+        recyView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         timelinelist = new ArrayList<>();
 
         requestQueuegetTimeline = Volley.newRequestQueue(this);
         FetchPosts();
+
+
     }
 
     private void FetchPosts() {
@@ -56,7 +61,7 @@ public class ListOldPostsActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
 
-             //   progressDialog.dismiss();
+                   progressDialog.dismiss();
 
                 try {
 
@@ -74,8 +79,8 @@ public class ListOldPostsActivity extends AppCompatActivity {
 
                     }
 
-                    adapter = new HomeTimelineRecyAdapter(timelinelist, getApplicationContext());
-                    home_recyclerview.setAdapter(adapter);
+                    adapter = new ModifyPostRecyAdapter(timelinelist, getApplicationContext());
+                    recyView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -89,10 +94,9 @@ public class ListOldPostsActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-       requestQueuegetTimeline.add(jsonObjectRequest);
-//        progressDialog = new ProgressDialog(getApplicationContext());
-//        progressDialog.setMessage("Loading......");
-//        progressDialog.show();
+        requestQueuegetTimeline.add(jsonObjectRequest);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading Posts");
+        progressDialog.show();
     }
-
 }

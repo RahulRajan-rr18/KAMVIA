@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia.HomeTimelineRecyView;
+package com.spyromedia.android.kamvia.AdminFunctions;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,17 +17,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.spyromedia.android.kamvia.Globals;
+import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRecyAdapter.ViewHolder> {
+public class ModifyPostRecyAdapter extends RecyclerView.Adapter<ModifyPostRecyAdapter.ViewHolder> {
     private final List<HomeTimelineListItem> timelineList;
     private final Context context;
 
-    public HomeTimelineRecyAdapter(List<HomeTimelineListItem> timelineList, Context context) {
+    public ModifyPostRecyAdapter(List<HomeTimelineListItem> timelineList, Context context) {
         this.timelineList = timelineList;
         this.context = context;
     }
@@ -62,7 +62,6 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
                 ex.getMessage();
             }
         }
-
 
 
 //
@@ -143,39 +142,19 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
 
         @Override
         public void onClick(View v) {
-            String verified = Globals.currentUser.VERIFICATION;
-            if (verified.equals("verified")) {
 
-                int position = getAdapterPosition();
-                HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
-                Intent intent = new Intent(this.context, TimelineViewActivity.class);
+            int position = getAdapterPosition();
+            HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
+            Intent intent = new Intent(this.context, ModifyPostActivity.class);
 
-                String pdfurl = homeTimelineListItem.getPOstUrl();
-                intent.putExtra("pdfurl", pdfurl);
-                intent.putExtra("heading", homeTimelineListItem.getHeading());
-                intent.putExtra("condent", homeTimelineListItem.getCondent());
-                intent.putExtra("image", homeTimelineListItem.getPostImage());
-
-                this.context.startActivity(intent);
-
-            } else {
-
-
-                int position = getAdapterPosition();
-                HomeTimelineListItem homeTimelineListItem = this.listItems.get(position);
-                Intent intent = new Intent(this.context, TimelineViewActivity.class);
-
-                String pdfurl = homeTimelineListItem.getPOstUrl();
-                intent.putExtra("pdfurl", pdfurl);
-                intent.putExtra("heading", homeTimelineListItem.getHeading());
-                intent.putExtra("condent", homeTimelineListItem.getCondent());
-
-                this.context.startActivity(intent);
-
-
-                //  alertDialog();
-            }
-
+            String pdfurl = homeTimelineListItem.getPOstUrl();
+            intent.putExtra("pdfurl", pdfurl);
+            intent.putExtra("heading", homeTimelineListItem.getHeading());
+            intent.putExtra("condent", homeTimelineListItem.getCondent());
+            intent.putExtra("image", homeTimelineListItem.getPostImage());
+            intent.putExtra("postid", homeTimelineListItem.getPostId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.context.startActivity(intent);
 
         }
     }

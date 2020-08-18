@@ -31,43 +31,23 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/viewprofilemargin"
-            android:text="Heading"
-            android:textSize="17sp" />
-
         <EditText
             android:id="@+id/postheading"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="@dimen/viewprofilemargin"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:gravity="top"
             android:background="@drawable/mainwindowviews"
             android:ems="10"
+            android:gravity="top"
             android:hint="Heading"
             android:inputType="textMultiLine" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/viewprofilemargin"
-            android:text="Content"
-            android:textSize="17sp" />
 
         <EditText
             android:id="@+id/postcontent"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="@dimen/viewprofilemargin"
             android:layout_marginTop="10dp"
             android:layout_weight="1"

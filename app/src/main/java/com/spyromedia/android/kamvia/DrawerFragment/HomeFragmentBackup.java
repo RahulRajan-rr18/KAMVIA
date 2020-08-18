@@ -77,7 +77,9 @@ public class HomeFragmentBackup extends Fragment {
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
                         String image = jsonObject.getString("post_image");
-                        timelinelist.add(new HomeTimelineListItem(pdfurl, heading, condent, image));
+                        String post_id = jsonObject.getString("post_id");
+
+                        timelinelist.add(new HomeTimelineListItem(post_id,pdfurl, heading, condent, image));
 
                     }
 

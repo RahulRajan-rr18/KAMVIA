@@ -32,10 +32,10 @@ public class TimelineViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline_view);
         getSupportActionBar().hide();
 
-
         postImage = findViewById(R.id.postImage);
         tv_heading = findViewById(R.id.tv_heading);
         tv_condent = findViewById(R.id.tv_condent);
+
         pdfurl = getIntent().getStringExtra("pdfurl");
 
         tv_heading.setText("" + getIntent().getStringExtra("heading"));

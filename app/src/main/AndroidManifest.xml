@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddOrdersOrCirculars"></activity>
+        <activity android:name=".AdminFunctions.ModifyPostActivity"></activity>
+        <activity android:name=".AdminFunctions.ModifyPostListActivity" />
+        <activity android:name=".AddOrdersOrCirculars" />
         <activity android:name=".OrdersandCircularViews.ListAllOrdersActivity" />
         <activity android:name=".ListAllStations.ListAllStationsActivity" />
         <activity android:name=".BasicSettingsActivity" />

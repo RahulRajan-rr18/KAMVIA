@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -40,7 +39,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.spyromedia.android.kamvia.Globals;
 import com.spyromedia.android.kamvia.R;
-import com.spyromedia.android.kamvia.RequestHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +64,8 @@ public class AddNewPostActivity extends AppCompatActivity {
     private ArrayList<HashMap<String, String>> arraylist;
     //Pdf request code
     private final int PICK_PDF_REQUEST = 1;
-    private int PICK_IMAGE_REQUEST =2;
+    private int PICK_IMAGE_REQUEST = 2;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -74,21 +73,23 @@ public class AddNewPostActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
+
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
     //Uri to store the image uri
     private Uri filePath;
-  //  String url = "https://www.google.com";
     Uri uri;
     String displayName = null;
     private Bitmap bitmap;
+    Boolean pdfpicked = false;
+    Boolean imagePicked = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
-        Button pdfChoose, uploadPost,btnChooseImage;
+        Button pdfChoose, uploadPost, btnChooseImage;
         pdfChoose = findViewById(R.id.choose_file);
         btnChooseImage = findViewById(R.id.btnPickImage);
         postHead = findViewById(R.id.postheading);
@@ -100,34 +101,35 @@ public class AddNewPostActivity extends AppCompatActivity {
         btnChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showImageChooser();            }
+                pickImage();
+            }
         });
+
+
+        pdfChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickPdf();
+            }
+        });
+
+
         uploadPost = findViewById(R.id.buttonuploadpost);
         uploadPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Boolean verify = verifyPost();
                 if (verify == true) {
-                    // AddNewPost();
-//                    Intent intent = new Intent();
-//                    intent.setAction(Intent.ACTION_GET_CONTENT);
-//                    intent.setType("application/pdf");
-//                    startActivityForResult(intent, 1);
-                    uploadPDF(displayName, uri);
 
+                    if (imagePicked & pdfpicked) {
+                        uploadPDF(displayName, uri);
+                    } else {
+                        AddNewPost();
+                    }
 
                 }
             }
         });
-
-        pdfChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFileChooser();
-            }
-        });
-
-
 
     }
 
@@ -153,14 +155,15 @@ public class AddNewPostActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                progressDialog.dismiss();
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    Boolean res = jsonObject.getBoolean("error");
+                    //Boolean res = jsonObject.getBoolean("error");
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(AddNewPostActivity.this, "Post Added Successfully", Toast.LENGTH_LONG).show();
+                        finish();
 
 
                     } else {
@@ -204,6 +207,7 @@ public class AddNewPostActivity extends AppCompatActivity {
                 params.put("user_id", Globals.currentUser.USER_ID.trim());
                 params.put("post_heading", postHead.getText().toString().trim());
                 params.put("content", postContent.getText().toString().trim());
+                params.put("content", postContent.getText().toString().trim());
 
                 return params;
             }
@@ -214,138 +218,55 @@ public class AddNewPostActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
-
-    //method to show file chooser
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PICK_PDF_REQUEST);
-    }
-
-    private void requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-            return;
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            //If the user has denied the permission previously your code will come to this block
-            //Here you can explain why you need this permission
-            //Explain here why you need this permission
-        }
-        //And finally ask for the permission
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            // Get the Uri of the selected file
-             uri = data.getData();
-            String uriString = uri.toString();
-            File myFile = new File(uriString);
-            String path = myFile.getAbsolutePath();
-            if (uriString.startsWith("content://")) {
-                Cursor cursor = null;
-                try {
-                    cursor = this.getContentResolver().query(uri, null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst()) {
-                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                        Log.d("nameeeee>>>>  ", displayName);
-                    }
-                } finally {
-                    cursor.close();
-                }
-            } else if (uriString.startsWith("file://")) {
-                displayName = myFile.getName();
-                Log.d("nameeeee>>>>  ", displayName);
-            }
-        }
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                postImage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }
-
-    //This method will be called when the user will tap on allow or deny
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        //Checking the request code of our request
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-
-            //If permission is granted
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
-                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
-            } else {
-                //Displaying another toast if permission is not granted
-                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-
     private void uploadPDF(final String pdfname, Uri pdffile) {
 
         InputStream iStream = null;
         try {
 
+
             iStream = getContentResolver().openInputStream(pdffile);
+            if (!iStream.equals(null)) {
+
+            }
+
             final byte[] inputData = getBytes(iStream);
 
-            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                    new Response.Listener<NetworkResponse>() {
-                        @Override
-                        public void onResponse(NetworkResponse response) {
-                            progressDialog.dismiss();
+            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest
+                    (Request.Method.POST, upload_URL,
+                            new Response.Listener<NetworkResponse>() {
+                                @Override
+                                public void onResponse(NetworkResponse response) {
+                                    progressDialog.dismiss();
 
-                            Log.d("Uploading ....", new String(response.data));
-                            rQueue.getCache().clear();
-                            try {
-                                JSONObject jsonObject = new JSONObject(new String(response.data));
-                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                    Log.d("Uploading ....", new String(response.data));
+                                    rQueue.getCache().clear();
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(new String(response.data));
+                                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
-                                jsonObject.toString().replace("\\\\", "");
+                                        jsonObject.toString().replace("\\\\", "");
 
-                                if (jsonObject.getString("status").equals("true")) {
+                                        if (jsonObject.getString("status").equals("true")) {
 
-//                                    Log.d("come::: >>>  ","yessssss");
-//                                    arraylist = new ArrayList<HashMap<String, String>>();
 //                                    JSONArray dataArray = jsonObject.getJSONArray("data");
-                                    Toast.makeText(AddNewPostActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                    finish();
+                                            Toast.makeText(AddNewPostActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                            finish();
 
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(AddNewPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(AddNewPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }) {
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }) {
 
-                /*
-                 * If you want to add more parameters with the image
-                 * you can do it here
-                 * here we have only one parameter with the image
-                 * which is tags
-                 * */
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
@@ -389,9 +310,98 @@ public class AddNewPostActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    //method to show file chooser
+    private void pickPdf() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PICK_PDF_REQUEST);
+    }
+
+    private void pickImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK) {
+            // Get the Uri of the selected file
+            uri = data.getData();
+            String uriString = uri.toString();
+            File myFile = new File(uriString);
+            String path = myFile.getAbsolutePath();
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
+                try {
+                    cursor = this.getContentResolver().query(uri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        pdfpicked = true;
+                        Log.d("nameeeee>>>>  ", displayName);
+                    }
+                } finally {
+                    cursor.close();
+                }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+                Log.d("nameeeee>>>>  ", displayName);
+            }
+        }
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                postImage.setImageBitmap(bitmap);
+                imagePicked = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+
 
     public byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
@@ -405,14 +415,8 @@ public class AddNewPostActivity extends AppCompatActivity {
         return byteBuffer.toByteArray();
     }
 
-    private void showImageChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
 
-    public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -420,41 +424,6 @@ public class AddNewPostActivity extends AppCompatActivity {
         return encodedImage;
     }
 
-    private void uploadImage(){
-        class UploadImage extends AsyncTask<Bitmap,Void,String> {
 
-            ProgressDialog loading;
-            RequestHandler rh = new RequestHandler();
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(AddNewPostActivity.this, "Uploading Image", "Please wait...",true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
-
-                HashMap<String,String> data = new HashMap<>();
-                data.put("image", uploadImage);
-
-                String result = rh.sendPostRequest(upload_URL,data);
-
-                return result;
-            }
-        }
-
-        UploadImage ui = new UploadImage();
-        ui.execute(bitmap);
-    }
 
 }

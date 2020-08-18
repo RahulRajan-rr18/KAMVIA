@@ -36,7 +36,7 @@ public class AdminCornerFragment extends Fragment {
             }
         });
 
-      Button btnNewPost = view.findViewById(R.id.btn_createpost);
+      Button btnNewPost = view.findViewById(R.id.btnPost);
       btnNewPost.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -45,8 +45,8 @@ public class AdminCornerFragment extends Fragment {
           }
       });
 
-      Button btnApprovalList = view.findViewById(R.id.btn_membership);
-      btnApprovalList.setOnClickListener(new View.OnClickListener() {
+      Button btnMembership = view.findViewById(R.id.btn_membership);
+      btnMembership.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
               Intent membership = new Intent(getContext(), MembershipTabActivity.class);
@@ -62,8 +62,8 @@ public class AdminCornerFragment extends Fragment {
               startActivity(findmem);
           }
       });
-      Button btnAddNewStation = view.findViewById(R.id.basicSettings);
-      btnAddNewStation.setOnClickListener(new View.OnClickListener() {
+      Button btnBasicSettings = view.findViewById(R.id.basicSettings);
+      btnBasicSettings.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
               Intent newstation = new Intent(getContext(), BasicSettingsActivity.class);

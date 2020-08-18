@@ -110,7 +110,8 @@ public class HomeFragment extends Fragment {
                         String condent = jsonObject.getString("condent");
                         String image = null;
                          image = jsonObject.getString("post_image");
-                        timelinelist.add(new HomeTimelineListItem(pdfurl, heading, condent, image));
+                         String postid = jsonObject.getString("post_id");
+                        timelinelist.add(new HomeTimelineListItem(postid,pdfurl, heading, condent, image));
 
                     }
 
