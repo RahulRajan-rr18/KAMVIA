@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -118,7 +117,7 @@ public class HomeFragment extends Fragment {
                     homeTimelineRecyAdapter = new HomeTimelineRecyAdapter(timelinelist, getContext());
                     news_recyclerView.setAdapter(homeTimelineRecyAdapter);
 
-                    final int speedScroll = 2000;
+                    final int speedScroll = 1000;
                     final Handler handler = new Handler();
                     final Runnable runnable = new Runnable() {
                         int count = 0;
