@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_createpost"
+        android:id="@+id/btnPost"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="20dp"
@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toTopOf="@+id/basicSettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_createpost"
+        app:layout_constraintStart_toEndOf="@+id/btnPost"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:shapeAppearanceOverlay="@style/Button.Cut" />
@@ -57,7 +57,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_createpost"
+        app:layout_constraintTop_toBottomOf="@+id/btnPost"
         app:shapeAppearanceOverlay="@style/Button.Cut" />
 
     <com.google.android.material.button.MaterialButton
