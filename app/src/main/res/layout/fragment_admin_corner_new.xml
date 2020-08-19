@@ -4,42 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPost"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="0dp"
+        android:layout_height="148dp"
+        android:layout_marginStart="10dp"
         android:text="Posts"
         app:icon="@drawable/article_svg"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
         app:iconGravity="textStart"
         app:iconSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_findmembers"
-        app:layout_constraintEnd_toStartOf="@+id/btn_membership"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:shapeAppearanceOverlay="@style/Button.Cut" />
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_membership"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:text="Check Membership"
-        android:textSize="10sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Membership"
         app:icon="@drawable/membership_svg"
         app:iconGravity="textStart"
         app:iconSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/basicSettings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnPost"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPost"
         app:shapeAppearanceOverlay="@style/Button.Cut" />
 
     <com.google.android.material.button.MaterialButton
@@ -47,24 +45,21 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
         android:text="Find Members"
         app:icon="@drawable/search_svg"
         app:iconGravity="textStart"
         app:iconSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/basicSettings"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPost"
+        app:layout_constraintTop_toBottomOf="@+id/btn_membership"
         app:shapeAppearanceOverlay="@style/Button.Cut" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/basicSettings"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="48dp"
         android:layout_marginEnd="20dp"
         android:text="Basic Settings"
         app:icon="@drawable/gear"
@@ -72,7 +67,6 @@
         app:iconSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_findmembers"
         app:layout_constraintTop_toBottomOf="@+id/btn_membership"
         app:shapeAppearanceOverlay="@style/Button.Cut" />
