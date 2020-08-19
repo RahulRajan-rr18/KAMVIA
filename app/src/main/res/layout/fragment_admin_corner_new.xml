@@ -10,7 +10,7 @@
         android:layout_height="150dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
-        android:text="@string/create_new_post"
+        android:text="Posts"
         app:icon="@drawable/article_svg"
         app:iconGravity="textStart"
         app:iconSize="30dp"
