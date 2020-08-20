@@ -87,9 +87,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/viewprofilemargin"
-
                 android:background="@android:color/background_dark"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,6 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
+                android:background="@style/Button.Corner"
                 android:text=" Change Pdf " />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,7 +164,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"
+                android:background="@style/Button.Corner"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="Upload" />
 
         </LinearLayout>

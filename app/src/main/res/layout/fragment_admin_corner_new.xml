@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_membership"
@@ -38,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPost"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_findmembers"
@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_membership"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/basicSettings"
@@ -69,5 +69,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_findmembers"
         app:layout_constraintTop_toBottomOf="@+id/btn_membership"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

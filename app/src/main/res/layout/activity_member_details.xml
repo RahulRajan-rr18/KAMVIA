@@ -22,6 +22,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/roboto"
             android:layout_marginLeft="@dimen/viewprofilemargin"
             android:layout_marginTop="11dp"
             android:layout_marginBottom="12dp"
@@ -36,6 +37,7 @@
             android:layout_alignParentTop="false"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="false"
+            android:fontFamily="@font/roboto"
             android:gravity="center"
             android:layout_marginEnd="11dp"
             android:text="Edit "
@@ -90,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="name"
+                    android:fontFamily="@font/roboto"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -100,6 +103,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="empno"
+                    android:fontFamily="@font/roboto"
                     android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -112,6 +116,7 @@
                 android:id="@+id/email_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
                 android:layout_marginTop="@dimen/viewprofilemargin"
                 android:text="email"
                 android:textSize="@dimen/condentsize" />
@@ -120,6 +125,7 @@
                 android:id="@+id/mobilenumber_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
                 android:layout_marginTop="@dimen/viewprofilemargin"
                 android:text="mob number"
                 android:textSize="@dimen/condentsize" />
@@ -133,6 +139,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
                 android:layout_marginTop="@dimen/fivedp"
                 android:text="Address"
                 android:textSize="@dimen/condentsize"
@@ -150,6 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/viewprofilemargin"
+                android:fontFamily="@font/roboto"
                 android:text="House name"
                 android:textSize="@dimen/condentsize"
                 />
@@ -159,6 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
+                android:fontFamily="@font/roboto"
                 android:text="Location"
                 android:textSize="@dimen/condentsize"
                 />
@@ -173,6 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="district"
+                    android:fontFamily="@font/roboto"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -183,6 +193,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:gravity="center"
+                    android:fontFamily="@font/roboto"
                     android:text="home_loc_code"
                     android:textSize="@dimen/condentsize"
                     android:textStyle="bold"
@@ -203,6 +214,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
                     android:text="Kerala"
+                    android:fontFamily="@font/roboto"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -214,6 +226,7 @@
                     android:layout_marginStart="30dp"
                     android:gravity="center"
                     android:text="pin"
+                    android:fontFamily="@font/roboto"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/state_tv"
@@ -226,6 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fivedp"
                 android:text="Other Details"
+                android:fontFamily="@font/roboto"
                 android:textSize="@dimen/condentsize"
                 android:textStyle="bold" />
 
@@ -245,6 +259,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Date of joing as AMVI:"
+                    android:fontFamily="@font/roboto"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -255,6 +270,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
+                    android:fontFamily="@font/roboto"
                     android:text="date"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -273,6 +289,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
                     android:text="Present Station:"
+                    android:fontFamily="@font/roboto"
                     android:textSize="@dimen/condentsize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -282,6 +299,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="working_station"
                     android:textSize="@dimen/condentsize"

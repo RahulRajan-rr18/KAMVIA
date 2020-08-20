@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textAlignment="center"
+        android:fontFamily="@font/roboto"
         android:textColor="@color/white"
         android:text="kerala assistant motor vehicles inspectors association"
         app:layout_constraintEnd_toEndOf="parent"

@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:editable="false"
+            android:fontFamily="@font/roboto"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
             android:gravity="center_vertical"
@@ -61,6 +62,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
                     android:focusable="true"
                     android:text="" />
 
@@ -80,6 +82,7 @@
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
                     android:background="@drawable/mainwindowviews"
                     android:ems="10"
                     android:editable="false"
@@ -90,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
                     android:background="@drawable/mainwindowviews"
                     android:ems="10"
                     android:hint="Email"
@@ -103,6 +107,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/mainwindowviews"
                     android:ems="10"
+                    android:fontFamily="@font/roboto"
                     android:hint="Permanent Employee Number"
                     android:inputType="text"
                     android:editable="false"
@@ -120,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
+                        android:fontFamily="@font/roboto"
                         android:text="Date of Birth"
                         android:textAlignment="gravity"
                         android:textSize="20dp" />
@@ -130,6 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/roboto"
                         android:background="@drawable/mainwindowviews"
                         android:focusable="false"
                         android:hint="dd-mm-yyy" />
@@ -144,6 +151,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/roboto"
                         android:gravity="center_vertical"
                         android:text="Blood Group "
                         android:textAlignment="gravity"
@@ -164,6 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
                     android:text="Permanent Address"
                     android:textSize="20dp" />
 
@@ -172,6 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
                     android:background="@drawable/mainwindowviews"
                     android:hint="Flat / House No/ Building"
                     android:singleLine="true" />
@@ -181,6 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
                     android:background="@drawable/mainwindowviews"
                     android:hint="Street / Locality "
                     android:singleLine="true" />
@@ -195,6 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/roboto"
                         android:gravity="center_vertical"
                         android:text="District          "
                         android:textAlignment="gravity"
@@ -213,6 +225,7 @@
                         android:id="@+id/error_dist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
                         android:text="    " />
                 </LinearLayout>
 
@@ -221,6 +234,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
                     android:background="@drawable/mainwindowviews"
                     android:hint="PIN CODE"
                     android:inputType="number"
@@ -231,6 +245,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
                     android:background="@drawable/mainwindowviews"
                     android:editable="false"
                     android:text="Kerala" />
@@ -258,6 +273,7 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
                         android:text="Home Station "
+                        android:fontFamily="@font/roboto"
                         android:textAlignment="gravity"
                         android:textSize="20dp" />
 
@@ -275,6 +291,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
                     android:text="Other Details"
                     android:textSize="20dp" />
 
@@ -295,6 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
+                        android:fontFamily="@font/roboto"
                         android:text="Date Of Joining as AMVI "
                         android:textAlignment="gravity"
                         android:textSize="18dp" />
@@ -305,6 +323,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/roboto"
                         android:background="@drawable/mainwindowviews"
                         android:focusable="false"
                         android:hint="dd-mm-yyy"
@@ -322,6 +341,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
+                        android:fontFamily="@font/roboto"
                         android:text="Present RTO District"
                         android:textAlignment="gravity"
                         android:textSize="20dp" />
@@ -339,6 +359,7 @@
                         android:id="@+id/error_rto_dist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
                         android:text="    " />
                 </LinearLayout>
 
@@ -364,6 +385,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
+                        android:fontFamily="@font/roboto"
                         android:text="Present Station "
                         android:textAlignment="gravity"
                         android:textSize="20dp" />
@@ -386,6 +408,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="40dp"
+                    android:fontFamily="@font/roboto"
                     android:layout_marginBottom="50dp"
                     android:background="@drawable/mainwindowbutton"
                     android:text="Save"

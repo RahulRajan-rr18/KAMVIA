@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,12 +9,13 @@
         android:id="@+id/constraintLayout11"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -29,59 +31,52 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNewPost"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="320dp"
+        android:layout_height="120dp"
         android:text="Create New Post"
         app:icon="@drawable/article_svg"
         app:iconGravity="textStart"
         app:iconSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnOldPosts"
-        app:layout_constraintEnd_toStartOf="@+id/btnModify"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/btnModify"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout11"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
+        app:layout_constraintVertical_chainStyle="spread"
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnModify"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="320dp"
+        android:layout_height="120dp"
         android:text="Modify/Delete Posts"
         app:icon="@drawable/trash"
+        app:iconGravity="textStart"
+        app:iconSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnOldPosts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNewPost"
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnOldPosts"
+        android:layout_width="320dp"
+        android:layout_height="120dp"
+        android:text="Old Posts"
+        app:icon="@drawable/history"
         app:iconGravity="textStart"
         app:iconSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/btnAddCircular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnNewPost"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnOldPosts"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="48dp"
-        android:text="Old Posts"
-        app:icon="@drawable/history"
-        app:iconGravity="textStart"
-        app:iconSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddCircular"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNewPost"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
+        app:layout_constraintTop_toBottomOf="@+id/btnModify"
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddCircular"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="320dp"
+        android:layout_height="120dp"
         android:text="Add Circular"
         app:icon="@drawable/share_post"
         app:iconGravity="textStart"
@@ -89,9 +84,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnOldPosts"
-        app:layout_constraintTop_toBottomOf="@+id/btnModify"
-        app:shapeAppearanceOverlay="@style/Button.Cut" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOldPosts"
+        app:shapeAppearanceOverlay="@style/Button.Corner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
