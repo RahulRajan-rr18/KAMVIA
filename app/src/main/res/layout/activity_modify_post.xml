@@ -42,130 +42,134 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
-        android:id="@+id/postheading"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="@dimen/viewprofilemargin"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/mainwindowviews"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="Heading"
-        android:inputType="textMultiLine" />
 
-    <EditText
-        android:id="@+id/postcontent"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="@dimen/viewprofilemargin"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/mainwindowviews"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="Type the content "
-        android:inputType="textMultiLine" />
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/viewprofilemargin"
-        android:layout_marginTop="10dp"
-        android:text="Upload Documents"
-        android:textSize="17sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/viewprofilemargin"
-
-        android:background="@android:color/background_dark"
-        android:orientation="horizontal"></LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/viewprofilemargin"
-            android:text="Document Type"
-            android:textSize="17sp" />
-
-        <Spinner
-            android:id="@+id/spinnerdoctype"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:entries="@array/doc_type"
-            android:hint="Dist"
-            android:textAlignment="center" />
+            android:padding="10dp"
 
-    </LinearLayout>
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/postheading"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:textStyle="bold"
+                android:gravity="top"
+                android:hint="Heading"
+                android:inputType="textMultiLine" />
+            <EditText
+                android:id="@+id/postcontent"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="Type the content "
+                android:inputType="textMultiLine" />
 
-    <TextView
-        android:id="@+id/tvpdfurl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:hint="pdf url" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Upload Documents"
+                android:textSize="17sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/viewprofilemargin"
 
-    <Button
-        android:id="@+id/choose_file"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text=" Change Pdf " />
+                android:background="@android:color/background_dark"
+                android:orientation="horizontal"></LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload Image"
-            android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Document Type"
+                    android:textSize="17sp" />
 
-        <Button
-            android:id="@+id/btnPickImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:text="Change Image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                <Spinner
+                    android:id="@+id/spinnerdoctype"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:entries="@array/doc_type"
+                    android:hint="Dist"
+                    android:textAlignment="center" />
 
-        <ImageView
-            android:id="@+id/postImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvpdfurl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="pdf url" />
+            <Button
+                android:id="@+id/choose_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text=" Change Pdf " />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Image"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btnPickImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="Change Image"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/postImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/buttonuploadpost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimary"
+                android:text="Upload" />
+
+        </LinearLayout>
 
 
-    <Button
-        android:id="@+id/buttonuploadpost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/colorPrimary"
-        android:text="Upload" />
+    </ScrollView>
 
 
 </LinearLayout>

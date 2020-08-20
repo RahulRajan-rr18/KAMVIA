@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
@@ -28,9 +29,9 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/alltimelinebutton"
+        android:layout_width="14dp"
+        android:layout_height="13dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="5dp"
         android:src="@drawable/archive_24px"

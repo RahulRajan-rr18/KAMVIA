@@ -59,8 +59,8 @@ import java.util.Map;
 public class ModifyPostActivity extends AppCompatActivity {
     EditText postHead, postContent;
     ProgressDialog progressDialog;
-    ImageView postImage , deletePOst;
-    private String upload_URL = "http://18.220.53.162/kamvia/api/pdfUpload.php";
+    ImageView postImage, deletePOst;
+    private String upload_URL = "http://18.220.53.162/kamvia/api/modifyPost.php";
     private RequestQueue rQueue;
     private ArrayList<HashMap<String, String>> arraylist;
     //Pdf request code
@@ -68,6 +68,7 @@ public class ModifyPostActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 2;
 
     TextView tvPdfurl;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -81,8 +82,8 @@ public class ModifyPostActivity extends AppCompatActivity {
     //Uri to store the image uri
     private Uri filePath;
     Uri uri;
-    String displayName = null , postId ,stringImage,pdfUrl;
-    private Bitmap bitmap;
+    String displayName = null, postId, stringImage, pdfUrl;
+    private Bitmap bitmap ;
     Boolean pdfpicked = false;
     Boolean imagePicked = false;
 
@@ -118,8 +119,12 @@ public class ModifyPostActivity extends AppCompatActivity {
                 showImageChooser();
             }
         });
+        if (!stringImage.isEmpty()){
+            bitmap = StringToBitMap(stringImage);
+        }
 
-        postImage.setImageBitmap(StringToBitMap(stringImage));
+
+        postImage.setImageBitmap(bitmap);
         tvPdfurl.setText(pdfUrl);
 
         uploadPost = findViewById(R.id.buttonuploadpost);
@@ -129,10 +134,10 @@ public class ModifyPostActivity extends AppCompatActivity {
                 Boolean verify = verifyPost();
                 if (verify == true) {
 
-                    if (imagePicked & pdfpicked) {
-                        uploadPDF(displayName, uri);
+                    if (!pdfpicked) {
+                        modifyPostWithoutPdf();
                     } else {
-                        AddNewPost();
+                        uploadPDF(displayName, uri);
                     }
 
                 }
@@ -161,7 +166,7 @@ public class ModifyPostActivity extends AppCompatActivity {
 
                         deletePost();
 
-                       // dialog.dismiss();
+                        // dialog.dismiss();
                     }
                 });
 
@@ -199,9 +204,9 @@ public class ModifyPostActivity extends AppCompatActivity {
                     if (!jsonObject.getBoolean("error")) {
 
                         Toast.makeText(ModifyPostActivity.this, "Post Deleted Successfully", Toast.LENGTH_LONG).show();
-                       // finish();
+                        // finish();
 
-                        Intent post = new Intent(ModifyPostActivity.this , PostsActivity.class);
+                        Intent post = new Intent(ModifyPostActivity.this, PostsActivity.class);
                         startActivity(post);
                         finish();
 
@@ -267,32 +272,36 @@ public class ModifyPostActivity extends AppCompatActivity {
             postContent.setError("Type the content");
             return false;
         }
+
+//        if(!pdfpicked){
+//
+//            Toast.makeText(this, "Please Choose Pdf", Toast.LENGTH_SHORT).show();
+//            return  false;
+//        }
+
         return true;
     }
 
-    public void AddNewPost() {
+    public void modifyPostWithoutPdf() {
 
-        String url = "http://18.220.53.162/kamvia/api/addnewpost.php";
+        String url = "http://18.220.53.162/kamvia/api/modifyPost.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                progressDialog.dismiss();
+                   progressDialog.dismiss();
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     //Boolean res = jsonObject.getBoolean("error");
-                    if (!jsonObject.getBoolean("error")) {
+                    if (jsonObject.getBoolean("status")) {
 
-                        Toast.makeText(ModifyPostActivity.this, "Post Added Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ModifyPostActivity.this, "Post Modified Successfully", Toast.LENGTH_LONG).show();
                         finish();
 
-
                     } else {
-
-                        Toast.makeText(ModifyPostActivity.this, "Failed", Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(ModifyPostActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -310,7 +319,8 @@ public class ModifyPostActivity extends AppCompatActivity {
                 if (error instanceof NetworkError) {
                 } else if (error instanceof ServerError) {
 
-                    Toast.makeText(ModifyPostActivity.this, "Server Error" + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyPostActivity.this, "Server Error" + error,
+                            Toast.LENGTH_SHORT).show();
 
                 } else if (error instanceof AuthFailureError) {
                 } else if (error instanceof ParseError) {
@@ -325,14 +335,33 @@ public class ModifyPostActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", Globals.currentUser.USER_ID.trim());
-                params.put("post_heading", postHead.getText().toString().trim());
-                params.put("content", postContent.getText().toString().trim());
-                params.put("content", postContent.getText().toString().trim());
+              //  try {
+
+
+                    params.put("user_id", Globals.currentUser.USER_ID.trim());
+                    params.put("heading", postHead.getText().toString().trim());
+                    params.put("content", postContent.getText().toString().trim());
+
+                    if(bitmap != null){
+                        params.put("image", getStringImage(bitmap));
+                    }
+                    else{
+                        params.put("image", "no image");
+
+                    }
+                    params.put("post_id", postId);
+
+
+
+
+//                } catch (Exception ex) {
+//                    ex.getMessage();
+//                }
 
                 return params;
+
+
             }
         };
         requestQueue.add(stringRequest);
@@ -438,78 +467,79 @@ public class ModifyPostActivity extends AppCompatActivity {
 
 
             iStream = getContentResolver().openInputStream(pdffile);
-            if (!iStream.equals(null)) {
 
-            }
 
             final byte[] inputData = getBytes(iStream);
 
-            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                    new Response.Listener<NetworkResponse>() {
-                        @Override
-                        public void onResponse(NetworkResponse response) {
-                            progressDialog.dismiss();
+            VolleyMultipartRequest volleyMultipartRequest =
+                    new VolleyMultipartRequest(Request.Method.POST, upload_URL,
+                            new Response.Listener<NetworkResponse>() {
+                                @Override
+                                public void onResponse(NetworkResponse response) {
+                                    progressDialog.dismiss();
 
-                            Log.d("Uploading ....", new String(response.data));
-                            rQueue.getCache().clear();
-                            try {
-                                JSONObject jsonObject = new JSONObject(new String(response.data));
-                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                    Log.d("Uploading ....", new String(response.data));
+                                    rQueue.getCache().clear();
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(new String(response.data));
+                                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
-                                jsonObject.toString().replace("\\\\", "");
+                                        jsonObject.toString().replace("\\\\", "");
 
-                                if (jsonObject.getString("status").equals("true")) {
+                                        if (jsonObject.getString("status").equals("true")) {
 
 //                                    Log.d("come::: >>>  ","yessssss");
 //                                    arraylist = new ArrayList<HashMap<String, String>>();
 //                                    JSONArray dataArray = jsonObject.getJSONArray("data");
-                                    Toast.makeText(ModifyPostActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                    finish();
+                                            Toast.makeText(ModifyPostActivity.this, jsonObject.getString("message"),
+                                                    Toast.LENGTH_SHORT).show();
+                                            finish();
 
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(ModifyPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(ModifyPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }) {
+
+                        /*
+                         * If you want to add more parameters with the image
+                         * you can do it here
+                         * here we have only one parameter with the image
+                         * which is tags
+                         * */
                         @Override
-                        public void onErrorResponse(VolleyError error) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            // params.put("tags", "ccccc");  add string parameters
+                            params.put("user_id", Globals.currentUser.USER_ID);
+                            params.put("heading", postHead.getText().toString());
+                            params.put("content", postContent.getText().toString());
+                            String uploadImage = getStringImage(bitmap);
+                            params.put("image", uploadImage);
+                            params.put("post_id", postId);
+
+                            return params;
                         }
-                    }) {
 
-                /*
-                 * If you want to add more parameters with the image
-                 * you can do it here
-                 * here we have only one parameter with the image
-                 * which is tags
-                 * */
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    // params.put("tags", "ccccc");  add string parameters
-                    params.put("user_id", Globals.currentUser.USER_ID);
-                    params.put("heading", postHead.getText().toString());
-                    params.put("content", postContent.getText().toString());
-                    String uploadImage = getStringImage(bitmap);
-                    params.put("image", uploadImage);
-
-                    return params;
-                }
-
-                /*
-                 *pass files using below method
-                 * */
-                @Override
-                protected Map<String, DataPart> getByteData() {
-                    Map<String, DataPart> params = new HashMap<>();
-                    params.put("filename", new DataPart(pdfname, inputData));
-                    return params;
-                }
-            };
+                        /*
+                         *pass files using below method
+                         * */
+                        @Override
+                        protected Map<String, DataPart> getByteData() {
+                            Map<String, DataPart> params = new HashMap<>();
+                            params.put("filename", new DataPart(pdfname, inputData));
+                            return params;
+                        }
+                    };
 
 
             volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(

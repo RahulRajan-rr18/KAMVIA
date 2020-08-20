@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.spyromedia.android.kamvia.AllTimelineActivity;
 import com.spyromedia.android.kamvia.CustomLinearLayoutManager;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapter;
@@ -44,29 +45,38 @@ public class HomeFragment extends Fragment {
     @Nullable
     HomeTimelineRecyAdapter homeTimelineRecyAdapter;
     List<HomeTimelineListItem> timelinelist;
-    RequestQueue requestQueuegetTimeline ,orderRequestQueue;
-    RecyclerView news_recyclerView , ordersRecyView;
+    RequestQueue requestQueuegetTimeline, orderRequestQueue;
+    RecyclerView news_recyclerView, ordersRecyView;
     List<ListAllOrdersListItem> listAllOrdersListItems;
     ListAllOrdersRecyAdapter adapter;
 
     ProgressDialog progressDialog;
 
-
-
-    AppCompatImageView orderArchive;
+    AppCompatImageView orderArchive, timelineArchive;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_frame, container, false);
 
         SnapHelper snapHelper = new PagerSnapHelper();
+
         orderArchive = view.findViewById(R.id.appCompatImageView);
         orderArchive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent allorder = new Intent(getActivity() , ListAllOrdersActivity.class);
+                Intent allorder = new Intent(getActivity(), ListAllOrdersActivity.class);
                 startActivity(allorder);
             }
         });
+
+        timelineArchive = view.findViewById(R.id.alltimelinebutton);
+        timelineArchive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent alltimeline = new Intent(getActivity(), AllTimelineActivity.class);
+                startActivity(alltimeline);
+            }
+        });
+
         news_recyclerView = view.findViewById(R.id.newsrecyclerview);
         news_recyclerView.setHasFixedSize(true);
         //news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -109,9 +119,9 @@ public class HomeFragment extends Fragment {
                         String heading = jsonObject.getString("heading");
                         String condent = jsonObject.getString("condent");
                         String image = null;
-                         image = jsonObject.getString("post_image");
-                         String postid = jsonObject.getString("post_id");
-                        timelinelist.add(new HomeTimelineListItem(postid,pdfurl, heading, condent, image));
+                        image = jsonObject.getString("post_image");
+                        String postid = jsonObject.getString("post_id");
+                        timelinelist.add(new HomeTimelineListItem(postid, pdfurl, heading, condent, image));
 
                     }
 
@@ -123,29 +133,30 @@ public class HomeFragment extends Fragment {
                     final Runnable runnable = new Runnable() {
                         int count = 0;
                         boolean flag = true;
+
                         @Override
                         public void run() {
                             //try{
-                                if(count < homeTimelineRecyAdapter.getItemCount()){
-                                    if(count==homeTimelineRecyAdapter.getItemCount()-1){
-                                        flag = false;
-                                    }else if(count == 0){
-                                        flag = true;
-                                    }
-                                    if(flag) count++;
-                                    else count--;
-
-                                    news_recyclerView.smoothScrollToPosition(count);
-                                    handler.postDelayed(this,speedScroll);
+                            if (count < homeTimelineRecyAdapter.getItemCount()) {
+                                if (count == homeTimelineRecyAdapter.getItemCount() - 1) {
+                                    flag = false;
+                                } else if (count == 0) {
+                                    flag = true;
                                 }
-                           // }catch (Exception ex){
+                                if (flag) count++;
+                                else count--;
 
-                           // }
+                                news_recyclerView.smoothScrollToPosition(count);
+                                handler.postDelayed(this, speedScroll);
+                            }
+                            // }catch (Exception ex){
+
+                            // }
 
                         }
                     };
 
-                    handler.postDelayed(runnable,speedScroll);
+                    handler.postDelayed(runnable, speedScroll);
 
 
                 } catch (JSONException e) {
@@ -165,6 +176,7 @@ public class HomeFragment extends Fragment {
         progressDialog.setMessage("Loading latest news");
         progressDialog.show();
     }
+
 
     private void getOrdersList() {
 
@@ -211,6 +223,7 @@ public class HomeFragment extends Fragment {
 //        progressDialog.setMessage("Loading List");
 //        progressDialog.show();
     }
+
     private void alertDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         dialog.setMessage("You are not a Registered member. Please request for membership in New Member");

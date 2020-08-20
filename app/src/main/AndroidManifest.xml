@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminFunctions.ModifyPostActivity"></activity>
+        <activity android:name=".AllTimelineActivity"></activity>
+        <activity android:name=".AdminFunctions.ModifyPostActivity" />
         <activity android:name=".AdminFunctions.ModifyPostListActivity" />
         <activity android:name=".AddOrdersOrCirculars" />
         <activity android:name=".OrdersandCircularViews.ListAllOrdersActivity" />
@@ -34,7 +35,9 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SENDTO" />
+
                 <data android:scheme="mailto" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
