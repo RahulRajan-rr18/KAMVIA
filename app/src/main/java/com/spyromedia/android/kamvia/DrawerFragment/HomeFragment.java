@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     RecyclerView news_recyclerView, ordersRecyView;
     List<ListAllOrdersListItem> listAllOrdersListItems;
     ListAllOrdersRecyAdapter adapter;
+    boolean touchflag = true;
 
     ProgressDialog progressDialog , progressDialog2;
 
@@ -80,8 +82,26 @@ public class HomeFragment extends Fragment {
 
         news_recyclerView = view.findViewById(R.id.newsrecyclerview);
         news_recyclerView.setHasFixedSize(true);
-        //news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        news_recyclerView.setLayoutManager(new CustomLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        news_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        news_recyclerView.setLayoutManager(new CustomLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        news_recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                touchflag = false;
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
         timelinelist = new ArrayList<>();
         requestQueuegetTimeline = Volley.newRequestQueue(getContext());
 
@@ -137,17 +157,22 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void run() {
                             //try{
-                            if (count < homeTimelineRecyAdapter.getItemCount()) {
-                                if (count == homeTimelineRecyAdapter.getItemCount() - 1) {
-                                    flag = false;
-                                } else if (count == 0) {
-                                    flag = true;
-                                }
-                                if (flag) count++;
-                                else count--;
+                            if(touchflag) {
+                                if (count < homeTimelineRecyAdapter.getItemCount()) {
+                                    if (count == homeTimelineRecyAdapter.getItemCount() - 1) {
+                                        flag = false;
+                                    } else if (count == 0) {
+                                        flag = true;
+                                    }
+                                    if (flag) count++;
+                                    else count--;
 
-                                news_recyclerView.smoothScrollToPosition(count);
-                                handler.postDelayed(this, speedScroll);
+                                    news_recyclerView.smoothScrollToPosition(count);
+                                    handler.postDelayed(this, speedScroll);
+                                }
+                            }
+                            else{
+                                //nothing
                             }
                             // }catch (Exception ex){
 

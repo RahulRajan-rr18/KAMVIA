@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:background="@style/Button.Corner"
+                android:background="@drawable/rounded_corner_btn"
                 android:text=" Change Pdf " />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -146,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:text="Change Image"
+                    android:background="@drawable/rounded_corner_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -164,7 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@style/Button.Corner"
+                android:background="@drawable/rounded_corner_btn"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="Upload" />
 
