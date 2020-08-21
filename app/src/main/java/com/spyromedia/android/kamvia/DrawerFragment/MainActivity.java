@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkUserverificationStatus();
 
-         navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         headerText = headerView.findViewById(R.id.drawer_name);
         headerImage = headerView.findViewById(R.id.drawer_icon);
