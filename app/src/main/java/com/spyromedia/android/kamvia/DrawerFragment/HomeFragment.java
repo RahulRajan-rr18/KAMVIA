@@ -29,9 +29,9 @@ import com.spyromedia.android.kamvia.AllTimelineActivity;
 import com.spyromedia.android.kamvia.CustomLinearLayoutManager;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineListItem;
 import com.spyromedia.android.kamvia.HomeTimelineRecyView.HomeTimelineRecyAdapter;
-import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersActivity;
-import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersListItem;
-import com.spyromedia.android.kamvia.OrdersandCircularViews.ListAllOrdersRecyAdapter;
+import com.spyromedia.android.kamvia.OrdersAndCircularViews.ListAllOrdersActivity;
+import com.spyromedia.android.kamvia.OrdersAndCircularViews.ListAllOrdersListItem;
+import com.spyromedia.android.kamvia.OrdersAndCircularViews.ListAllOrdersRecyAdapter;
 import com.spyromedia.android.kamvia.R;
 
 import org.json.JSONArray;
@@ -50,11 +50,12 @@ public class HomeFragment extends Fragment {
     List<ListAllOrdersListItem> listAllOrdersListItems;
     ListAllOrdersRecyAdapter adapter;
 
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog , progressDialog2;
 
     AppCompatImageView orderArchive, timelineArchive;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_frame, container, false);
 
         SnapHelper snapHelper = new PagerSnapHelper();
@@ -93,7 +94,6 @@ public class HomeFragment extends Fragment {
         listAllOrdersListItems = new ArrayList<>();
         orderRequestQueue = Volley.newRequestQueue(getContext());
 
-
         getOrdersList();
 
 
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
 
-                progressDialog.dismiss();
+                progressDialog2.dismiss();
                 timelinelist.clear();
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
@@ -167,14 +167,14 @@ public class HomeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
+                progressDialog2.dismiss();
                 error.printStackTrace();
             }
         });
         requestQueuegetTimeline.add(jsonObjectRequest);
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading latest news");
-        progressDialog.show();
+        progressDialog2 = new ProgressDialog(getContext());
+        progressDialog2.setMessage("Loading latest news");
+        progressDialog2.show();
     }
 
 
@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
 
-                progressDialog.dismiss();
+               // progressDialog.dismiss();
                 try {
 
                     JSONArray jsonArray = response.getJSONArray("data");
@@ -206,8 +206,7 @@ public class HomeFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    progressDialog.dismiss();
-
+                   // progressDialog.dismiss();
                 }
 
             }

@@ -155,6 +155,7 @@ public class HomeTimelineRecyAdapter extends RecyclerView.Adapter<HomeTimelineRe
                 intent.putExtra("heading", homeTimelineListItem.getHeading());
                 intent.putExtra("condent", homeTimelineListItem.getCondent());
                 intent.putExtra("image", homeTimelineListItem.getPostImage());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 this.context.startActivity(intent);
 

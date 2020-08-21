@@ -52,49 +52,49 @@ public class AllTimelineActivity extends AppCompatActivity {
     private void parseJSON() {
 
         String url = "http://18.220.53.162/kamvia/api/timeline.php";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+@Override
+public void onResponse(JSONObject response) {
 
-                progressDialog.dismiss();
-                timelinelist.clear();
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
+        progressDialog.dismiss();
+        timelinelist.clear();
+        try {
+        JSONArray jsonArray = response.getJSONArray("data");
+        for (int i = 0; i < jsonArray.length(); i++) {
 
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        //geting pdf url from server
-                        String pdfurl = jsonObject.getString("pdfurl");
-                        String heading = jsonObject.getString("heading");
-                        String condent = jsonObject.getString("condent");
-                        String image = null;
-                        image = jsonObject.getString("post_image");
-                        String postid = jsonObject.getString("post_id");
-                        timelinelist.add(new HomeTimelineListItem(postid,pdfurl, heading, condent, image));
+        JSONObject jsonObject = jsonArray.getJSONObject(i);
+        //geting pdf url from server
+        String pdfurl = jsonObject.getString("pdfurl");
+        String heading = jsonObject.getString("heading");
+        String condent = jsonObject.getString("condent");
+        String image = null;
+        image = jsonObject.getString("post_image");
+        String postid = jsonObject.getString("post_id");
+        timelinelist.add(new HomeTimelineListItem(postid,pdfurl, heading, condent, image));
 
-                    }
+        }
 
-                    homeTimelineRecyAdapter = new HomeTimelineRecyAdapter(timelinelist, getApplicationContext());
-                    RecyView.setAdapter(homeTimelineRecyAdapter);
+        homeTimelineRecyAdapter = new HomeTimelineRecyAdapter(timelinelist, getApplicationContext());
+        RecyView.setAdapter(homeTimelineRecyAdapter);
 
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(AllTimelineActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        } catch (JSONException e) {
+        e.printStackTrace();
+        Toast.makeText(AllTimelineActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
-            }
+        }
         }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                error.printStackTrace();
-            }
+@Override
+public void onErrorResponse(VolleyError error) {
+        progressDialog.dismiss();
+        error.printStackTrace();
+        }
         });
         requestQueuegetTimeline.add(jsonObjectRequest);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading all Posts , Please wait");
         progressDialog.show();
-    }
-}
+        }
+        }

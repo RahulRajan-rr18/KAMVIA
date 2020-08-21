@@ -20,7 +20,7 @@
         <activity android:name=".AdminFunctions.ModifyPostActivity" />
         <activity android:name=".AdminFunctions.ModifyPostListActivity" />
         <activity android:name=".AddOrdersOrCirculars" />
-        <activity android:name=".OrdersandCircularViews.ListAllOrdersActivity" />
+        <activity android:name=".OrdersAndCircularViews.ListAllOrdersActivity" />
         <activity android:name=".ListAllStations.ListAllStationsActivity" />
         <activity android:name=".BasicSettingsActivity" />
         <activity android:name=".EditProfileActivity" />

@@ -1,4 +1,4 @@
-package com.spyromedia.android.kamvia.OrdersandCircularViews;
+package com.spyromedia.android.kamvia.OrdersAndCircularViews;
 
 	public class ListAllOrdersListItem {
 
