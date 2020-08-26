@@ -140,13 +140,10 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("EMP_NUMBER",emp_number);
                       //  editor.putString("USER_NAME", uname);
                         editor.putString("MOBILE_NUMBER", mobno);
-                        //editor.apply();
-                        editor.commit();
-                        editor.apply();
+//                        editor.apply();
                         Globals.currentUser.USER_ID=uid;
                       //  Globals.currentUser.USER_NAME=uname;
                         Globals.currentUser.MOBILE_NUMBER=mobno;
-                        editor.commit();
                         editor.apply();
 
 
